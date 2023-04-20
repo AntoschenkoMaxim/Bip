@@ -3,20 +3,21 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
-import { DepartmentLessons } from "src/departments/department-lessons.model";
-import { Department } from "src/departments/departments.model";
+import { Lesson } from "src/lessons/lessons.model";
+import { DepartmentLessons } from "./department-lessons.model";
 
-interface LessonsCreationAttrs {
+interface DepartmentsCreationAttrs {
   value: string;
   description: string;
 }
 
-@Table({ tableName: "lessons" })
-export class Lesson extends Model<Lesson, LessonsCreationAttrs> {
+@Table({ tableName: "departments" })
+export class Department extends Model<Department, DepartmentsCreationAttrs> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -38,6 +39,6 @@ export class Lesson extends Model<Lesson, LessonsCreationAttrs> {
   })
   description: string;
 
-  @BelongsToMany(() => Department, () => DepartmentLessons)
-  departments: Department[];
+  @BelongsToMany(() => Lesson, () => DepartmentLessons)
+  lessons: Lesson[];
 }

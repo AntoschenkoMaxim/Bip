@@ -3,6 +3,9 @@ import { ConfigModule } from "@nestjs/config";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { LessonsModule } from "./lessons/lessons.module";
 import { Lesson } from "./lessons/lessons.model";
+import { DepartmentsModule } from "./departments/departments.module";
+import { Department } from "./departments/departments.model";
+import { DepartmentLessons } from "./departments/department-lessons.model";
 
 @Module({
   controllers: [],
@@ -21,10 +24,11 @@ import { Lesson } from "./lessons/lessons.model";
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Lesson],
+      models: [Lesson, Department, DepartmentLessons],
       autoLoadModels: true,
     }),
     LessonsModule,
+    DepartmentsModule,
   ],
 })
 export class AppModule {}
