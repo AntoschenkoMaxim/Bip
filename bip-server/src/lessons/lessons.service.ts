@@ -21,7 +21,10 @@ export class LessonsService {
   }
 
   async getAllLessons() {
-    const lessons = await this.lessonRepository.findAndCountAll();
+    const lessons = await this.lessonRepository.findAndCountAll({
+      include: { all: true },
+      order: [["id", "ASC"]],
+    });
     return lessons;
   }
 
