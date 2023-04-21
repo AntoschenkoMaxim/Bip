@@ -26,7 +26,7 @@ export class PostsController {
   }
 
   @Patch(":id")
-  updateById(@Param("id") id: number, updatePostDto: UpdatePostDto) {
+  updateById(@Param("id") id: number, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.updatePostById(id, updatePostDto);
   }
 
