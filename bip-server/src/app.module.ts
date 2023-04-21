@@ -8,6 +8,8 @@ import { Department } from "./departments/departments.model";
 import { DepartmentLessons } from "./departments/department-lessons.model";
 import { TeachersModule } from "./teachers/teachers.module";
 import { Teacher } from "./teachers/teachers.model";
+import { PostsModule } from "./posts/posts.module";
+import { Post } from "./posts/posts.model";
 
 @Module({
   controllers: [],
@@ -26,12 +28,13 @@ import { Teacher } from "./teachers/teachers.model";
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Lesson, Department, DepartmentLessons, Teacher],
+      models: [Lesson, Department, DepartmentLessons, Teacher, Post],
       autoLoadModels: true,
     }),
     LessonsModule,
     DepartmentsModule,
     TeachersModule,
+    PostsModule,
   ],
 })
 export class AppModule {}

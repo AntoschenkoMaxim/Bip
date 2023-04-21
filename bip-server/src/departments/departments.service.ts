@@ -19,7 +19,7 @@ export class DepartmentsService {
     );
     if (existedDepartment) {
       throw new HttpException(
-        "Lesson with this value already exists!",
+        "Department with this value already exists!",
         HttpStatus.BAD_REQUEST
       );
     }
@@ -84,7 +84,7 @@ export class DepartmentsService {
       return addLessonDto;
     }
     throw new HttpException(
-      "Category or brand not found.",
+      "Department or lesson not found.",
       HttpStatus.NOT_FOUND
     );
   }
