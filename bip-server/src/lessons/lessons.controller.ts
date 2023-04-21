@@ -6,15 +6,18 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
 } from "@nestjs/common";
 import { LessonsService } from "./lessons.service";
 import { CreateLessonDto } from "./dto/create-lesson.dto";
 import { UpdateLessonDto } from "./dto/update-lesson.dto";
+import { ValidationPipe } from "src/pipes/validation.pipe";
 
 @Controller("lessons")
 export class LessonsController {
   constructor(private lessonService: LessonsService) {}
 
+  @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonService.createLesson(createLessonDto);
@@ -25,6 +28,7 @@ export class LessonsController {
     return this.lessonService.getAllLessons();
   }
 
+  @UsePipes(ValidationPipe)
   @Patch(":id")
   updateById(
     @Param("id") id: number,
