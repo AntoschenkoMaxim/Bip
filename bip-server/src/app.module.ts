@@ -10,6 +10,10 @@ import { TeachersModule } from "./teachers/teachers.module";
 import { Teacher } from "./teachers/teachers.model";
 import { PostsModule } from "./posts/posts.module";
 import { Post } from "./posts/posts.model";
+import { ImagesModule } from "./images/images.module";
+import { Image } from "./images/images.model";
+import { ServeStaticModule } from "@nestjs/serve-static";
+import * as path from "path";
 
 @Module({
   controllers: [],
@@ -18,9 +22,9 @@ import { Post } from "./posts/posts.model";
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: path.resolve(__dirname, "static"),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, "static"),
+    }),
     SequelizeModule.forRoot({
       dialect: "postgres",
       host: process.env.POSTGRES_HOST,
@@ -28,13 +32,14 @@ import { Post } from "./posts/posts.model";
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Lesson, Department, DepartmentLessons, Teacher, Post],
+      models: [Lesson, Department, DepartmentLessons, Teacher, Post, Image],
       autoLoadModels: true,
     }),
     LessonsModule,
     DepartmentsModule,
     TeachersModule,
     PostsModule,
+    ImagesModule,
   ],
 })
 export class AppModule {}
