@@ -3,6 +3,7 @@ import { Column, DataType, Model, Table } from "sequelize-typescript";
 interface PostsCreationAttrs {
   title: string;
   description: string;
+  image: string;
 }
 
 @Table({ tableName: "posts" })
@@ -26,4 +27,10 @@ export class Post extends Model<Post, PostsCreationAttrs> {
     allowNull: false,
   })
   description: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  image: string;
 }

@@ -6,12 +6,15 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
   UsePipes,
 } from "@nestjs/common";
 import { PostsService } from "./posts.service";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
 import { ValidationPipe } from "src/pipes/validation.pipe";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("posts")
 export class PostsController {
@@ -19,8 +22,9 @@ export class PostsController {
 
   @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postService.createPost(createPostDto);
+  @UseInterceptors(FileInterceptor("image"))
+  create(@Body() createPostDto: CreatePostDto, @UploadedFile() image: any) {
+    return this.postService.createPost(createPostDto, image);
   }
 
   @Get()
@@ -30,8 +34,13 @@ export class PostsController {
 
   @UsePipes(ValidationPipe)
   @Patch(":id")
-  updateById(@Param("id") id: number, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.updatePostById(id, updatePostDto);
+  @UseInterceptors(FileInterceptor("image"))
+  updateById(
+    @Param("id") id: number,
+    @Body() updatePostDto: UpdatePostDto,
+    @UploadedFile() image: any
+  ) {
+    return this.postService.updatePostById(id, updatePostDto, image);
   }
 
   @Delete(":id")

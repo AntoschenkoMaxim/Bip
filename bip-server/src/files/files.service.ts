@@ -25,6 +25,9 @@ export class FilesService {
   async removeFile(fileName: string) {
     try {
       const filePath = path.resolve(__dirname, "..", "static");
+      if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath, { recursive: true });
+      }
       fs.unlinkSync(`${filePath}/${fileName}`);
     } catch (e) {
       throw new HttpException(

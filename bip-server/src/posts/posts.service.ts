@@ -3,13 +3,21 @@ import { InjectModel } from "@nestjs/sequelize";
 import { Post } from "./posts.model";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
+import { FilesService } from "src/files/files.service";
 
 @Injectable()
 export class PostsService {
-  constructor(@InjectModel(Post) private postRepository: typeof Post) {}
+  constructor(
+    @InjectModel(Post) private postRepository: typeof Post,
+    private fileService: FilesService
+  ) {}
 
-  async createPost(createPostDto: CreatePostDto) {
-    const post = await this.postRepository.create(createPostDto);
+  async createPost(createPostDto: CreatePostDto, image: any) {
+    const fileName = await this.fileService.createFile(image);
+    const post = await this.postRepository.create({
+      ...createPostDto,
+      image: fileName,
+    });
     return post;
   }
 
@@ -25,12 +33,17 @@ export class PostsService {
     return post;
   }
 
-  async updatePostById(id: number, updatePostDto: UpdatePostDto) {
+  async updatePostById(id: number, updatePostDto: UpdatePostDto, image: any) {
     const post = await this.getPostById(id);
     if (!post) {
       throw new HttpException("Post not found!", HttpStatus.NOT_FOUND);
     }
-    await this.postRepository.update(updatePostDto, { where: { id } });
+    await this.fileService.removeFile(post.image);
+    const fileName = await this.fileService.createFile(image);
+    await this.postRepository.update(
+      { ...updatePostDto, image: fileName },
+      { where: { id } }
+    );
   }
 
   async removePostById(id: number) {
@@ -38,6 +51,7 @@ export class PostsService {
     if (!post) {
       throw new HttpException("Post not found!", HttpStatus.NOT_FOUND);
     }
+    await this.fileService.removeFile(post.image);
     await this.postRepository.destroy({ where: { id } });
   }
 }
