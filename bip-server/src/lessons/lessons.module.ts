@@ -5,12 +5,16 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { Lesson } from "./lessons.model";
 import { Department } from "src/departments/departments.model";
 import { DepartmentLessons } from "src/departments/department-lessons.model";
+import { AuthModule } from "src/auth/auth.module";
+import { TeachersModule } from "src/teachers/teachers.module";
 
 @Module({
   providers: [LessonsService],
   controllers: [LessonsController],
   imports: [
     SequelizeModule.forFeature([Lesson, Department, DepartmentLessons]),
+    TeachersModule,
+    AuthModule,
   ],
   exports: [LessonsService],
 })

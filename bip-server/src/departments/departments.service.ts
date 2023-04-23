@@ -53,11 +53,20 @@ export class DepartmentsService {
     id: number,
     updateDepartmentDto: UpdateDepartmentDto
   ) {
+    const existedDepartment = await this.getDepartmentByValue(
+      updateDepartmentDto.value
+    );
     const department = await this.departmentRepository.findOne({
       where: { id },
     });
     if (!department) {
       throw new HttpException("Department not found!", HttpStatus.NOT_FOUND);
+    }
+    if (existedDepartment) {
+      throw new HttpException(
+        "Department with this value already exists!",
+        HttpStatus.NOT_FOUND
+      );
     }
     await this.departmentRepository.update(updateDepartmentDto, {
       where: { id },
@@ -84,7 +93,7 @@ export class DepartmentsService {
       return addLessonDto;
     }
     throw new HttpException(
-      "Department or lesson not found.",
+      "Department or lesson not found!",
       HttpStatus.NOT_FOUND
     );
   }
