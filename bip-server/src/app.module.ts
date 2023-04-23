@@ -13,7 +13,13 @@ import { Post } from "./posts/posts.model";
 import { ImagesModule } from "./images/images.module";
 import { Image } from "./images/images.model";
 import { ServeStaticModule } from "@nestjs/serve-static";
+import { UsersModule } from "./users/users.module";
+import { RolesModule } from "./roles/roles.module";
 import * as path from "path";
+import { User } from "./users/users.model";
+import { Role } from "./roles/roles.model";
+import { UserRoles } from "./roles/user-roles.model";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [],
@@ -32,7 +38,17 @@ import * as path from "path";
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [Lesson, Department, DepartmentLessons, Teacher, Post, Image],
+      models: [
+        Lesson,
+        Department,
+        DepartmentLessons,
+        Teacher,
+        Post,
+        Image,
+        User,
+        Role,
+        UserRoles,
+      ],
       autoLoadModels: true,
     }),
     LessonsModule,
@@ -40,6 +56,9 @@ import * as path from "path";
     TeachersModule,
     PostsModule,
     ImagesModule,
+    UsersModule,
+    RolesModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
