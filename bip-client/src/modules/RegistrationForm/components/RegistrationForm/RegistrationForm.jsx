@@ -1,22 +1,15 @@
-import { Button, Card, Col, Form, Input, Row, Steps } from 'antd'
+import { Card, Form, Input, Steps } from 'antd'
 import { useQueryClient, useMutation } from 'react-query'
-import { userRegistration } from '../api/registrationRequest'
+import { userRegistration } from '../../api/registrationRequest'
 import { useState } from 'react'
-
-const steps = [{ title: 'Step 1' }, { title: 'Step 2' }]
+import { steps } from '../../constants/steps'
+import { validateMessages } from '../../constants/validateMessages'
+import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
 
 export function RegistrationForm() {
   //state
   const [form] = Form.useForm()
   const [current, setCurrent] = useState(0)
-
-  //validate messages obj
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-    },
-  }
 
   //user registration (react-query)
   const client = useQueryClient()
@@ -158,27 +151,7 @@ export function RegistrationForm() {
             </Form.Item>
           </>
         )}
-        {current < steps.length - 1 && (
-          <Button block type='primary' onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        <Row gutter={16}>
-          <Col span={12}>
-            {current > 0 && (
-              <Button block type='dashed' onClick={() => prev()}>
-                Previous
-              </Button>
-            )}
-          </Col>
-          <Col span={12}>
-            {current === steps.length - 1 && (
-              <Button block type='primary' htmlType='submit'>
-                Done
-              </Button>
-            )}
-          </Col>
-        </Row>
+        <RegistrationButtons current={current} next={next} prev={prev} />
       </Form>
     </Card>
   )
