@@ -5,7 +5,7 @@ export async function loginUser(loginData) {
   console.log(loginData)
   return axios({
     method: 'POST',
-    url: `${BASE_URL}`,
+    url: BASE_URL,
     data: loginData,
     headers: {
       'Content-Type': 'application/json',

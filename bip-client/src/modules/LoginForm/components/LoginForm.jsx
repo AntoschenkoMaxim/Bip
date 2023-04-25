@@ -1,6 +1,7 @@
 import { Button, Card, Form, Input } from 'antd'
 import { useQueryClient, useMutation } from 'react-query'
 import { loginUser } from '../api/loginRequest'
+import { validateMessages } from '../constants/validateMessages'
 
 export function LoginForm() {
   const [form] = Form.useForm()
@@ -29,26 +30,17 @@ export function LoginForm() {
       }}
     >
       <Form
+        layout='vertical'
         name='login_form'
         form={form}
-        layout='vertical'
+        validateMessages={validateMessages}
         onFinish={handleSubmit}
       >
         <Form.Item
           label='Email'
           name='email'
           required
-          rules={[
-            {
-              required: true,
-              message: '${label} is required!',
-            },
-            {
-              pattern:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              message: '${label} incorrect!',
-            },
-          ]}
+          rules={[{ required: true }, { type: 'email' }]}
         >
           <Input placeholder='andrew@gmail.com' allowClear />
         </Form.Item>
@@ -57,7 +49,7 @@ export function LoginForm() {
           label='Password'
           name='password'
           required
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true }]}
         >
           <Input.Password placeholder='password' allowClear />
         </Form.Item>
