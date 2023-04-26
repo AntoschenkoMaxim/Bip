@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from 'react-query'
 import { userRegistration } from '../../api/registrationRequest'
 import { useState } from 'react'
 import { steps } from '../../constants/steps'
-import { validateMessages } from '../../constants/validateMessages'
+import { validateMessages } from '../../../../constants/validateMessages'
 import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
 
 export function RegistrationForm() {

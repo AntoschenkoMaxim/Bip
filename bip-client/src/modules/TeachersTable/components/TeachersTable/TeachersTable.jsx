@@ -84,5 +84,20 @@ export function TeachersTable() {
     },
   })
 
-  return <>{isSuccess && <Table columns={columns} dataSource={data} />}</>
+  return (
+    <>
+      {isSuccess && (
+        <Table
+          tableLayout='fixed'
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            defaultPageSize: '5',
+            showSizeChanger: true,
+            pageSizeOptions: [5, 10, 15],
+          }}
+        />
+      )}
+    </>
+  )
 }

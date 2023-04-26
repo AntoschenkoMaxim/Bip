@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
+import { message } from 'antd'
 
 export async function loginUser(loginData) {
-  console.log(loginData)
   return axios({
     method: 'POST',
     url: BASE_URL,
@@ -11,7 +11,7 @@ export async function loginUser(loginData) {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => console.log(res.data))
+    .then((response) => response.data, message.success('Успешно авторизован!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })

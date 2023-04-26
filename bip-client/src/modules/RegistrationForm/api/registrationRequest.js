@@ -12,8 +12,8 @@ export async function userRegistration(registrationData) {
     },
   })
     .then(
-      (res) => console.log(res.data),
-      message.success('Successfully registration!')
+      (response) => response.data,
+      message.success('Успешно зарегистрирован!')
     )
     .catch(function (error) {
       console.log(error.toJSON())

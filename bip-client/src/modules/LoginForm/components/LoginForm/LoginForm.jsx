@@ -1,7 +1,7 @@
 import { Button, Card, Form, Input } from 'antd'
 import { useQueryClient, useMutation } from 'react-query'
-import { loginUser } from '../api/loginRequest'
-import { validateMessages } from '../constants/validateMessages'
+import { loginUser } from '../../api/loginRequest'
+import { validateMessages } from '../../../../constants/validateMessages'
 
 export function LoginForm() {
   const [form] = Form.useForm()
