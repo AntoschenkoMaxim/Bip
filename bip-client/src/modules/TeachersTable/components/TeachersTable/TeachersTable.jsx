@@ -1,4 +1,4 @@
-import { Popconfirm, Table, Tag } from 'antd'
+import { Badge, Popconfirm, Table, Tag } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllTeachers } from '../../api/getTeachersRequest'
 import { removeTeacherById } from '../../api/removeTeacherRequest'
@@ -87,16 +87,18 @@ export function TeachersTable() {
   return (
     <>
       {isSuccess && (
-        <Table
-          tableLayout='fixed'
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            defaultPageSize: '5',
-            showSizeChanger: true,
-            pageSizeOptions: [5, 10, 15],
-          }}
-        />
+        <Badge count={data?.count} color='blue'>
+          <Table
+            tableLayout='fixed'
+            columns={columns}
+            dataSource={data?.rows}
+            pagination={{
+              defaultPageSize: '5',
+              showSizeChanger: true,
+              pageSizeOptions: [5, 10, 15],
+            }}
+          />
+        </Badge>
       )}
     </>
   )

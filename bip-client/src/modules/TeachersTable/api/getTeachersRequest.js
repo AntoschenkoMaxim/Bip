@@ -9,7 +9,7 @@ export async function getAllTeachers() {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data.rows)
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })
