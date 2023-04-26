@@ -20,6 +20,11 @@ export function CreateLessonForm({ handleOk }) {
     },
   })
 
+  const options = data?.rows.map((item) => ({
+    value: item.id,
+    label: `${item.firstName} ${item.surname} ${item.lastName} (${item.role})`,
+  }))
+
   const { mutate: create } = useMutation({
     mutationFn: createLesson,
     onSuccess: () => {
@@ -32,11 +37,6 @@ export function CreateLessonForm({ handleOk }) {
     form.resetFields()
     handleOk()
   }
-
-  const options = data?.rows.map((item) => ({
-    value: item.id,
-    label: `${item.firstName} ${item.surname} ${item.lastName}`,
-  }))
 
   return (
     <Form
@@ -75,7 +75,7 @@ export function CreateLessonForm({ handleOk }) {
               .toLowerCase()
               .localeCompare((optionB?.label ?? '').toLowerCase())
           }
-          options={options}
+          options={isSuccess && options}
         />
       </Form.Item>
     </Form>

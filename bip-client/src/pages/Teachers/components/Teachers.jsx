@@ -22,7 +22,7 @@ export function Teachers() {
     <>
       <Button onClick={showModal}>Добавить преподавателя</Button>
       <Modal
-        title='Добавление преподавателя'
+        title='Создание преподавателя'
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[

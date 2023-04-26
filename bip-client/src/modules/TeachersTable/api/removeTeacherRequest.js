@@ -10,7 +10,7 @@ export async function removeTeacherById(id) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Успешно удален!'))
+    .then((response) => response.data, message.success('Преподаватель удален!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })

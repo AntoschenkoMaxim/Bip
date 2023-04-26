@@ -1,14 +1,14 @@
 export const options = [
   {
-    value: 'professor',
+    value: 'Профессор',
     label: 'Профессор',
   },
   {
-    value: 'docent',
+    value: 'Доцент',
     label: 'Доцент',
   },
   {
-    value: 'teacher',
+    value: 'Преподаватель',
     label: 'Преподаватель',
   },
 ]

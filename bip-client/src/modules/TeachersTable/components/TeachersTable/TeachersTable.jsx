@@ -57,7 +57,7 @@ export function TeachersTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data.length >= 1 ? (
+        data?.rows.length >= 1 ? (
           <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
             <a>Удалить</a>
           </Popconfirm>

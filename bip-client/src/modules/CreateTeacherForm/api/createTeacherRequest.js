@@ -11,7 +11,10 @@ export async function createTeacher(teacherData) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Успешно добавлен!'))
+    .then(
+      (response) => response.data,
+      message.success('Преподаватель добавлен!')
+    )
     .catch(function (error) {
       console.log(error.toJSON())
     })
