@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import MainLayoutPage from './pages/MainLayoutPage/components/MainLayoutPage'
 import { Teachers } from './pages/Teachers/components/Teachers'
 import { Lessons } from './pages/Lessons/components/Lessons'
+import { Departments } from './pages/Departments/components/Departments'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path='/dashboard' element={<MainLayoutPage />}>
           <Route index element={<Teachers />} />
+          <Route path='departments' element={<Departments />} />
           <Route path='lessons' element={<Lessons />} />
         </Route>
         {/* <Route path='*' element={<NotFoundPage />} /> */}
