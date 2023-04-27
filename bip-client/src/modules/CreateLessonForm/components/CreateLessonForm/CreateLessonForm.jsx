@@ -48,6 +48,7 @@ export function CreateLessonForm({ handleOk }) {
     >
       {formItems.map((item) => (
         <Form.Item
+          key={item.name}
           label={item.label}
           name={item.name}
           required

@@ -27,13 +27,17 @@ export function DepartmentsTable() {
       key: 'lessons',
       render: (_, { lessons }) => (
         <>
-          {lessons.map((lesson) => {
-            return (
-              <Tag color='geekblue' key={lesson.value}>
-                {lesson.description.toUpperCase()}
-              </Tag>
-            )
-          })}
+          {lessons.length ? (
+            lessons.map((lesson) => {
+              return (
+                <Tag color='geekblue' key={lesson.value}>
+                  {lesson.description.toUpperCase()}
+                </Tag>
+              )
+            })
+          ) : (
+            <Tag color='volcano'>НЕТ ПРЕДМЕТОВ</Tag>
+          )}
         </>
       ),
     },

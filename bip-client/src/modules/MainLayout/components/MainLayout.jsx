@@ -8,22 +8,23 @@ import {
 } from '@ant-design/icons'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { getItem } from '../helpers/getItem'
 
 const { Header, Content, Footer, Sider } = Layout
 
 const items = [
-  getItem('Главная', '1', <HomeOutlined />),
-  getItem('Кафедры', '2', <InboxOutlined />),
-  getItem('Преподаватели', '3', <TeamOutlined />),
-  getItem('Предметы', '4', <ProfileOutlined />),
-  getItem('Новости', '5', <FileProtectOutlined />),
-  getItem('Галерея', '6', <PictureOutlined />),
+  getItem('Главная', '/', <HomeOutlined />),
+  getItem('Кафедры', 'departments', <InboxOutlined />),
+  getItem('Преподаватели', 'teachers', <TeamOutlined />),
+  getItem('Предметы', 'lessons', <ProfileOutlined />),
+  getItem('Новости', 'news', <FileProtectOutlined />),
+  getItem('Галерея', 'gallery', <PictureOutlined />),
 ]
 
 export function MainLayout() {
   const [collapsed, setCollapsed] = useState(false)
+  const navigate = useNavigate()
   const {
     token: { colorBgContainer },
   } = theme.useToken()
@@ -47,9 +48,10 @@ export function MainLayout() {
         />
         <Menu
           theme='dark'
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={['/']}
           mode='inline'
           items={items}
+          onClick={({ keyPath }) => navigate(`/dashboard/${keyPath}`)}
         />
       </Sider>
       <Layout className='site-layout'>

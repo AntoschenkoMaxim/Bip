@@ -42,13 +42,17 @@ export function TeachersTable() {
       key: 'lessons',
       render: (_, { lessons }) => (
         <>
-          {lessons.map((lesson) => {
-            return (
-              <Tag color='geekblue' key={lesson.value}>
-                {lesson.description.toUpperCase()}
-              </Tag>
-            )
-          })}
+          {lessons.length ? (
+            lessons.map((lesson) => {
+              return (
+                <Tag color='geekblue' key={lesson.value}>
+                  {lesson.description.toUpperCase()}
+                </Tag>
+              )
+            })
+          ) : (
+            <Tag color='volcano'>НЕТ ПРЕДМЕТОВ</Tag>
+          )}
         </>
       ),
     },
@@ -67,7 +71,7 @@ export function TeachersTable() {
 
   const client = useQueryClient()
 
-  const { data, isLoading, isSuccess } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryFn: () => getAllTeachers(),
     queryKey: ['teachers'],
     onError: (err) => {
