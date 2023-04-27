@@ -20,6 +20,7 @@ export class TeachersService {
     const teachers = await this.teacherRepository.findAndCountAll({
       include: { all: true },
       order: [["id", "ASC"]],
+      distinct: true,
     });
     return teachers;
   }

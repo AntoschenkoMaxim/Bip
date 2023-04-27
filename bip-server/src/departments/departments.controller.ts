@@ -21,8 +21,8 @@ import { RolesGuard } from "src/auth/roles.guard";
 export class DepartmentsController {
   constructor(private departmentService: DepartmentsService) {}
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
@@ -34,8 +34,8 @@ export class DepartmentsController {
     return this.departmentService.getAllDepartments();
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Patch(":id")
   updateById(
@@ -45,8 +45,8 @@ export class DepartmentsController {
     return this.departmentService.updateDepartmentById(id, updateDepartmentDto);
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @Delete(":id")
   removeById(@Param("id") id: number) {
     return this.departmentService.removeDepartmentById(id);

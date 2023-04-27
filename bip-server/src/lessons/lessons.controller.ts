@@ -20,8 +20,8 @@ import { Roles } from "src/auth/roles-auth.decorator";
 export class LessonsController {
   constructor(private lessonService: LessonsService) {}
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
@@ -33,8 +33,8 @@ export class LessonsController {
     return this.lessonService.getAllLessons();
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Patch(":id")
   updateById(
@@ -44,8 +44,8 @@ export class LessonsController {
     return this.lessonService.updateLessonById(id, updateLessonDto);
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @Delete(":id")
   removeById(@Param("id") id: number) {
     return this.lessonService.deleteLessonById(id);

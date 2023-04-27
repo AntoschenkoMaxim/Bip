@@ -20,8 +20,8 @@ import { RolesGuard } from "src/auth/roles.guard";
 export class TeachersController {
   constructor(private teacherService: TeachersService) {}
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Post()
   create(@Body() createTeacherDto: CreateTeacherDto) {
@@ -33,8 +33,8 @@ export class TeachersController {
     return this.teacherService.getAllTeachers();
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Patch(":id")
   updateById(
@@ -44,8 +44,8 @@ export class TeachersController {
     return this.teacherService.updateTeacherById(id, updateTeacherDto);
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @Delete(":id")
   removeById(@Param("id") id: number) {
     return this.teacherService.removeTeacherById(id);
