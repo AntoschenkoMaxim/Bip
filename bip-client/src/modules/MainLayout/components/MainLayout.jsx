@@ -18,7 +18,7 @@ const items = [
   getItem('Кафедры', 'departments', <InboxOutlined />),
   getItem('Преподаватели', 'teachers', <TeamOutlined />),
   getItem('Предметы', 'lessons', <ProfileOutlined />),
-  getItem('Новости', 'news', <FileProtectOutlined />),
+  getItem('Новости', 'posts', <FileProtectOutlined />),
   getItem('Галерея', 'gallery', <PictureOutlined />),
 ]
 
@@ -48,7 +48,7 @@ export function MainLayout() {
         />
         <Menu
           theme='dark'
-          defaultSelectedKeys={['/']}
+          defaultSelectedKeys={['departments']}
           mode='inline'
           items={items}
           onClick={({ keyPath }) => navigate(`/dashboard/${keyPath}`)}
