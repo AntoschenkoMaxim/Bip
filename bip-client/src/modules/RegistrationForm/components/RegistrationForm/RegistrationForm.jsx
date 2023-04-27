@@ -5,11 +5,14 @@ import { useState } from 'react'
 import { steps } from '../../constants/steps'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
+import { useNavigate } from 'react-router-dom'
 
 export function RegistrationForm() {
   //state
   const [form] = Form.useForm()
   const [current, setCurrent] = useState(0)
+
+  const navigate = useNavigate()
 
   //user registration (react-query)
   const client = useQueryClient()
@@ -36,6 +39,7 @@ export function RegistrationForm() {
     registration(registrationData)
     setCurrent(0)
     form.resetFields()
+    navigate('/dashboard')
   }
 
   //stepper

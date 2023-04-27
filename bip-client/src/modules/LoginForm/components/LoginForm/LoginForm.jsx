@@ -2,9 +2,12 @@ import { Button, Card, Form, Input } from 'antd'
 import { useQueryClient, useMutation } from 'react-query'
 import { loginUser } from '../../api/loginRequest'
 import { validateMessages } from '../../../../constants/validateMessages'
+import { useNavigate } from 'react-router-dom'
 
 export function LoginForm() {
   const [form] = Form.useForm()
+
+  const navigate = useNavigate()
 
   const client = useQueryClient()
   const { mutate: login } = useMutation({
@@ -19,6 +22,7 @@ export function LoginForm() {
   const handleSubmit = (values) => {
     login(values)
     form.resetFields()
+    navigate('/dashboard')
   }
 
   return (

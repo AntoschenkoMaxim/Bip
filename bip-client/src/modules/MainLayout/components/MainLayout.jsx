@@ -48,7 +48,7 @@ export function MainLayout() {
         />
         <Menu
           theme='dark'
-          defaultSelectedKeys={['departments']}
+          defaultSelectedKeys={['/']}
           mode='inline'
           items={items}
           onClick={({ keyPath }) => navigate(`/dashboard/${keyPath}`)}
