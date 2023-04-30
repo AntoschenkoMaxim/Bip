@@ -10,7 +10,7 @@ export async function removePostById(id) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Успешно удален!'))
+    .then((response) => response.data, message.success('Новость удалена!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })

@@ -8,13 +8,10 @@ export async function createPost(postData) {
     url: BASE_URL,
     data: postData,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
-    .then(
-      (response) => response.data,
-      message.success('Преподаватель добавлен!')
-    )
+    .then((response) => response.data, message.success('Новость добавлена!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })

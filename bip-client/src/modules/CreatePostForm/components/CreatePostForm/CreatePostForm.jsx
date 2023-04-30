@@ -1,21 +1,24 @@
-import { Button, Form, Input, Upload, message } from 'antd'
+import { Button, Form, Input, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { formItems } from '../../constants/formItems'
 import { useMutation, useQueryClient } from 'react-query'
 import { createPost } from '../../api/createPostRequest'
 import { UploadOutlined } from '@ant-design/icons'
-import { BASE_URL } from '../../constants/baseUrl'
 import { useState } from 'react'
 
 export function CreatePostForm({ handleOk }) {
   const [form] = Form.useForm()
 
-  const normFile = (e) => {
-    console.log('Upload event:', e)
-    if (Array.isArray(e)) {
-      return e
-    }
-    return e?.fileList
+  const [file, setFile] = useState()
+
+  const props = {
+    onRemove: () => {
+      setFile()
+    },
+    beforeUpload: (file) => {
+      setFile(file)
+      return false
+    },
   }
 
   const client = useQueryClient()
@@ -27,9 +30,17 @@ export function CreatePostForm({ handleOk }) {
     },
   })
 
+  const getFormData = (values) => {
+    const formData = new FormData()
+    formData.append('title', values.title)
+    formData.append('description', values.description)
+    formData.append('image', file)
+    return formData
+  }
+
   const handleSubmit = (values) => {
-    console.log(values)
-    create(values)
+    const formData = getFormData(values)
+    create(formData)
     form.resetFields()
     handleOk()
   }
@@ -53,16 +64,16 @@ export function CreatePostForm({ handleOk }) {
           <Input placeholder={item.placeholder} allowClear />
         </Form.Item>
       ))}
-      {/* <Form.Item
-        // name='image'
-        // label='Изображение'
-        valuePropName='fileList'
-        getValueFromEvent={normFile}
+      <Form.Item
+        name='image'
+        label='Изображение'
+        required
+        rules={[{ required: true }]}
       >
-        <Upload name='logo' listType='picture'>
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
+        <Upload {...props} listType='picture' maxCount={1}>
+          <Button icon={<UploadOutlined />}>Выберите изображение</Button>
         </Upload>
-      </Form.Item> */}
+      </Form.Item>
     </Form>
   )
 }
