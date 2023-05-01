@@ -19,7 +19,8 @@ const items = [
   getItem('Преподаватели', 'teachers', <TeamOutlined />),
   getItem('Предметы', 'lessons', <ProfileOutlined />),
   getItem('Новости', 'posts', <FileProtectOutlined />),
-  getItem('Галерея', 'gallery', <PictureOutlined />),
+  getItem('Галерея', 'categories', <PictureOutlined />),
+  getItem('Изображения', 'images', <PictureOutlined />),
 ]
 
 export function MainLayout() {
