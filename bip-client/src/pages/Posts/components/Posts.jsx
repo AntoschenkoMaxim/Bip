@@ -18,6 +18,20 @@ export function Posts() {
     setIsModalOpen(false)
   }
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='create_post_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Добавить
+    </Button>,
+  ]
+
   return (
     <>
       <Button onClick={showModal}>Добавить новость</Button>
@@ -25,19 +39,7 @@ export function Posts() {
         title='Создание новости'
         open={isModalOpen}
         onCancel={handleCancel}
-        footer={[
-          <Button key='back' onClick={handleCancel}>
-            Закрыть
-          </Button>,
-          <Button
-            form='create_post_form'
-            key='submit'
-            type='primary'
-            htmlType='submit'
-          >
-            Добавить
-          </Button>,
-        ]}
+        footer={buttons}
       >
         <CreatePostForm handleOk={handleOk} />
       </Modal>

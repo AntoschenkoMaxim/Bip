@@ -18,6 +18,20 @@ export function Lessons() {
     setIsModalOpen(false)
   }
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='create_lesson_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Добавить
+    </Button>,
+  ]
+
   return (
     <>
       <Button onClick={showModal}>Добавить предмет</Button>
@@ -25,19 +39,7 @@ export function Lessons() {
         title='Создание предмета'
         open={isModalOpen}
         onCancel={handleCancel}
-        footer={[
-          <Button key='back' onClick={handleCancel}>
-            Закрыть
-          </Button>,
-          <Button
-            form='create_lesson_form'
-            key='submit'
-            type='primary'
-            htmlType='submit'
-          >
-            Добавить
-          </Button>,
-        ]}
+        footer={buttons}
       >
         <CreateLessonForm handleOk={handleOk} />
       </Modal>

@@ -18,6 +18,20 @@ export function Teachers() {
     setIsModalOpen(false)
   }
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='create_teacher_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Добавить
+    </Button>,
+  ]
+
   return (
     <>
       <Button onClick={showModal}>Добавить преподавателя</Button>
@@ -25,19 +39,7 @@ export function Teachers() {
         title='Создание преподавателя'
         open={isModalOpen}
         onCancel={handleCancel}
-        footer={[
-          <Button key='back' onClick={handleCancel}>
-            Закрыть
-          </Button>,
-          <Button
-            form='create_teacher_form'
-            key='submit'
-            type='primary'
-            htmlType='submit'
-          >
-            Добавить
-          </Button>,
-        ]}
+        footer={buttons}
       >
         <CreateTeacherForm handleOk={handleOk} />
       </Modal>
