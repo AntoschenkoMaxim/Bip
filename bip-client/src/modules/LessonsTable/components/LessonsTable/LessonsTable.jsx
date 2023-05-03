@@ -1,7 +1,9 @@
-import { Badge, Popconfirm, Spin, Table } from 'antd'
+import { Badge, Button, Modal, Popconfirm, Space, Table, message } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllLessons } from '../../api/getLessonsRequest'
 import { removeLessonById } from '../../api/removeLessonRequest'
+import { UpdateLessonForm } from '../UpdateLessonForm/UpdateLessonForm'
+import { useState } from 'react'
 
 export function LessonsTable() {
   const columns = [
@@ -27,12 +29,33 @@ export function LessonsTable() {
       key: 'operations',
       render: (_, record) =>
         data?.rows.length >= 1 ? (
-          <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
-            <a>Удалить</a>
-          </Popconfirm>
+          <Space>
+            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+              <a>Удалить</a>
+            </Popconfirm>
+            <a onClick={() => showModal(record.id)}>Изменить</a>
+          </Space>
         ) : null,
     },
   ]
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState(null)
+
+  const showModal = (id) => {
+    setId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const client = useQueryClient()
 
@@ -50,11 +73,29 @@ export function LessonsTable() {
     mutationFn: removeLessonById,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['lessons'] })
+      message.success('Предмет удален!')
     },
   })
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_lesson_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Обновить
+    </Button>,
+  ]
+
   return (
     <>
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={buttons}>
+        <UpdateLessonForm id={id} handleOk={handleOk} />
+      </Modal>
       {isSuccess && (
         <Badge count={data?.count} color='blue'>
           <Table

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
 
-export async function removeLessonById(id) {
+export async function updateLessonById(lessonData) {
   return axios({
-    method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    method: 'PATCH',
+    url: `${BASE_URL}/${lessonData.id}`,
+    data: lessonData,
     headers: {
       'Content-Type': 'application/json',
     },
