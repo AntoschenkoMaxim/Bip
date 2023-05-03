@@ -1,10 +1,14 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
 
-export async function removeCategoryById(id) {
+export async function updateCategoryById(categoryData) {
   return axios({
-    method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    method: 'PATCH',
+    url: `${BASE_URL}/${categoryData.id}`,
+    data: categoryData,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
     .then((response) => response.data)
     .catch(function (error) {
