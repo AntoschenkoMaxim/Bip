@@ -1,7 +1,10 @@
-import { Badge, Popconfirm, Table, Tag } from 'antd'
+import { Badge, Button, Modal, Popconfirm, Space, Table, Tag } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllTeachers } from '../../api/getTeachersRequest'
 import { removeTeacherById } from '../../api/removeTeacherRequest'
+import { useState } from 'react'
+import { getTeacherById } from '../../api/getTeacherRequest'
+import { UpdateTeacherForm } from '../UpdateTeacherForm/UpdateTeacherForm'
 
 export function TeachersTable() {
   const columns = [
@@ -12,14 +15,14 @@ export function TeachersTable() {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: 'Имя',
-      dataIndex: 'firstName',
-      key: 'firstName',
-    },
-    {
       title: 'Фамилия',
       dataIndex: 'lastName',
       key: 'lastName',
+    },
+    {
+      title: 'Имя',
+      dataIndex: 'firstName',
+      key: 'firstName',
     },
     {
       title: 'Отчество',
@@ -62,12 +65,33 @@ export function TeachersTable() {
       key: 'operations',
       render: (_, record) =>
         data?.rows.length >= 1 ? (
-          <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
-            <a>Удалить</a>
-          </Popconfirm>
+          <Space>
+            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+              <a>Удалить</a>
+            </Popconfirm>
+            <a onClick={() => showModal(record.id)}>Изменить</a>
+          </Space>
         ) : null,
     },
   ]
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState(null)
+
+  const showModal = (id) => {
+    setId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const client = useQueryClient()
 
@@ -88,8 +112,25 @@ export function TeachersTable() {
     },
   })
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_teacher_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Обновить
+    </Button>,
+  ]
+
   return (
     <>
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={buttons}>
+        <UpdateTeacherForm id={id} handleOk={handleOk} />
+      </Modal>
       {isSuccess && (
         <Badge count={data?.count} color='blue'>
           <Table
