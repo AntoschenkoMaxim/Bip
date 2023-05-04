@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd'
+import { Form, Input, Select, message } from 'antd'
 import { formItems } from '../../constants/formItems'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { createLesson } from '../../api/createLessonRequest'
@@ -29,6 +29,7 @@ export function CreateLessonForm({ handleOk }) {
     mutationFn: createLesson,
     onSuccess: () => {
       client.invalidateQueries(['lessons'])
+      message.success('Предмет добавлен!')
     },
   })
 

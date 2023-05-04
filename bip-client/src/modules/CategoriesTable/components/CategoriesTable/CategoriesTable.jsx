@@ -129,7 +129,7 @@ export function CategoriesTable() {
   return (
     <>
       <Modal
-        title='Обновление категории'
+        title='Редактирование категории'
         open={isModalOpen}
         onCancel={handleCancel}
         footer={buttons}

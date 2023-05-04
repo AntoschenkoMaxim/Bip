@@ -1,4 +1,4 @@
-import { Badge, Popconfirm, Table, Tag } from 'antd'
+import { Badge, Popconfirm, Table, Tag, message } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { removeDepartmentById } from '../../api/removeDepartmentRequest'
 import { getAllDepartments } from '../../api/getDepartmentsRequest'
@@ -70,6 +70,7 @@ export function DepartmentsTable() {
     mutationFn: removeDepartmentById,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['departments'] })
+      message.success('Кафедра удалена!')
     },
   })
 

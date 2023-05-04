@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Upload } from 'antd'
+import { Button, Form, Input, Select, Upload, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { UploadOutlined } from '@ant-design/icons'
@@ -37,6 +37,7 @@ export function CreateImageForm({ handleOk }) {
     mutationFn: createImage,
     onSuccess: () => {
       client.invalidateQueries(['images'])
+      message.success('Изображение добавлено!')
     },
   })
 

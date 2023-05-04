@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd'
+import { Form, Input, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { formItems } from '../../constants/formItems'
 import { useMutation, useQueryClient } from 'react-query'
@@ -13,6 +13,7 @@ export function CreateCategoryForm({ handleOk }) {
     mutationFn: createCategory,
     onSuccess: () => {
       client.invalidateQueries(['categories'])
+      message.success('Категория добавлена!')
     },
   })
 

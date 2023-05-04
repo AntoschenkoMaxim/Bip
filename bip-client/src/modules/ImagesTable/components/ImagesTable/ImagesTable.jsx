@@ -1,4 +1,4 @@
-import { Badge, Image, Popconfirm, Table } from 'antd'
+import { Badge, Image, Popconfirm, Table, message } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllImages } from '../../api/getImagesRequest'
 import { removeImageById } from '../../api/removeImageRequest'
@@ -62,6 +62,7 @@ export function ImagesTable() {
     mutationFn: removeImageById,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['images'] })
+      message.success('Изображение удалено!')
     },
   })
 

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
 
 export async function removeTeacherById(id) {
   return axios({
@@ -10,7 +9,7 @@ export async function removeTeacherById(id) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Преподаватель удален!'))
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })

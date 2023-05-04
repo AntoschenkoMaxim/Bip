@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd'
+import { Form, Input, Select, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { formItems } from '../../constants/formItems'
 import { useMutation, useQueryClient } from 'react-query'
@@ -14,6 +14,7 @@ export function CreateTeacherForm({ handleOk }) {
     mutationFn: createTeacher,
     onSuccess: () => {
       client.invalidateQueries(['teachers'])
+      message.success('Преподаватель добавлен!')
     },
   })
 

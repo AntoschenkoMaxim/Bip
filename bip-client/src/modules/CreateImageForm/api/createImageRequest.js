@@ -11,10 +11,7 @@ export async function createImage(imageData) {
       'Content-Type': 'multipart/form-data',
     },
   })
-    .then(
-      (response) => response.data,
-      message.success('Изображение добавлено!')
-    )
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })

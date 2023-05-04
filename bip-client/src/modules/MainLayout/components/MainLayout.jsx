@@ -1,10 +1,11 @@
 import {
-  HomeOutlined,
+  BarChartOutlined,
   TeamOutlined,
   PictureOutlined,
   InboxOutlined,
   FileProtectOutlined,
   ProfileOutlined,
+  OrderedListOutlined,
 } from '@ant-design/icons'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { useState } from 'react'
@@ -14,12 +15,12 @@ import { getItem } from '../helpers/getItem'
 const { Header, Content, Footer, Sider } = Layout
 
 const items = [
-  getItem('Главная', '/', <HomeOutlined />),
+  getItem('Главная', '/', <BarChartOutlined />),
   getItem('Кафедры', 'departments', <InboxOutlined />),
   getItem('Преподаватели', 'teachers', <TeamOutlined />),
   getItem('Предметы', 'lessons', <ProfileOutlined />),
   getItem('Новости', 'posts', <FileProtectOutlined />),
-  getItem('Галерея', 'categories', <PictureOutlined />),
+  getItem('Категории', 'categories', <OrderedListOutlined />),
   getItem('Изображения', 'images', <PictureOutlined />),
 ]
 

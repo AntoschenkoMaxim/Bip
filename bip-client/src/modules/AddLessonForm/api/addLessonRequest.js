@@ -11,7 +11,7 @@ export async function addLessonToDepartment(data) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Предмет добавлен!'))
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })

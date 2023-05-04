@@ -11,7 +11,7 @@ export async function createCategory(categoryData) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.data, message.success('Категория добавлена!'))
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })

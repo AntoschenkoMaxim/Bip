@@ -1,4 +1,4 @@
-import { Form, Input, Select } from 'antd'
+import { Form, Input, Select, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { addLessonToDepartment } from '../../api/addLessonRequest'
@@ -44,6 +44,7 @@ export function AddLessonForm({ handleOk }) {
     mutationFn: addLessonToDepartment,
     onSuccess: () => {
       client.invalidateQueries(['departments'])
+      message.success('Предмет добавлен!')
     },
   })
 

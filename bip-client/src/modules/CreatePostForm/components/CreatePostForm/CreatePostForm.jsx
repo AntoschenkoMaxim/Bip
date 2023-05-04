@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload } from 'antd'
+import { Button, Form, Input, Upload, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { formItems } from '../../constants/formItems'
 import { useMutation, useQueryClient } from 'react-query'
@@ -27,6 +27,7 @@ export function CreatePostForm({ handleOk }) {
     mutationFn: createPost,
     onSuccess: () => {
       client.invalidateQueries(['posts'])
+      message.success('Новость добавлена!')
     },
   })
 

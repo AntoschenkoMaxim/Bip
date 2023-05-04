@@ -109,6 +109,7 @@ export function TeachersTable() {
     mutationFn: removeTeacherById,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['teachers'] })
+      message.success('Преподаватель удален!')
     },
   })
 
@@ -128,7 +129,12 @@ export function TeachersTable() {
 
   return (
     <>
-      <Modal open={isModalOpen} onCancel={handleCancel} footer={buttons}>
+      <Modal
+        title='Редактирование преподавателя'
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={buttons}
+      >
         <UpdateTeacherForm id={id} handleOk={handleOk} />
       </Modal>
       {isSuccess && (

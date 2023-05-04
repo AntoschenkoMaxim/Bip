@@ -1,11 +1,9 @@
 import { Form, Input, Select, message } from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { formItems } from '../../constants/formItems'
 import { getTeacherById } from '../../api/getTeacherRequest'
 import { updateTeacherById } from '../../api/updateTeacherRequest'
 import { options } from '../../constants/options'
-import { useState } from 'react'
 
 export function UpdateTeacherForm({ id, handleOk }) {
   const [form] = Form.useForm()

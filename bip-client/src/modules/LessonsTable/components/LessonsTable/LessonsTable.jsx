@@ -93,7 +93,12 @@ export function LessonsTable() {
 
   return (
     <>
-      <Modal open={isModalOpen} onCancel={handleCancel} footer={buttons}>
+      <Modal
+        title='Редактирование предмета'
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={buttons}
+      >
         <UpdateLessonForm id={id} handleOk={handleOk} />
       </Modal>
       {isSuccess && (

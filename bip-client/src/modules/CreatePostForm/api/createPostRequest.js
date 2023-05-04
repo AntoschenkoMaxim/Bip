@@ -11,7 +11,7 @@ export async function createPost(postData) {
       'Content-Type': 'multipart/form-data',
     },
   })
-    .then((response) => response.data, message.success('Новость добавлена!'))
+    .then((response) => response.data)
     .catch(function (error) {
       console.log(error.toJSON())
     })
