@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
 
-export async function removePostById(id) {
+export async function updatePostById(postData) {
   return axios({
-    method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    method: 'PATCH',
+    url: `${BASE_URL}/${postData.get('id')}`,
+    data: postData,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
     .then((response) => response.data)

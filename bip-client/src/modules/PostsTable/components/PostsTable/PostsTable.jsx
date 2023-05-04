@@ -1,7 +1,19 @@
-import { Badge, Image, Popconfirm, Table, Tag } from 'antd'
+import {
+  Badge,
+  Button,
+  Image,
+  Modal,
+  Popconfirm,
+  Space,
+  Table,
+  Tooltip,
+  message,
+} from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllPosts } from '../../api/getPostsRequest'
 import { removePostById } from '../../api/removePostRequest'
+import { useState } from 'react'
+import { UpdatePostForm } from '../UpdatePostForm/UpdatePostForm'
 
 export function PostsTable() {
   const columns = [
@@ -20,6 +32,14 @@ export function PostsTable() {
       title: 'Описание',
       dataIndex: 'description',
       key: 'description',
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (description) => (
+        <Tooltip placement='topLeft' title={description}>
+          {description}
+        </Tooltip>
+      ),
     },
     {
       title: 'Изображение',
@@ -39,12 +59,33 @@ export function PostsTable() {
       key: 'operations',
       render: (_, record) =>
         data?.rows.length >= 1 ? (
-          <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
-            <a>Удалить</a>
-          </Popconfirm>
+          <Space>
+            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+              <a>Удалить</a>
+            </Popconfirm>
+            <a onClick={() => showModal(record.id)}>Изменить</a>
+          </Space>
         ) : null,
     },
   ]
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState(null)
+
+  const showModal = (id) => {
+    setId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const client = useQueryClient()
 
@@ -62,11 +103,34 @@ export function PostsTable() {
     mutationFn: removePostById,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['posts'] })
+      message.success('Новость удалена!')
     },
   })
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_post_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Обновить
+    </Button>,
+  ]
+
   return (
     <>
+      <Modal
+        title='Редактирование новости'
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={buttons}
+      >
+        <UpdatePostForm id={id} handleOk={handleOk} />
+      </Modal>
       {isSuccess && (
         <Badge count={data?.count} color='blue'>
           <Table
