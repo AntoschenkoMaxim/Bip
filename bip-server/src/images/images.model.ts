@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  Model,
+  Table,
+} from "sequelize-typescript";
+import { Category } from "src/categories/categories.model";
 
 interface ImagesCreationAttrs {
   title: string;
@@ -26,4 +34,14 @@ export class Image extends Model<Image, ImagesCreationAttrs> {
     allowNull: false,
   })
   image: string;
+
+  @ForeignKey(() => Category)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  categoryId: number;
+
+  @BelongsTo(() => Category)
+  category: Category;
 }
