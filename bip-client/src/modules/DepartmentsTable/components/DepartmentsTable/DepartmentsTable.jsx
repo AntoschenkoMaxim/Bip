@@ -1,7 +1,18 @@
-import { Badge, Popconfirm, Table, Tag, message } from 'antd'
+import {
+  Badge,
+  Button,
+  Modal,
+  Popconfirm,
+  Space,
+  Table,
+  Tag,
+  message,
+} from 'antd'
+import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { removeDepartmentById } from '../../api/removeDepartmentRequest'
 import { getAllDepartments } from '../../api/getDepartmentsRequest'
+import { UpdateDepartmentForm } from '../UpdateDepartmentForm/UpdateDepartmentForm'
 
 export function DepartmentsTable() {
   const columns = [
@@ -47,12 +58,33 @@ export function DepartmentsTable() {
       key: 'operations',
       render: (_, record) =>
         data?.rows.length >= 1 ? (
-          <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
-            <a>Удалить</a>
-          </Popconfirm>
+          <Space>
+            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+              <a>Удалить</a>
+            </Popconfirm>
+            <a onClick={() => showModal(record.id)}>Изменить</a>
+          </Space>
         ) : null,
     },
   ]
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState(null)
+
+  const showModal = (id) => {
+    setId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const client = useQueryClient()
 
@@ -74,8 +106,30 @@ export function DepartmentsTable() {
     },
   })
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_department_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Обновить
+    </Button>,
+  ]
+
   return (
     <>
+      <Modal
+        title='Редактирование предмета'
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={buttons}
+      >
+        <UpdateDepartmentForm id={id} handleOk={handleOk} />
+      </Modal>
       {isSuccess && (
         <Badge count={data?.count} color='blue'>
           <Table
