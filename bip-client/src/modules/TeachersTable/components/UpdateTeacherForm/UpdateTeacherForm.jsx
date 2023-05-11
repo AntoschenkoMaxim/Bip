@@ -29,7 +29,7 @@ export function UpdateTeacherForm({ id, handleOk }) {
       firstName: values.firstName,
       lastName: values.lastName,
       surname: values.surname,
-      phone: values.prefix + values.phone,
+      phone: values.phone,
       role: values.role,
     }
     return teacher

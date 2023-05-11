@@ -24,6 +24,15 @@ export function CreateTeacherForm({ handleOk }) {
     handleOk()
   }
 
+  const prefixSelector = (
+    <Form.Item name='prefix' noStyle>
+      <Select defaultValue='375' style={{ width: 80 }}>
+        <Option value='375'>+375</Option>
+        <Option value='80'>80</Option>
+      </Select>
+    </Form.Item>
+  )
+
   return (
     <Form
       layout='vertical'
@@ -43,6 +52,24 @@ export function CreateTeacherForm({ handleOk }) {
           <Input placeholder={item.placeholder} allowClear />
         </Form.Item>
       ))}
+      <Form.Item
+        label='Номер телефона'
+        name='phone'
+        required
+        rules={[
+          { required: true },
+          {
+            pattern: /^(29|25|44|33)(\d{3})(\d{2})(\d{2})$/,
+            message: 'Не соответствует формату!',
+          },
+        ]}
+      >
+        <Input
+          addonBefore={prefixSelector}
+          placeholder='295553535'
+          allowClear
+        />
+      </Form.Item>
       <Form.Item
         label='Должность'
         name='role'
