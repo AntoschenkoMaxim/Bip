@@ -37,6 +37,7 @@ export class LessonsService {
     const lessons = await this.lessonRepository.findAndCountAll({
       include: { all: true },
       order: [["id", "ASC"]],
+      distinct: true
     });
     return lessons;
   }

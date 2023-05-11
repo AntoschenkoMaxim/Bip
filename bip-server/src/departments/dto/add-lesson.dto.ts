@@ -1,8 +1,8 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber } from "class-validator";
 
 export class AddLessonDto {
-  @IsString({ message: "Must be a string" })
-  readonly value: string;
+  @IsNumber({}, { message: "Must be a number" })
+  readonly lessonId: number;
 
   @IsNumber({}, { message: "Must be a number" })
   readonly departmentId: number;

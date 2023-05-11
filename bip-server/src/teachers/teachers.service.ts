@@ -27,22 +27,19 @@ export class TeachersService {
 
   async getTeacherById(id: number) {
     const teacher = await this.teacherRepository.findOne({ where: { id } });
+    if (!teacher) {
+      throw new HttpException("Teacher not found!", HttpStatus.NOT_FOUND);
+    }
     return teacher;
   }
 
   async updateTeacherById(id: number, updateTeacherDto: UpdateTeacherDto) {
-    const teacher = await this.getTeacherById(id);
-    if (!teacher) {
-      throw new HttpException("Teacher not found!", HttpStatus.NOT_FOUND);
-    }
+    await this.getTeacherById(id);
     await this.teacherRepository.update(updateTeacherDto, { where: { id } });
   }
 
   async removeTeacherById(id: number) {
-    const teacher = await this.getTeacherById(id);
-    if (!teacher) {
-      throw new HttpException("Teacher not found!", HttpStatus.NOT_FOUND);
-    }
+    await this.getTeacherById(id);
     await this.teacherRepository.destroy({ where: { id } });
   }
 }

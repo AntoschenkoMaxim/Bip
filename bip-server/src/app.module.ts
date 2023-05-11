@@ -20,6 +20,8 @@ import { User } from "./users/users.model";
 import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.model";
 import { AuthModule } from "./auth/auth.module";
+import { CategoriesModule } from "./categories/categories.module";
+import { Category } from "./categories/categories.model";
 
 @Module({
   controllers: [],
@@ -48,6 +50,7 @@ import { AuthModule } from "./auth/auth.module";
         User,
         Role,
         UserRoles,
+        Category,
       ],
       autoLoadModels: true,
     }),
@@ -59,6 +62,7 @@ import { AuthModule } from "./auth/auth.module";
     UsersModule,
     RolesModule,
     AuthModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}

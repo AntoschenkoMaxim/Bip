@@ -52,8 +52,8 @@ export class DepartmentsController {
     return this.departmentService.removeDepartmentById(id);
   }
 
-  @Roles("moderator", "admin")
-  @UseGuards(RolesGuard)
+  // @Roles("moderator", "admin")
+  // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)
   @Post("/lesson")
   add(@Body() addLessonDto: AddLessonDto) {

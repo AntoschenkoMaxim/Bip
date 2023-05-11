@@ -8,7 +8,7 @@ export class UpdateTeacherDto {
   @IsString({ message: "Must be a string" })
   readonly surname: string;
   @IsString({ message: "Must be a string" })
-  readonly role: string;
-  @IsString({ message: "Must be a string" })
   readonly phone: string;
+  @IsString({ message: "Must be a string" })
+  readonly role: string;
 }

@@ -31,6 +31,7 @@ export class DepartmentsService {
     const departments = await this.departmentRepository.findAndCountAll({
       include: { all: true },
       order: [["id", "ASC"]],
+      distinct: true,
     });
     return departments;
   }
@@ -56,9 +57,7 @@ export class DepartmentsService {
     const existedDepartment = await this.getDepartmentByValue(
       updateDepartmentDto.value
     );
-    const department = await this.departmentRepository.findOne({
-      where: { id },
-    });
+    const department = await this.getDepartmentById(id);
     if (!department) {
       throw new HttpException("Department not found!", HttpStatus.NOT_FOUND);
     }
@@ -85,8 +84,8 @@ export class DepartmentsService {
     const department = await this.departmentRepository.findByPk(
       addLessonDto.departmentId
     );
-    const lesson = await this.lessonService.getLessonByValue(
-      addLessonDto.value
+    const lesson = await this.lessonService.getLessonById(
+      addLessonDto.lessonId
     );
     if (department && lesson) {
       await department.$add("lesson", lesson.id);

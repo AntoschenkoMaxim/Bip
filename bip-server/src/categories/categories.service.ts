@@ -27,6 +27,7 @@ export class CategoriesService {
   async getAllCategories() {
     const categories = await this.categoryRepository.findAndCountAll({
       include: { all: true },
+      order: [["id", "ASC"]],
       distinct: true,
     });
     return categories;
