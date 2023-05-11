@@ -1,7 +1,18 @@
-import { Badge, Image, Popconfirm, Table, message } from 'antd'
+import {
+  Badge,
+  Button,
+  Image,
+  Modal,
+  Popconfirm,
+  Space,
+  Table,
+  message,
+} from 'antd'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { getAllImages } from '../../api/getImagesRequest'
 import { removeImageById } from '../../api/removeImageRequest'
+import { useState } from 'react'
+import { UpdateImageForm } from '../UpdateImageForm/UpdateImageForm'
 
 export function ImagesTable() {
   const columns = [
@@ -39,12 +50,33 @@ export function ImagesTable() {
       key: 'operations',
       render: (_, record) =>
         data?.rows.length >= 1 ? (
-          <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
-            <a>Удалить</a>
-          </Popconfirm>
+          <Space>
+            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+              <a>Удалить</a>
+            </Popconfirm>
+            <a onClick={() => showModal(record.id)}>Изменить</a>
+          </Space>
         ) : null,
     },
   ]
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState(null)
+
+  const showModal = (id) => {
+    setId(id)
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const client = useQueryClient()
 
@@ -66,8 +98,30 @@ export function ImagesTable() {
     },
   })
 
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_image_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      Обновить
+    </Button>,
+  ]
+
   return (
     <>
+      <Modal
+        title='Редактирование предмета'
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={buttons}
+      >
+        <UpdateImageForm id={id} handleOk={handleOk} />
+      </Modal>
       {isSuccess && (
         <Badge count={data?.count} color='blue'>
           <Table
