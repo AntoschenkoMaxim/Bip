@@ -1,6 +1,5 @@
 import { Button, Form, Input, Upload, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { formItems } from '../../constants/formItems'
 import { useMutation, useQueryClient } from 'react-query'
 import { createPost } from '../../api/createPostRequest'
 import { UploadOutlined } from '@ant-design/icons'
@@ -54,17 +53,29 @@ export function CreatePostForm({ handleOk }) {
       validateMessages={validateMessages}
       onFinish={handleSubmit}
     >
-      {formItems.map((item) => (
-        <Form.Item
-          key={item.name}
-          label={item.label}
-          name={item.name}
-          required
-          rules={[{ required: true }]}
-        >
-          <Input placeholder={item.placeholder} allowClear />
-        </Form.Item>
-      ))}
+      <Form.Item
+        label='Заголовок'
+        name='title'
+        required
+        rules={[{ required: true }]}
+      >
+        <Input placeholder='Новая новость' allowClear />
+      </Form.Item>
+      <Form.Item
+        label='Описание'
+        name='description'
+        required
+        rules={[{ required: true }]}
+      >
+        <Input.TextArea
+          placeholder='Новость о наших успехах...'
+          allowClear
+          autoSize={{
+            minRows: 3,
+            maxRows: 7,
+          }}
+        />
+      </Form.Item>
       <Form.Item
         name='image'
         label='Изображение'
