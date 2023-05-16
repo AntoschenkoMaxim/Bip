@@ -1,19 +1,8 @@
-import {
-  Badge,
-  Button,
-  Image,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  Tooltip,
-  message,
-} from 'antd'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getAllPosts } from '../../api/getPostsRequest'
-import { removePostById } from '../../api/removePostRequest'
+import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
 import { useState } from 'react'
 import { UpdatePostForm } from '../UpdatePostForm/UpdatePostForm'
+import { useGetAllPostsQuery } from '../../hooks/useGetAllPostsQuery'
+import { useRemovePostByIdQuery } from '../../hooks/useRemovePostByIdQuery'
 
 export function PostsTable() {
   const columns = [
@@ -58,9 +47,12 @@ export function PostsTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data?.rows.length >= 1 ? (
+        posts?.rows.length >= 1 ? (
           <Space>
-            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+            <Popconfirm
+              title='Вы уверены?'
+              onConfirm={() => removePost(record.id)}
+            >
               <a>Удалить</a>
             </Popconfirm>
             <a onClick={() => showModal(record.id)}>Изменить</a>
@@ -77,66 +69,24 @@ export function PostsTable() {
     setIsModalOpen(true)
   }
 
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
+  const { data: posts, isSuccess } = useGetAllPostsQuery()
 
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const client = useQueryClient()
-
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllPosts(),
-    queryKey: ['posts'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: remove } = useMutation({
-    mutationFn: removePostById,
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['posts'] })
-      message.success('Новость удалена!')
-    },
-  })
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='update_post_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
-    </Button>,
-  ]
+  const { mutate: removePost } = useRemovePostByIdQuery()
 
   return (
     <>
-      <Modal
-        title='Редактирование новости'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <UpdatePostForm id={id} handleOk={handleOk} />
-      </Modal>
+      <UpdatePostForm
+        id={id}
+        setId={setId}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       {isSuccess && (
-        <Badge count={data?.count} color='blue'>
+        <Badge count={posts?.count} color='blue'>
           <Table
             tableLayout='fixed'
             columns={columns}
-            dataSource={data?.rows}
+            dataSource={posts?.rows}
             pagination={{
               defaultPageSize: '5',
               showSizeChanger: true,

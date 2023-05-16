@@ -2,9 +2,10 @@ import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
 
 export async function updatePostById(postData) {
+  const id = postData.get('id')
   return axios({
     method: 'PATCH',
-    url: `${BASE_URL}/${postData.get('id')}`,
+    url: `${BASE_URL}/${id}`,
     data: postData,
     headers: {
       'Content-Type': 'multipart/form-data',
