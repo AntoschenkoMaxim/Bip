@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  Model,
+  Table,
+} from "sequelize-typescript";
+import { PostsCategories } from "src/posts-categories/posts-categories.model";
 
 interface PostsCreationAttrs {
   title: string;
@@ -33,4 +41,14 @@ export class Post extends Model<Post, PostsCreationAttrs> {
     allowNull: false,
   })
   image: string;
+
+  @ForeignKey(() => PostsCategories)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  postsCategoryId: number;
+
+  @BelongsTo(() => PostsCategories)
+  postsCategory: PostsCategories;
 }
