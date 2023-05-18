@@ -1,9 +1,8 @@
-import { Badge, Button, Modal, Popconfirm, Space, Table, message } from 'antd'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getAllLessons } from '../../api/getLessonsRequest'
-import { removeLessonById } from '../../api/removeLessonRequest'
+import { Badge, Popconfirm, Space, Table } from 'antd'
 import { UpdateLessonForm } from '../UpdateLessonForm/UpdateLessonForm'
 import { useState } from 'react'
+import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
+import { useGetAllLessonsQuery } from '../../hooks/useGetAllLessonsQuery'
 
 export function LessonsTable() {
   const columns = [
@@ -28,9 +27,12 @@ export function LessonsTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data?.rows.length >= 1 ? (
+        lessons?.rows.length >= 1 ? (
           <Space>
-            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+            <Popconfirm
+              title='Вы уверены?'
+              onConfirm={() => removeLesson(record.id)}
+            >
               <a>Удалить</a>
             </Popconfirm>
             <a onClick={() => showModal(record.id)}>Изменить</a>
@@ -47,66 +49,24 @@ export function LessonsTable() {
     setIsModalOpen(true)
   }
 
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
+  const { data: lessons, isSuccess } = useGetAllLessonsQuery()
 
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const client = useQueryClient()
-
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllLessons(),
-    queryKey: ['lessons'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: remove } = useMutation({
-    mutationFn: removeLessonById,
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['lessons'] })
-      message.success('Предмет удален!')
-    },
-  })
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='update_lesson_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
-    </Button>,
-  ]
+  const { mutate: removeLesson } = useRemoveLessonByIdQuery()
 
   return (
     <>
-      <Modal
-        title='Редактирование предмета'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <UpdateLessonForm id={id} handleOk={handleOk} />
-      </Modal>
+      <UpdateLessonForm
+        id={id}
+        setId={setId}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       {isSuccess && (
-        <Badge count={data?.count} color='blue'>
+        <Badge count={lessons?.count} color='blue'>
           <Table
             tableLayout='fixed'
             columns={columns}
-            dataSource={data?.rows}
+            dataSource={lessons?.rows}
             pagination={{
               defaultPageSize: '5',
               showSizeChanger: true,

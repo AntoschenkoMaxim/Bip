@@ -1,20 +1,26 @@
-import { Form, Input, message } from 'antd'
-import { useMutation, useQueryClient } from 'react-query'
+import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { updateDepartmentById } from '../../api/updateDepartmentRequest'
+import { useUpdateDepartmentByIdQuery } from '../../hooks/useUpdateDepartmentByIdQuery'
 
-export function UpdateDepartmentForm({ id, handleOk }) {
+export function UpdateDepartmentForm({
+  id,
+  setId,
+  isModalOpen,
+  setIsModalOpen,
+}) {
   const [form] = Form.useForm()
 
-  const client = useQueryClient()
+  const { mutate: updateDepartment } = useUpdateDepartmentByIdQuery()
 
-  const { mutate: updateDepartment } = useMutation({
-    mutationFn: updateDepartmentById,
-    onSuccess: () => {
-      client.invalidateQueries(['departments'])
-      message.success('Кафедра обновлена!')
-    },
-  })
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
   const getDepartmentData = (values) => {
     const department = {
@@ -32,31 +38,52 @@ export function UpdateDepartmentForm({ id, handleOk }) {
     handleOk()
   }
 
-  return (
-    <Form
-      layout='vertical'
-      name='update_department_form'
-      form={form}
-      validateMessages={validateMessages}
-      onFinish={handleSubmit}
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_department_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
     >
-      <Form.Item
-        label='Значение'
-        name='value'
-        required
-        rules={[{ required: true }]}
-      >
-        <Input placeholder='math' allowClear />
-      </Form.Item>
+      Обновить
+    </Button>,
+  ]
 
-      <Form.Item
-        label='Описание'
-        name='description'
-        required
-        rules={[{ required: true }]}
+  return (
+    <Modal
+      title='Редактирование предмета'
+      open={isModalOpen}
+      onCancel={handleCancel}
+      footer={buttons}
+    >
+      <Form
+        layout='vertical'
+        name='update_department_form'
+        form={form}
+        validateMessages={validateMessages}
+        onFinish={handleSubmit}
       >
-        <Input placeholder='Кафедра математики' allowClear />
-      </Form.Item>
-    </Form>
+        <Form.Item
+          label='Значение'
+          name='value'
+          required
+          rules={[{ required: true }]}
+        >
+          <Input placeholder='math' allowClear />
+        </Form.Item>
+
+        <Form.Item
+          label='Описание'
+          name='description'
+          required
+          rules={[{ required: true }]}
+        >
+          <Input placeholder='Кафедра математики' allowClear />
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }

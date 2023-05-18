@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { POSTS_URL } from '../constants/postsUrl'
 
 export async function getAllPosts() {
   return axios({
     method: 'GET',
-    url: BASE_URL,
+    url: POSTS_URL,
   })
     .then((response) => response.data)
     .catch(function (error) {

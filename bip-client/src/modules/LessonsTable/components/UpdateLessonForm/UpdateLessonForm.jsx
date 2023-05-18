@@ -1,33 +1,26 @@
-import { Form, Input, Select, message } from 'antd'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { Button, Form, Input, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { updateLessonById } from '../../api/updateLessonRequest'
-import { getAllTeachers } from '../../api/getTeachersRequest'
+import { useUpdateLessonByIdQuery } from '../../hooks/useUpdateLessonByIdQuery'
+import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
 
-export function UpdateLessonForm({ id, handleOk }) {
+export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
   const [form] = Form.useForm()
 
-  const client = useQueryClient()
+  const { mutate: updateLesson } = useUpdateLessonByIdQuery()
 
-  const { mutate: updateLesson } = useMutation({
-    mutationFn: updateLessonById,
-    onSuccess: () => {
-      client.invalidateQueries(['lessons'])
-      message.success('Предмет обновлен!')
-    },
-  })
+  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
 
-  const { data: teachersData, isSuccess } = useQuery({
-    queryFn: () => getAllTeachers(),
-    queryKey: ['teachers'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
+  const handleCancel = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
 
-  const options = teachersData?.rows.map((item) => ({
+  const handleOk = () => {
+    setId(null)
+    setIsModalOpen(false)
+  }
+
+  const options = teachers?.rows.map((item) => ({
     value: item.id,
     label: `${item.firstName} ${item.surname} ${item.lastName} (${item.role})`,
   }))
@@ -49,53 +42,74 @@ export function UpdateLessonForm({ id, handleOk }) {
     handleOk()
   }
 
-  return (
-    <Form
-      layout='vertical'
-      name='update_lesson_form'
-      form={form}
-      validateMessages={validateMessages}
-      onFinish={handleSubmit}
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='update_lesson_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
     >
-      <Form.Item
-        label='Значение'
-        name='value'
-        required
-        rules={[{ required: true }]}
-      >
-        <Input placeholder='new' allowClear />
-      </Form.Item>
+      Обновить
+    </Button>,
+  ]
 
-      <Form.Item
-        label='Описание'
-        name='description'
-        required
-        rules={[{ required: true }]}
+  return (
+    <Modal
+      title='Редактирование предмета'
+      open={isModalOpen}
+      onCancel={handleCancel}
+      footer={buttons}
+    >
+      <Form
+        layout='vertical'
+        name='update_lesson_form'
+        form={form}
+        validateMessages={validateMessages}
+        onFinish={handleSubmit}
       >
-        <Input placeholder='Новые' allowClear />
-      </Form.Item>
-      <Form.Item
-        label='Преподаватель'
-        name='teacherId'
-        required
-        rules={[{ required: true }]}
-      >
-        <Select
-          showSearch
-          style={{ width: '100%' }}
-          placeholder='Искать'
-          optionFilterProp='children'
-          filterOption={(input, option) =>
-            (option?.label ?? '').includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA?.label ?? '')
-              .toLowerCase()
-              .localeCompare((optionB?.label ?? '').toLowerCase())
-          }
-          options={isSuccess && options}
-        />
-      </Form.Item>
-    </Form>
+        <Form.Item
+          label='Значение'
+          name='value'
+          required
+          rules={[{ required: true }]}
+        >
+          <Input placeholder='new' allowClear />
+        </Form.Item>
+
+        <Form.Item
+          label='Описание'
+          name='description'
+          required
+          rules={[{ required: true }]}
+        >
+          <Input placeholder='Новые' allowClear />
+        </Form.Item>
+        <Form.Item
+          label='Преподаватель'
+          name='teacherId'
+          required
+          rules={[{ required: true }]}
+        >
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            placeholder='Искать'
+            optionFilterProp='children'
+            filterOption={(input, option) =>
+              (option?.label ?? '').includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '')
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            options={isSuccess && options}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { getAllPostsCategories } from '../api/getPostsCategoriesRequest'
 
-export const useGetPostsCategoriesQuery = () => {
+export const useGetAllPostsCategoriesQuery = () => {
   return useQuery({
     queryFn: () => getAllPostsCategories(),
     queryKey: ['posts-categories'],

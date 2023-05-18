@@ -1,9 +1,10 @@
-import { Button, Form, Input, Upload, message } from 'antd'
+import { Button, Form, Input, Select, Upload, message } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { createPost } from '../../api/createPostRequest'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import { getAllPostsCategories } from '../../api/getPostsCategoriesRequest'
 
 export function CreatePostForm({ handleOk }) {
   const [form] = Form.useForm()
@@ -20,6 +21,21 @@ export function CreatePostForm({ handleOk }) {
     },
   }
 
+  const { data: postsCategories, isSuccess } = useQuery({
+    queryFn: () => getAllPostsCategories(),
+    queryKey: ['posts-categories'],
+    onError: (err) => {
+      if (err instanceof Error) {
+        message.error(err.message)
+      }
+    },
+  })
+
+  const options = postsCategories?.rows.map((item) => ({
+    value: item.id,
+    label: item.description,
+  }))
+
   const client = useQueryClient()
 
   const { mutate: create } = useMutation({
@@ -34,6 +50,7 @@ export function CreatePostForm({ handleOk }) {
     const formData = new FormData()
     formData.append('title', values.title)
     formData.append('description', values.description)
+    formData.append('postsCategoryId', values.postsCategoryId)
     formData.append('image', file)
     return formData
   }
@@ -74,6 +91,28 @@ export function CreatePostForm({ handleOk }) {
             minRows: 3,
             maxRows: 7,
           }}
+        />
+      </Form.Item>
+      <Form.Item
+        label='Категория'
+        name='postsCategoryId'
+        required
+        rules={[{ required: true }]}
+      >
+        <Select
+          showSearch
+          style={{ width: '100%' }}
+          placeholder='Искать'
+          optionFilterProp='children'
+          filterOption={(input, option) =>
+            (option?.label ?? '').includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? '')
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? '').toLowerCase())
+          }
+          options={isSuccess && options}
         />
       </Form.Item>
       <Form.Item

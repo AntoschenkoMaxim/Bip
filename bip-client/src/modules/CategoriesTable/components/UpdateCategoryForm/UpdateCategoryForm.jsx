@@ -11,7 +11,7 @@ export function UpdateCategoryForm({ id, handleOk }) {
   const { mutate: updateCategory } = useMutation({
     mutationFn: updateCategoryById,
     onSuccess: () => {
-      client.invalidateQueries(['categories'])
+      client.invalidateQueries({ queryKey: ['categories'] })
       message.success('Категория обновлена!')
     },
   })

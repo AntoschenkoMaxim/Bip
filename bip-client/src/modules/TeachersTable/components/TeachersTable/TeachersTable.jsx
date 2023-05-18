@@ -1,19 +1,8 @@
-import {
-  Badge,
-  Button,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  Tag,
-  message,
-} from 'antd'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getAllTeachers } from '../../api/getTeachersRequest'
-import { removeTeacherById } from '../../api/removeTeacherRequest'
+import { Badge, Popconfirm, Space, Table, Tag } from 'antd'
 import { useState } from 'react'
-import { getTeacherById } from '../../api/getTeacherRequest'
 import { UpdateTeacherForm } from '../UpdateTeacherForm/UpdateTeacherForm'
+import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
+import { useRemoveTeacherByIdQuery } from '../../hooks/useRemoveTeacherByIdQuery'
 
 export function TeachersTable() {
   const columns = [
@@ -73,9 +62,12 @@ export function TeachersTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data?.rows.length >= 1 ? (
+        teachers?.rows.length >= 1 ? (
           <Space>
-            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+            <Popconfirm
+              title='Вы уверены?'
+              onConfirm={() => removeTeacher(record.id)}
+            >
               <a>Удалить</a>
             </Popconfirm>
             <a onClick={() => showModal(record.id)}>Изменить</a>
@@ -92,66 +84,24 @@ export function TeachersTable() {
     setIsModalOpen(true)
   }
 
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
+  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
 
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const client = useQueryClient()
-
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllTeachers(),
-    queryKey: ['teachers'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: remove } = useMutation({
-    mutationFn: removeTeacherById,
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['teachers'] })
-      message.success('Преподаватель удален!')
-    },
-  })
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='update_teacher_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
-    </Button>,
-  ]
+  const { mutate: removeTeacher } = useRemoveTeacherByIdQuery()
 
   return (
     <>
-      <Modal
-        title='Редактирование преподавателя'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <UpdateTeacherForm id={id} handleOk={handleOk} />
-      </Modal>
+      <UpdateTeacherForm
+        id={id}
+        setId={setId}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       {isSuccess && (
-        <Badge count={data?.count} color='blue'>
+        <Badge count={teachers?.count} color='blue'>
           <Table
             tableLayout='fixed'
             columns={columns}
-            dataSource={data?.rows}
+            dataSource={teachers?.rows}
             pagination={{
               defaultPageSize: '5',
               showSizeChanger: true,

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
 
 export async function removeLessonById(id) {
   return axios({

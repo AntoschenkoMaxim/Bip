@@ -1,8 +1,8 @@
 import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
 import { useState } from 'react'
 import { UpdatePostForm } from '../UpdatePostForm/UpdatePostForm'
-import { useGetAllPostsQuery } from '../../hooks/useGetAllPostsQuery'
 import { useRemovePostByIdQuery } from '../../hooks/useRemovePostByIdQuery'
+import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 
 export function PostsTable() {
   const columns = [

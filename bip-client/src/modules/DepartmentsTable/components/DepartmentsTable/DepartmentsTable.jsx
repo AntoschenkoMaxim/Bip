@@ -1,18 +1,10 @@
-import {
-  Badge,
-  Button,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  Tag,
-  message,
-} from 'antd'
+import { Badge, Popconfirm, Space, Table, Tag, message } from 'antd'
 import { useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { removeDepartmentById } from '../../api/removeDepartmentRequest'
+import { useQuery } from 'react-query'
 import { getAllDepartments } from '../../api/getDepartmentsRequest'
 import { UpdateDepartmentForm } from '../UpdateDepartmentForm/UpdateDepartmentForm'
+import { useRemoveDepartmentByIdQuery } from '../../hooks/useRemoveDepartmentByIdQuery'
+import { useGetAllDepartmentsQuery } from '../../hooks/useGetAllDepartmentsQuery'
 
 export function DepartmentsTable() {
   const columns = [
@@ -57,9 +49,12 @@ export function DepartmentsTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data?.rows.length >= 1 ? (
+        departments?.rows.length >= 1 ? (
           <Space>
-            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+            <Popconfirm
+              title='Вы уверены?'
+              onConfirm={() => removeDepartment(record.id)}
+            >
               <a>Удалить</a>
             </Popconfirm>
             <a onClick={() => showModal(record.id)}>Изменить</a>
@@ -76,66 +71,24 @@ export function DepartmentsTable() {
     setIsModalOpen(true)
   }
 
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
+  const { data: departments, isSuccess } = useGetAllDepartmentsQuery()
 
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const client = useQueryClient()
-
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllDepartments(),
-    queryKey: ['departments'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: remove } = useMutation({
-    mutationFn: removeDepartmentById,
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['departments'] })
-      message.success('Кафедра удалена!')
-    },
-  })
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='update_department_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
-    </Button>,
-  ]
+  const { mutate: removeDepartment } = useRemoveDepartmentByIdQuery()
 
   return (
     <>
-      <Modal
-        title='Редактирование предмета'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <UpdateDepartmentForm id={id} handleOk={handleOk} />
-      </Modal>
+      <UpdateDepartmentForm
+        id={id}
+        setId={setId}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       {isSuccess && (
-        <Badge count={data?.count} color='blue'>
+        <Badge count={departments?.count} color='blue'>
           <Table
             tableLayout='fixed'
             columns={columns}
-            dataSource={data?.rows}
+            dataSource={departments?.rows}
             pagination={{
               defaultPageSize: '5',
               showSizeChanger: true,

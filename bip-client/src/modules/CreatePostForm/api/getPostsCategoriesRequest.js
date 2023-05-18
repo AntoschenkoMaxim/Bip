@@ -1,13 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { POSTS_CATEGORIES_URL } from '../constants/postsCategoriesUrl'
 
-export async function getAllTeachers() {
+export async function getAllPostsCategories() {
   return axios({
     method: 'GET',
-    url: BASE_URL,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    url: POSTS_CATEGORIES_URL,
   })
     .then((response) => response.data)
     .catch(function (error) {

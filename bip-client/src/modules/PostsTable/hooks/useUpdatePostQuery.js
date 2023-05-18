@@ -7,7 +7,7 @@ export const useUpdatePostQuery = () => {
   return useMutation({
     mutationFn: updatePostById,
     onSuccess: () => {
-      client.invalidateQueries(['posts'])
+      client.invalidateQueries({ queryKey: ['posts'] })
       message.success('Новость обновлена!')
     },
   })
