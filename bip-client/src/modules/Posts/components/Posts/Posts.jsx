@@ -1,10 +1,10 @@
 import { Image, List, Tabs } from 'antd'
 import { intlFormatDistance } from 'date-fns'
-import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 import { useGetAllPostsCategoriesQuery } from '../../../../hooks/useGetAllPostsCategoriesQuery'
+import { useState } from 'react'
+import { useGetPostsByCategoryIdQuery } from '../../hooks/useGetPostsByCategoryIdQuery'
 
 export function Posts() {
-  const { data: posts, isSuccess } = useGetAllPostsQuery()
   const { data: postsCategories } = useGetAllPostsCategoriesQuery()
 
   const items = postsCategories?.rows.map((item) => ({
@@ -12,9 +12,18 @@ export function Posts() {
     label: item.description,
   }))
 
+  const [id, setId] = useState(postsCategories?.rows.map((item) => item.id)[0])
+
+  const { data: posts, isSuccess } = useGetPostsByCategoryIdQuery(id)
+
+  const onChange = (key) => {
+    console.log(key)
+    setId(key)
+  }
+
   return (
     <>
-      <Tabs items={items} />
+      <Tabs items={items} onChange={onChange} />
       {isSuccess && (
         <List
           itemLayout='vertical'
