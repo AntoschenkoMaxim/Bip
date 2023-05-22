@@ -1,8 +1,12 @@
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
+  BookOutlined,
+  CrownOutlined,
+  ContainerOutlined,
+  QuestionCircleOutlined,
+  PhoneOutlined,
+  UsergroupAddOutlined,
+  AuditOutlined,
 } from '@ant-design/icons'
 import { getItem } from '../../helpers/getItem'
 import { Outlet, useNavigate } from 'react-router-dom'
@@ -17,23 +21,28 @@ const items = [
   getItem('Достижения', 'achievements'),
 ]
 
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1)
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        }
-      }),
-    }
-  }
-)
+const items2 = [
+  getItem('Новости', '', <ContainerOutlined />),
+  getItem('ОВРСМ', 'ovrsm', <UsergroupAddOutlined />, [
+    getItem('Клубы, кружки, проекты', 'projects'),
+    getItem('БРСМ', 'brsm'),
+    getItem('Консультации психолога', 'consultation'),
+  ]),
+  getItem('ЦПО', 'cpo', <AuditOutlined />, [
+    getItem(
+      'Положения регламентирующие деятельность первичной профсоюзной организации',
+      'regulations'
+    ),
+  ]),
+  getItem('Библиотека', 'library', <BookOutlined />),
+  getItem('Наши достижения', 'achievements', <CrownOutlined />),
+  getItem(
+    'Аккредитация и лицензирование',
+    'accreditation',
+    <QuestionCircleOutlined />
+  ),
+  getItem('Одно окно', 'one-window', <PhoneOutlined />),
+]
 
 export function MainLayout() {
   const {
@@ -100,12 +109,12 @@ export function MainLayout() {
           >
             <Menu
               mode='inline'
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              defaultSelectedKeys={['']}
               style={{
                 height: '100%',
               }}
               items={items2}
+              onClick={({ keyPath }) => navigate(`/${keyPath}`)}
             />
           </Sider>
           <Content

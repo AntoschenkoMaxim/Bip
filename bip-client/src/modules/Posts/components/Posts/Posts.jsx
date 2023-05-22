@@ -1,4 +1,4 @@
-import { Image, List, Tabs } from 'antd'
+import { Image, List, Tabs, Tag } from 'antd'
 import { intlFormatDistance } from 'date-fns'
 import { useGetAllPostsCategoriesQuery } from '../../../../hooks/useGetAllPostsCategoriesQuery'
 import { useState } from 'react'
@@ -17,7 +17,6 @@ export function Posts() {
   const { data: posts, isSuccess } = useGetPostsByCategoryIdQuery(id)
 
   const onChange = (key) => {
-    console.log(key)
     setId(key)
   }
 
@@ -45,15 +44,13 @@ export function Posts() {
             >
               <List.Item.Meta
                 title={item.title}
-                description={intlFormatDistance(
-                  new Date(item.createdAt),
-                  Date.now(),
-                  {
-                    locale: 'ru',
-                  }
-                )}
+                description={item.description}
               />
-              {item.description}
+              <Tag color='geekblue'>
+                {intlFormatDistance(new Date(item.createdAt), Date.now(), {
+                  locale: 'ru',
+                })}
+              </Tag>
             </List.Item>
           )}
         />

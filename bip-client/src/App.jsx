@@ -10,6 +10,10 @@ import { Categories } from './pages/Categories/components/Categories'
 import { DashboardLayoutPage } from './pages/DashboardLayout/components/DashboardLayoutPage'
 import { MainLayoutPage } from './pages/MainLayout/components/MainLayoutPage'
 import { MainPosts } from './pages/MainPosts/components/MainPosts'
+import { AccreditationPage } from './pages/Accreditation/components/AccreditationPage'
+import { OneWindowPage } from './pages/OneWindow/components/OneWindowPage'
+import { LibraryPage } from './pages/Library/components/LibraryPage'
+import { PostsCategoriesPage } from './pages/PostsCategories/components/PostsCategoriesPage'
 
 function App() {
   return (
@@ -17,6 +21,9 @@ function App() {
       <Routes>
         <Route path='/' element={<MainLayoutPage />}>
           <Route index element={<MainPosts />} />
+          <Route path='library' element={<LibraryPage />} />
+          <Route path='accreditation' element={<AccreditationPage />} />
+          <Route path='one-window' element={<OneWindowPage />} />
         </Route>
         <Route path='/auth/login' element={<LoginForm />} />
         <Route path='/auth/registration' element={<RegistrationForm />} />
@@ -25,6 +32,7 @@ function App() {
           <Route path='teachers' element={<Teachers />} />
           <Route path='departments' element={<Departments />} />
           <Route path='lessons' element={<Lessons />} />
+          <Route path='posts-categories' element={<PostsCategoriesPage />} />
           <Route path='posts' element={<Posts />} />
           <Route path='categories' element={<Categories />} />
           <Route path='images' element={<Images />} />

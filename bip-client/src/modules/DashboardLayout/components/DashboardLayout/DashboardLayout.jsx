@@ -19,8 +19,9 @@ const items = [
   getItem('Кафедры', 'departments', <InboxOutlined />),
   getItem('Преподаватели', 'teachers', <TeamOutlined />),
   getItem('Предметы', 'lessons', <ProfileOutlined />),
+  getItem('Категории новостей', 'posts-categories', <OrderedListOutlined />),
   getItem('Новости', 'posts', <FileProtectOutlined />),
-  getItem('Категории', 'categories', <OrderedListOutlined />),
+  getItem('Категории изображений', 'categories', <OrderedListOutlined />),
   getItem('Изображения', 'images', <PictureOutlined />),
 ]
 
