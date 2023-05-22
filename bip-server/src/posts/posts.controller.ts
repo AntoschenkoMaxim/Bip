@@ -37,6 +37,11 @@ export class PostsController {
     return this.postService.getAllPosts();
   }
 
+  @Get(":postsCategoryId")
+  getByCategoryId(@Param("postsCategoryId") postsCategoryId: number) {
+    return this.postService.getAllPostsByCategoryId(postsCategoryId);
+  }
+
   // @Roles("moderator", "admin")
   // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)

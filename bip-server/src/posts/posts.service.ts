@@ -28,6 +28,14 @@ export class PostsService {
     return posts;
   }
 
+  async getAllPostsByCategoryId(postsCategoryId: number) {
+    const posts = await this.postRepository.findAndCountAll({
+      where: { postsCategoryId },
+      order: [["createdAt", "DESC"]],
+    });
+    return posts;
+  }
+
   async getPostById(id: number) {
     const post = await this.postRepository.findOne({ where: { id } });
     return post;

@@ -30,6 +30,11 @@ export class PostsCategoriesController {
     return this.postsCategoriesService.getAllPostsCategories();
   }
 
+  @Get(":categoryId")
+  getByCategoryId(@Param("categoryId") categoryId: number) {
+    return this.postsCategoriesService.getPostsCategoryById(categoryId);
+  }
+
   @UsePipes(ValidationPipe)
   @Patch(":id")
   updateById(

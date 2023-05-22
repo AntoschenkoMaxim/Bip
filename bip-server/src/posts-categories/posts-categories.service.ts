@@ -49,6 +49,7 @@ export class PostsCategoriesService {
   async getPostsCategoryById(id: number) {
     const postsCategory = await this.postsCategoriesRepository.findOne({
       where: { id },
+      include: { all: true },
     });
     if (!postsCategory) {
       throw new HttpException("PostsCategory not found!", HttpStatus.NOT_FOUND);
