@@ -12,7 +12,7 @@ export function Posts() {
     label: item.description,
   }))
 
-  const [id, setId] = useState(postsCategories?.rows.map((item) => item.id)[0])
+  const [id, setId] = useState(1)
 
   const { data: posts, isSuccess } = useGetPostsByCategoryIdQuery(id)
 
