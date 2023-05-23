@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { DEPARTMENTS_URL } from '../../../constants/departmentsUrl'
 
 export async function updateDepartmentById(departmentData) {
   const id = departmentData.id
   return axios({
     method: 'PATCH',
-    url: `${BASE_URL}/${id}`,
+    url: `${DEPARTMENTS_URL}/${id}`,
     data: departmentData,
     headers: {
       'Content-Type': 'application/json',

@@ -1,10 +1,10 @@
-import { Button, Divider, Modal, Space } from 'antd'
+import { Button, Divider, Space } from 'antd'
 import { useState } from 'react'
 import { DepartmentsTable } from '../../../modules/DepartmentsTable'
 import { CreateDepartmentForm } from '../../../modules/CreateDepartmentForm'
 import { AddLessonForm } from '../../../modules/AddLessonForm'
 
-export function Departments() {
+export function DepartmentsPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ImagesTable } from '../../../modules/ImagesTable'
 import { CreateImageForm } from '../../../modules/CreateImageForm'
 
-export function Images() {
+export function ImagesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {

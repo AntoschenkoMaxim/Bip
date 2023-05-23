@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { PostsTable } from '../../../modules/PostsTable'
 import { CreatePostForm } from '../../../modules/CreatePostForm'
 
-export function Posts() {
+export function PostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { IMAGES_URL } from '../../../constants/imagesUrl'
 
 export async function removeImageById(id) {
   return axios({
     method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    url: `${IMAGES_URL}/${id}`,
   })
     .then((response) => response.data)
     .catch(function (error) {

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { POST_CATEGORIES_URL } from '../../../constants/postCategoriesUrl'
 
 export async function removePostCategoryById(id) {
   return axios({
     method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    url: `${POST_CATEGORIES_URL}/${id}`,
   })
     .then((response) => response.data)
     .catch(function (error) {

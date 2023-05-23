@@ -1,23 +1,14 @@
 import { Button, Card, Form, Input } from 'antd'
-import { useQueryClient, useMutation } from 'react-query'
-import { loginUser } from '../../api/loginRequest'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useNavigate } from 'react-router-dom'
+import { useLoginQuery } from '../../hooks/useLoginQuery'
 
 export function LoginForm() {
   const [form] = Form.useForm()
 
   const navigate = useNavigate()
 
-  const client = useQueryClient()
-  const { mutate: login } = useMutation({
-    mutationFn: loginUser,
-    onSuccess: () => {
-      client.invalidateQueries({
-        queryKey: ['login'],
-      })
-    },
-  })
+  const { mutate: login } = useLoginQuery()
 
   const handleSubmit = (values) => {
     login(values)

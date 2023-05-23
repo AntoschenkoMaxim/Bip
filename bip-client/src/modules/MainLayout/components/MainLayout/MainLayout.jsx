@@ -103,6 +103,7 @@ export function MainLayout() {
         >
           <Sider
             style={{
+              height: '100%',
               background: colorBgContainer,
             }}
             width={200}

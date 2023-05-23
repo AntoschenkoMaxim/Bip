@@ -1,32 +1,20 @@
 import { Card, Form, Input, Steps } from 'antd'
-import { useQueryClient, useMutation } from 'react-query'
-import { userRegistration } from '../../api/registrationRequest'
 import { useState } from 'react'
 import { steps } from '../../constants/steps'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
 import { useNavigate } from 'react-router-dom'
+import { useRegistrationQuery } from '../../hooks/useRegistrationQuery'
 
 export function RegistrationForm() {
-  //state
   const [form] = Form.useForm()
   const [current, setCurrent] = useState(0)
 
   const navigate = useNavigate()
 
-  //user registration (react-query)
-  const client = useQueryClient()
-  const { mutate: registration } = useMutation({
-    mutationFn: userRegistration,
-    onSuccess: () => {
-      client.invalidateQueries({
-        queryKey: ['login'],
-      })
-    },
-  })
+  const { mutate: registration } = useRegistrationQuery()
 
-  //submit form
-  const handleSubmit = (values) => {
+  const getRegistrationData = (values) => {
     const email = form.getFieldValue('email')
     const password = form.getFieldValue('password')
     const registrationData = {
@@ -36,13 +24,17 @@ export function RegistrationForm() {
       lastName: values.lastName,
       surname: values.surname,
     }
+    return registrationData
+  }
+
+  const handleSubmit = (values) => {
+    const registrationData = getRegistrationData(values)
     registration(registrationData)
     setCurrent(0)
     form.resetFields()
     navigate('/dashboard')
   }
 
-  //stepper
   const items = steps.map((step) => ({
     key: step.title,
     title: step.title,

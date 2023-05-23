@@ -1,11 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
+import { POSTS_URL } from '../../../constants/postsUrl'
 
 export async function removePostById(id) {
   return axios({
     method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    url: `${POSTS_URL}/${id}`,
     headers: {
       'Content-Type': 'application/json',
     },

@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { POST_CATEGORIES_URL } from '../../../constants/postCategoriesUrl'
 
 export async function updatePostCategoryById(categoryData) {
   const id = categoryData.id
   return axios({
     method: 'PATCH',
-    url: `${BASE_URL}/${id}`,
+    url: `${POST_CATEGORIES_URL}/${id}`,
     data: categoryData,
     headers: {
       'Content-Type': 'application/json',

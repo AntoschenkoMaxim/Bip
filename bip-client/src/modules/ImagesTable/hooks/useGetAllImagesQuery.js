@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query'
-import { getAllLessons } from '../api/getLessonsRequest'
+import { getAllImages } from '../api/getImagesRequest'
 
-export const useGetAllLessonsQuery = () => {
+export const useGetAllImagesQuery = () => {
   return useQuery({
-    queryFn: () => getAllLessons(),
-    queryKey: ['lessons'],
+    queryFn: () => getAllImages(),
+    queryKey: ['images'],
     onError: (err) => {
       if (err instanceof Error) {
         message.error(err.message)

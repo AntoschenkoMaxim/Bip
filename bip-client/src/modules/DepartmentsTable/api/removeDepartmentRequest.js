@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { DEPARTMENTS_URL } from '../../../constants/departmentsUrl'
 
 export async function removeDepartmentById(id) {
   return axios({
     method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    url: `${DEPARTMENTS_URL}/${id}`,
   })
     .then((response) => response.data)
     .catch(function (error) {

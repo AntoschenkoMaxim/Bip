@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { IMAGES_URL } from '../../../constants/imagesUrl'
 
 export async function getAllImages() {
   return axios({
     method: 'GET',
-    url: BASE_URL,
+    url: IMAGES_URL,
   })
     .then((response) => response.data)
     .catch(function (error) {

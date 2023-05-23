@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { LESSONS_URL } from '../../../constants/lessonsUrl'
 
 export async function removeLessonById(id) {
   return axios({
     method: 'DELETE',
-    url: `${BASE_URL}/${id}`,
+    url: `${LESSONS_URL}/${id}`,
     headers: {
       'Content-Type': 'application/json',
     },

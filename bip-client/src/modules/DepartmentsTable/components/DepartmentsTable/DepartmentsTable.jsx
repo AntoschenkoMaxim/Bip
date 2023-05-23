@@ -1,10 +1,8 @@
-import { Badge, Popconfirm, Space, Table, Tag, message } from 'antd'
+import { Badge, Popconfirm, Space, Table, Tag } from 'antd'
 import { useState } from 'react'
-import { useQuery } from 'react-query'
-import { getAllDepartments } from '../../api/getDepartmentsRequest'
 import { UpdateDepartmentForm } from '../UpdateDepartmentForm/UpdateDepartmentForm'
 import { useRemoveDepartmentByIdQuery } from '../../hooks/useRemoveDepartmentByIdQuery'
-import { useGetAllDepartmentsQuery } from '../../hooks/useGetAllDepartmentsQuery'
+import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
 
 export function DepartmentsTable() {
   const columns = [

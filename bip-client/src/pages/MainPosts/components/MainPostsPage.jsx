@@ -1,5 +1,5 @@
 import { Posts } from '../../../modules/Posts'
 
-export function MainPosts() {
+export function MainPostsPage() {
   return <Posts />
 }

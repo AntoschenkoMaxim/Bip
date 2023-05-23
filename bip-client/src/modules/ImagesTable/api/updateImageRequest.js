@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { IMAGES_URL } from '../../../constants/imagesUrl'
 
 export async function updateImageById(imageData) {
   const id = imageData.get('id')
   return axios({
     method: 'PATCH',
-    url: `${BASE_URL}/${id}`,
+    url: `${IMAGES_URL}/${id}`,
     data: imageData,
     headers: {
       'Content-Type': 'multipart/form-data',

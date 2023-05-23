@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { POSTS_URL } from '../../../constants/postsUrl'
 
 export async function getPostsByCategoryId(id) {
   return axios({
     method: 'GET',
-    url: `${BASE_URL}/${id}`,
+    url: `${POSTS_URL}/${id}`,
   })
     .then((response) => response.data)
     .catch(function (error) {

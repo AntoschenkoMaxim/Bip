@@ -1,18 +1,8 @@
-import {
-  Badge,
-  Button,
-  Image,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  message,
-} from 'antd'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getAllImages } from '../../api/getImagesRequest'
-import { removeImageById } from '../../api/removeImageRequest'
+import { Badge, Image, Popconfirm, Space, Table } from 'antd'
 import { useState } from 'react'
 import { UpdateImageForm } from '../UpdateImageForm/UpdateImageForm'
+import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
+import { useGetAllImagesQuery } from '../../hooks/useGetAllImagesQuery'
 
 export function ImagesTable() {
   const columns = [
@@ -49,9 +39,12 @@ export function ImagesTable() {
       dataIndex: 'operations',
       key: 'operations',
       render: (_, record) =>
-        data?.rows.length >= 1 ? (
+        images?.rows.length >= 1 ? (
           <Space>
-            <Popconfirm title='Вы уверены?' onConfirm={() => remove(record.id)}>
+            <Popconfirm
+              title='Вы уверены?'
+              onConfirm={() => removeImage(record.id)}
+            >
               <a>Удалить</a>
             </Popconfirm>
             <a onClick={() => showModal(record.id)}>Изменить</a>
@@ -68,66 +61,24 @@ export function ImagesTable() {
     setIsModalOpen(true)
   }
 
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
+  const { data: images, isSuccess } = useGetAllImagesQuery()
 
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const client = useQueryClient()
-
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllImages(),
-    queryKey: ['images'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: remove } = useMutation({
-    mutationFn: removeImageById,
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['images'] })
-      message.success('Изображение удалено!')
-    },
-  })
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='update_image_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
-    </Button>,
-  ]
+  const { mutate: removeImage } = useRemoveImageByIdQuery()
 
   return (
     <>
-      <Modal
-        title='Редактирование предмета'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <UpdateImageForm id={id} handleOk={handleOk} />
-      </Modal>
+      <UpdateImageForm
+        id={id}
+        setId={setId}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       {isSuccess && (
-        <Badge count={data?.count} color='blue'>
+        <Badge count={images?.count} color='blue'>
           <Table
             tableLayout='fixed'
             columns={columns}
-            dataSource={data?.rows}
+            dataSource={images?.rows}
             pagination={{
               defaultPageSize: '5',
               showSizeChanger: true,

@@ -2,7 +2,7 @@ import { Badge, Popconfirm, Space, Table } from 'antd'
 import { UpdateLessonForm } from '../UpdateLessonForm/UpdateLessonForm'
 import { useState } from 'react'
 import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
-import { useGetAllLessonsQuery } from '../../hooks/useGetAllLessonsQuery'
+import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
 
 export function LessonsTable() {
   const columns = [

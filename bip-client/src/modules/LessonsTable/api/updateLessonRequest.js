@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { LESSONS_URL } from '../../../constants/lessonsUrl'
 
 export async function updateLessonById(lessonData) {
   return axios({
     method: 'PATCH',
-    url: `${BASE_URL}/${lessonData.id}`,
+    url: `${LESSONS_URL}/${lessonData.id}`,
     data: lessonData,
     headers: {
       'Content-Type': 'application/json',
