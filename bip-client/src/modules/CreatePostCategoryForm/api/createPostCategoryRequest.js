@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { IMAGES_URL } from '../../../constants/imagesUrl'
+import { BASE_URL } from '../constants/baseUrl'
 
-export async function createImage(imageData) {
+export async function createPostCategory(categoryData) {
   return axios({
     method: 'POST',
-    url: IMAGES_URL,
-    data: imageData,
+    url: BASE_URL,
+    data: categoryData,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
     },
   })
     .then((response) => response.data)

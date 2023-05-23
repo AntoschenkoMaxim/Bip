@@ -3,7 +3,7 @@ import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useUpdatePostQuery } from '../../hooks/useUpdatePostQuery'
-import { useGetAllPostsCategoriesQuery } from '../../../../hooks/useGetAllPostsCategoriesQuery'
+import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 
 export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
   const [form] = Form.useForm()
@@ -30,9 +30,9 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
     setIsModalOpen(false)
   }
 
-  const { data: postsCategories, isSuccess } = useGetAllPostsCategoriesQuery()
+  const { data: postCategories, isSuccess } = useGetAllPostCategoriesQuery()
 
-  const options = postsCategories?.rows.map((item) => ({
+  const options = postCategories?.rows.map((item) => ({
     value: item.id,
     label: item.description,
   }))

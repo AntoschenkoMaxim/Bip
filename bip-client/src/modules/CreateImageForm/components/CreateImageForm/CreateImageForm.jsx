@@ -1,10 +1,9 @@
-import { Button, Form, Input, Select, Upload, message } from 'antd'
+import { Button, Form, Input, Select, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { createImage } from '../../api/createImageRequest'
-import { getAllCategories } from '../../api/getCategoriesRequest'
+import { useCreateImageQuery } from '../../hooks/useCreateImageQuery'
+import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
 
 export function CreateImageForm({ handleOk }) {
   const [form] = Form.useForm()
@@ -21,42 +20,26 @@ export function CreateImageForm({ handleOk }) {
     },
   }
 
-  const client = useQueryClient()
+  const { data: imageCategories, isSuccess } = useGetAllImageCategoriesQuery()
 
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllCategories(),
-    queryKey: ['categories'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
-
-  const { mutate: create } = useMutation({
-    mutationFn: createImage,
-    onSuccess: () => {
-      client.invalidateQueries(['images'])
-      message.success('Изображение добавлено!')
-    },
-  })
-
-  const options = data?.rows.map((item) => ({
+  const options = imageCategories?.rows.map((item) => ({
     value: item.id,
     label: item.description,
   }))
 
-  const getFormData = (values) => {
-    const formData = new FormData()
-    formData.append('title', values.title)
-    formData.append('categoryId', values.categoryId)
-    formData.append('image', file)
-    return formData
+  const { mutate: createImage } = useCreateImageQuery()
+
+  const getImageData = (values) => {
+    const imageData = new FormData()
+    imageData.append('title', values.title)
+    imageData.append('categoryId', values.categoryId)
+    imageData.append('image', file)
+    return imageData
   }
 
   const handleSubmit = (values) => {
-    const formData = getFormData(values)
-    create(formData)
+    const imageData = getImageData(values)
+    createImage(imageData)
     form.resetFields()
     handleOk()
   }

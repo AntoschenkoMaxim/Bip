@@ -1,11 +1,11 @@
 import { Image, List, Tabs, Tag } from 'antd'
 import { intlFormatDistance } from 'date-fns'
-import { useGetAllPostsCategoriesQuery } from '../../../../hooks/useGetAllPostsCategoriesQuery'
 import { useState } from 'react'
 import { useGetPostsByCategoryIdQuery } from '../../hooks/useGetPostsByCategoryIdQuery'
+import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 
 export function Posts() {
-  const { data: postsCategories } = useGetAllPostsCategoriesQuery()
+  const { data: postsCategories } = useGetAllPostCategoriesQuery()
 
   const items = postsCategories?.rows.map((item) => ({
     key: item.id,
