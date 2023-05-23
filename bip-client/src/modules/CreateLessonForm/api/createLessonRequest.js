@@ -1,11 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
+import { LESSONS_URL } from '../../../constants/lessonsUrl'
 
 export async function createLesson(lessonData) {
   return axios({
     method: 'POST',
-    url: BASE_URL,
+    url: LESSONS_URL,
     data: lessonData,
     headers: {
       'Content-Type': 'application/json',

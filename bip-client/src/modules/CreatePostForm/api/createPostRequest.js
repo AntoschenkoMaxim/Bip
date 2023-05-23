@@ -1,11 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
-import { message } from 'antd'
+import { POSTS_URL } from '../../../constants/postsUrl'
 
 export async function createPost(postData) {
   return axios({
     method: 'POST',
-    url: BASE_URL,
+    url: POSTS_URL,
     data: postData,
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { TEACHERS_URL } from '../../../constants/teachersUrl'
 
 export async function createTeacher(teacherData) {
   return axios({
     method: 'POST',
-    url: BASE_URL,
+    url: TEACHERS_URL,
     data: teacherData,
     headers: {
       'Content-Type': 'application/json',

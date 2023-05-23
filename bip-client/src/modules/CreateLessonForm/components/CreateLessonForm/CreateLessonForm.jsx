@@ -1,85 +1,97 @@
-import { Form, Input, Select, message } from 'antd'
+import { Button, Form, Input, Modal, Select } from 'antd'
 import { formItems } from '../../constants/formItems'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createLesson } from '../../api/createLessonRequest'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { getAllTeachers } from '../../api/getTeachersRequest'
+import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
+import { useCreateLessonQuery } from '../../hooks/useCreateLessonQuery'
 
-export function CreateLessonForm({ handleOk }) {
+export function CreateLessonForm({ isModalOpen, setIsModalOpen }) {
   const [form] = Form.useForm()
 
-  const client = useQueryClient()
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
 
-  const { data, isSuccess } = useQuery({
-    queryFn: () => getAllTeachers(),
-    queryKey: ['teachers'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
 
-  const options = data?.rows.map((item) => ({
+  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
+
+  const options = teachers?.rows.map((item) => ({
     value: item.id,
     label: `${item.firstName} ${item.surname} ${item.lastName} (${item.role})`,
   }))
 
-  const { mutate: create } = useMutation({
-    mutationFn: createLesson,
-    onSuccess: () => {
-      client.invalidateQueries(['lessons'])
-      message.success('Предмет добавлен!')
-    },
-  })
+  const { mutate: createLesson } = useCreateLessonQuery()
 
   const handleSubmit = (values) => {
-    create(values)
+    createLesson(values)
     form.resetFields()
     handleOk()
   }
 
-  return (
-    <Form
-      layout='vertical'
-      name='create_lesson_form'
-      form={form}
-      validateMessages={validateMessages}
-      onFinish={handleSubmit}
+  const buttons = [
+    <Button key='back' onClick={handleCancel}>
+      Закрыть
+    </Button>,
+    <Button
+      form='create_lesson_form'
+      key='submit'
+      type='primary'
+      htmlType='submit'
     >
-      {formItems.map((item) => (
+      Добавить
+    </Button>,
+  ]
+
+  return (
+    <Modal
+      title='Создание предмета'
+      open={isModalOpen}
+      onCancel={handleCancel}
+      footer={buttons}
+    >
+      <Form
+        layout='vertical'
+        name='create_lesson_form'
+        form={form}
+        validateMessages={validateMessages}
+        onFinish={handleSubmit}
+      >
+        {formItems.map((item) => (
+          <Form.Item
+            key={item.name}
+            label={item.label}
+            name={item.name}
+            required
+            rules={[{ required: true }]}
+          >
+            <Input placeholder={item.placeholder} allowClear />
+          </Form.Item>
+        ))}
         <Form.Item
-          key={item.name}
-          label={item.label}
-          name={item.name}
+          label='Преподаватель'
+          name='teacherId'
           required
           rules={[{ required: true }]}
         >
-          <Input placeholder={item.placeholder} allowClear />
+          <Select
+            showSearch
+            style={{ width: '100%' }}
+            placeholder='Искать'
+            optionFilterProp='children'
+            filterOption={(input, option) =>
+              (option?.label ?? '').includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? '')
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? '').toLowerCase())
+            }
+            options={isSuccess && options}
+          />
         </Form.Item>
-      ))}
-      <Form.Item
-        label='Преподаватель'
-        name='teacherId'
-        required
-        rules={[{ required: true }]}
-      >
-        <Select
-          showSearch
-          style={{ width: '100%' }}
-          placeholder='Искать'
-          optionFilterProp='children'
-          filterOption={(input, option) =>
-            (option?.label ?? '').includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA?.label ?? '')
-              .toLowerCase()
-              .localeCompare((optionB?.label ?? '').toLowerCase())
-          }
-          options={isSuccess && options}
-        />
-      </Form.Item>
-    </Form>
+      </Form>
+    </Modal>
   )
 }

@@ -1,6 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import { Teachers } from './pages/Teachers/components/Teachers'
-import { Lessons } from './pages/Lessons/components/Lessons'
 import { Departments } from './pages/Departments/components/Departments'
 import { LoginForm } from './modules/LoginForm/components/LoginForm/LoginForm'
 import { Posts } from './pages/Posts/components/Posts'
@@ -14,6 +12,8 @@ import { OneWindowPage } from './pages/OneWindow/components/OneWindowPage'
 import { LibraryPage } from './pages/Library/components/LibraryPage'
 import { ImageCategoriesPage } from './pages/ImageCategories/components/ImageCategoriesPage'
 import { PostCategoriesPage } from './pages/PostCategories/components/PostCategoriesPage'
+import { LessonsPage } from './pages/Lessons/components/LessonsPage'
+import { TeachersPage } from './pages/Teachers/components/TeachersPage'
 
 function App() {
   return (
@@ -29,12 +29,12 @@ function App() {
         <Route path='/auth/registration' element={<RegistrationForm />} />
         <Route path='/dashboard' element={<DashboardLayoutPage />}>
           <Route index element={<LoginForm />} />
-          <Route path='teachers' element={<Teachers />} />
+          <Route path='teachers' element={<TeachersPage />} />
           <Route path='departments' element={<Departments />} />
-          <Route path='lessons' element={<Lessons />} />
-          <Route path='posts-categories' element={<PostCategoriesPage />} />
+          <Route path='lessons' element={<LessonsPage />} />
+          <Route path='post-categories' element={<PostCategoriesPage />} />
           <Route path='posts' element={<Posts />} />
-          <Route path='categories' element={<ImageCategoriesPage />} />
+          <Route path='image-categories' element={<ImageCategoriesPage />} />
           <Route path='images' element={<Images />} />
         </Route>
         {/* <Route path='*' element={<NotFoundPage />} /> */}

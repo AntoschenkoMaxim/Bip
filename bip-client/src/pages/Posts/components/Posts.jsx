@@ -10,39 +10,13 @@ export function Posts() {
     setIsModalOpen(true)
   }
 
-  const handleOk = () => {
-    setIsModalOpen(false)
-  }
-
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
-
-  const buttons = [
-    <Button key='back' onClick={handleCancel}>
-      Закрыть
-    </Button>,
-    <Button
-      form='create_post_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Добавить
-    </Button>,
-  ]
-
   return (
     <>
       <Button onClick={showModal}>Добавить новость</Button>
-      <Modal
-        title='Создание новости'
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={buttons}
-      >
-        <CreatePostForm handleOk={handleOk} />
-      </Modal>
+      <CreatePostForm
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       <Divider />
       <PostsTable />
     </>
