@@ -1,55 +1,31 @@
-import { Form, Input, Select, message } from 'antd'
+import { Form, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { addLessonToDepartment } from '../../api/addLessonRequest'
-import { getAllLessons } from '../../api/getLessonsRequest'
-import { getAllDepartments } from '../../api/getDepartmentsRequest'
+import { useAddLessonToDepartmentQuery } from '../../hooks/useAddLessonToDepartmentQuery'
+import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
+import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
 
 export function AddLessonForm({ handleOk }) {
   const [form] = Form.useForm()
 
-  const client = useQueryClient()
-
-  const { data: lessons, isSuccess: isLessonsSuccess } = useQuery({
-    queryFn: () => getAllLessons(),
-    queryKey: ['lessons'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
+  const { data: lessons, isSuccess: isLessonsSuccess } = useGetAllLessonsQuery()
 
   const lessonsOptions = lessons?.rows.map((lesson) => ({
     value: lesson.id,
     label: lesson.description,
   }))
 
-  const { data: departments, isSuccess: isDepartmentsSuccess } = useQuery({
-    queryFn: () => getAllDepartments(),
-    queryKey: ['departments'],
-    onError: (err) => {
-      if (err instanceof Error) {
-        message.error(err.message)
-      }
-    },
-  })
+  const { data: departments, isSuccess: isDepartmentsSuccess } =
+    useGetAllDepartmentsQuery()
 
   const departmentsOptions = departments?.rows.map((department) => ({
     value: department.id,
     label: department.description,
   }))
 
-  const { mutate: add } = useMutation({
-    mutationFn: addLessonToDepartment,
-    onSuccess: () => {
-      client.invalidateQueries(['departments'])
-      message.success('Предмет добавлен!')
-    },
-  })
+  const { mutate: addLesson } = useAddLessonToDepartmentQuery()
 
   const handleSubmit = (values) => {
-    add(values)
+    addLesson(values)
     form.resetFields()
     handleOk()
   }
