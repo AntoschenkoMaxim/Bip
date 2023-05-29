@@ -1,0 +1,267 @@
+{
+  "main_menu": [
+    { "title": "Main", "path": "" },
+    { "title": "About branch", "path": "about" },
+    { "title": "Applicant", "path": "applicant" },
+    { "title": "Student", "path": "student" },
+    { "title": "Achievements", "path": "achievements" }
+  ],
+  "sider_menu": {
+    "main": [
+      { "title": "News", "path": "" },
+      {
+        "title": "OVRSM",
+        "path": "ovrsm",
+        "sub_menu": [
+          { "title": "Clubs, circles, projects", "path": "projects" },
+          { "title": "BRSM", "path": "brsm" },
+          { "title": "Psychologist's consultations", "path": "consultation" }
+        ]
+      },
+      {
+        "title": "CPO",
+        "path": "cpo",
+        "sub_menu": [
+          {
+            "title": "Regulations governing the activities of the primary trade union organization",
+            "path": "regulations"
+          }
+        ]
+      },
+      { "title": "Library", "path": "library" },
+      {
+        "title": "One window",
+        "path": "one-window",
+        "sub_menu": [
+          { "title": "Contacts", "path": "contacts" },
+          { "title": "Sample applications", "path": "statements" },
+          {
+            "title": "Educational and Methodological Department",
+            "path": "educational-department"
+          }
+        ]
+      }
+    ],
+    "about": [
+      { "title": "Branch history", "path": "about" },
+      { "title": "Departments", "path": "about/departments" },
+      {
+        "title": "Accreditation and Licensing",
+        "path": "about/accreditation"
+      }
+    ],
+    "applicant": [
+      { "title": "Dates of the introductory company", "path": "applicant" },
+      { "title": "Admission rules", "path": "applicant/rules" },
+      { "title": "Admission procedure", "path": "applicant/admission" },
+      { "title": "Documents for admission", "path": "applicant/documents" }
+    ],
+    "student": [
+      { "title": "Schedule of classes and exams", "path": "student" },
+      { "title": "Inner order rules", "path": "student/rules" },
+      {
+        "title": "Schedule of the educational process",
+        "path": "student/schedule"
+      },
+      { "title": "Cost of education", "path": "student/price" }
+    ],
+    "achievements": [{ "title": "Our achievements", "path": "achievements" }]
+  },
+  "library": {
+    "work_time_title": "Work time",
+    "rules_title": "Rules of conduct in the library",
+    "work_days_column": "Work days",
+    "work_time_column": "Time",
+    "work_time": [
+      {
+        "days": "Monday - Friday",
+        "time": "08:30 – 17:00"
+      },
+      {
+        "days": "Lunch",
+        "time": "12:30 – 13:00"
+      },
+      {
+        "days": "Saturday - Sunday",
+        "time": "Day off"
+      }
+    ],
+    "rules": [
+      {
+        "title": "Library users have the right to:",
+        "items": [
+          "1. Visit the library in accordance with its working hours;",
+          "2. To receive full information about the composition of the collections and information resources of the library free of charge through the system of catalogs, card files, databases and other forms of library information;",
+          "3. Get free consulting assistance in finding sources of information;",
+          "4. To receive for temporary use documents from the library funds for work in the reading room or for a subscription;",
+          "5. Get access to electronic information resources in accordance with the rules for using the library;",
+          "6. Receive documents or their copies by interlibrary loan on the terms of libraries-fund holders;",
+          "7. Participate in social and cultural events held by the library for users;",
+          "8. Extend the period of use of the document, provided that it is presented in safety and there are no requests from other users for this document;",
+          "9. Use technical devices powered by autonomous power supply without sound signals in reader service areas;",
+          "10. Use mobile phones outside reader service areas;",
+          "11. Contact the representatives of the library administration with suggestions, comments, complaints on all issues related to the maintenance, acquisition and organization of information resources and services."
+        ]
+      },
+      {
+        "title": "Library users must: ",
+        "items": [
+          "1. Library users are obliged to comply with the rules for using the library and observe the library's working hours;",
+          "2. Treat library collections with care. Upon receipt of documents with any defects, the user must notify the librarian;",
+          "3. Return documents within the time limit set by the library;",
+          "4. Treat library property and equipment with care;",
+          "5. Pass annual re-registration of readers within the period set by the library. Users who have not passed re-registration are not served by the library;",
+          "6. Observe public order and cleanliness in the premises of the library, respect the rights of other users and library employees;",
+          "7. In emergency situations (fire, accident, etc.), comply with the requirements of library employees, internal affairs bodies, emergency agencies and departments;",
+          "8. In case of loss, damage to documents from the library's funds, users shall reimburse or replace them with identical, equivalent ones, including in the form of copies. In the absence of the possibility of replacing documents, the library administration may demand compensation for damages in accordance with the legislation of the Republic of Belarus;",
+          "9. Library users who have caused damage to the material and technical base, compensate for the damage in accordance with the current legislation of the Republic of Belarus."
+        ]
+      },
+      {
+        "title": "Library users are prohibited from: ",
+        "items": [
+          "1. Visit the library in a state of alcoholic, toxic, drug intoxication;",
+          "2. To enter the library building with animals, with the exception of users - persons with impaired vision and persons who have lost their sight, accompanied by a guide dog;",
+          "3. Use a mobile phone in reader service areas, as well as for the purpose of filming and photographing documents from the library's collections;",
+          "4. Remove documents from the library premises without an entry in the reader's form."
+        ]
+      },
+      {
+        "title": "The order of using the literature on the subscription:",
+        "items": [
+          "1. To receive literature, the user of the BIP library must present a student card and passport;",
+          "2. Scientific literature is issued to readers for up to one month;",
+          "3. Educational literature is issued for one semester in the amount provided for by the norms of the book supply of the Ministry of Education of the Republic of Belarus, and corresponds to the curriculum;",
+          "4. The period of use of literature can be extended if there are no requirements for it from other readers;",
+          "5. For part-time students, the terms for using the documents are set depending on the timing of the laboratory examination sessions;",
+          "6. Encyclopedias, dictionaries and other reference books, rare and valuable books, as well as control copies of books are intended for use in the reading room and are not issued at home;",
+          "7. Library users who have violated the deadlines for the return of documents from the library's funds, the subsequent issuance of documents is terminated until the full mutual settlement of the debt;",
+          "8. In the event of expulsion or dismissal, before going on academic leave, for the summer holidays, users are required to return all publications that are listed for them in the library."
+        ]
+      },
+      {
+        "title": "The procedure for using literature in the reading room:",
+        "items": [
+          "1. Books and teaching aids for work in the reading room are issued on the security of a student card or a record book;",
+          "2. It is not allowed to take books out of the reading room."
+        ]
+      }
+    ]
+  },
+  "one-window": {
+    "contacts": {
+      "columns": [
+        { "title": "Fullname", "dataIndex": "fullname", "key": "fullname" },
+        { "title": "Role", "dataIndex": "role", "key": "role" },
+        { "title": "Phone", "dataIndex": "phone", "key": "phone" }
+      ],
+      "items": [
+        {
+          "fullname": "Filipchik Tatyana Viktorovna",
+          "role": "Branch Manager",
+          "phone": "8 (0152) 71-82-89"
+        },
+        {
+          "fullname": "Pilipenko Natalia Sergeevna",
+          "role": "Deputy Director for Research and International Relations",
+          "phone": "8 (0152) 71-82-65"
+        },
+        {
+          "fullname": "Murina Elena Edmundovna",
+          "role": "Deputy director for educational work",
+          "phone": "8 (0152) 71-84-47"
+        },
+        {
+          "fullname": "Kirisyuk Svetlana Petrovna",
+          "role": "Head of the educational and methodological department",
+          "phone": "8 (0152) 71-83-25"
+        },
+        {
+          "fullname": "Semenich Irina Bronislavovna",
+          "role": "Accountant of the 1st category",
+          "phone": "8 (0152) 71-82-86"
+        },
+        {
+          "fullname": "Ageichenko Yulia Alexandrovna",
+          "role": "Secretary-clerk",
+          "phone": "8 (0152) 71-82-89"
+        }
+      ],
+      "footer": [
+        {
+          "title": "address",
+          "link": "https://goo.gl/maps/qdoUcTidG5efcheV6?coh=178572&entry=tt",
+          "content": "с. Grodno, Mostovaya st., 39"
+        },
+        {
+          "title": "reception room",
+          "link": "callto:",
+          "content": "8 (0152) 71-82-89"
+        },
+        {
+          "title": "email",
+          "link": "mailto:",
+          "content": "bip-grodno@mail.ru"
+        }
+      ]
+    }
+  },
+  "about": {
+    "history": {
+      "title": "Branch history",
+      "items": [
+        "The Grodno branch has been operating since 1994. During this time, the branch has trained more than 4,000 specialists who successfully work in government bodies, commercial structures, and industrial enterprises.",
+        "A close-knit team of teachers has been formed here, and training in new educational specialties has recently been mastered.",
+        "From 1994 to 2010, the branch was located together with the EE «Grodno State Professional Electrotechnical College named after And Shchastny» in the building at Dzerzhinsky Street, 41B. From 2005-2008, the university also rented premises in the building where the Office is currently located of the investigative committee of the Republic of Belarus for the Grodno region. Since 2010, the Grodno branch has been located in a new comfortable building on the picturesque bank of the Neman in the city center.",
+        "A courtroom has been created in the branch for the courts to consider criminal, civil, economic cases in an off-site session, to conduct business games with students in the disciplines of the procedural cycle.",
+        "The educational process in 1994 was provided by one department, the first enrollment of students was carried out in the specialty «Jurisprudence». Today at the university, 3 departments train specialists: the Department of Theory and History of Law, the Department of Special Legal Disciplines, the Department of Social, Humanitarian and Linguistic disciplines The departments of the branch provide teaching of 150 disciplines.The Grodno branch of the BIP has the right to study in several specialties and specializations in full-time and part-time forms of study: «Jurisprudence» (specialization «Tax and Banking Law»), «International Law» (specialization «International customs law»)",
+        "The branch strives to pursue an active educational policy, focusing primarily on the quality of knowledge and the involvement of new technologies in education.",
+        "The branch is actively involved in the scientific life of the Grodno region. Together with the Grodno State University named after Yanka Kupala, scientific and practical conferences on legal and political science topics are systematically held. The scientific works of students constantly win prizes in various competitions of scientific works."
+      ]
+    }
+  },
+  "applicant": {
+    "dates": {
+      "columns": [
+        { "title": "Information", "dataIndex": "info", "key": "info" },
+        { "title": "Dates", "dataIndex": "date", "key": "date" }
+      ],
+      "items": [
+        {
+          "info": "Based on general secondary education",
+          "date": "from July 17 to August 9"
+        },
+        {
+          "info": "On the basis of secondary specialized education",
+          "date": "from July 17 to July 25"
+        },
+        {
+          "info": "Terms of entrance examinations",
+          "date": "from July 26 to August 2"
+        },
+        {
+          "info": "Enrollment",
+          "date": "to August 11"
+        }
+      ]
+    },
+    "documents": {
+      "title": "Applicants submit the following documents to the admission committee:",
+      "items": [
+        "1. Identity document (submitted by the applicant personally);",
+        "2. Application addressed to the head in the form established by the Ministry of Education;",
+        "3. Certificate of general secondary education (for persons who have received general secondary education);",
+        "4. Diploma of vocational education with its supplement (for persons who have received vocational education on the basis of general basic education);",
+        "5. Certificate of general secondary education and a diploma of vocational education with an appendix to it (for persons who have received vocational education on the basis of general secondary education);",
+        "6. Diploma of secondary specialized education with an appendix to it (for persons who have received secondary specialized education on the basis of general basic education);",
+        "7. A certificate of general secondary education and a diploma of secondary specialized education with its supplement (for persons who have received secondary specialized education on the basis of general secondary education);",
+        "8. Certificates of centralized testing (originals) conducted in the Republic of Belarus in the year of admission or in the year preceding the year of admission;",
+        "9. Certificates of a centralized examination (originals) held in the Republic of Belarus in the year of admission or in the year preceding the year of admission (for persons who graduated from institutions of general secondary education in 2023 and subsequent years);",
+        "10. Characteristics issued by an educational institution in the form and in the manner established by the Ministry of Education (for persons who received general secondary, vocational or secondary specialized education in the year of admission);",
+        "11. Medical certificate on the state of health in the form established by the Ministry of Health;",
+        "12. Documents confirming the applicant's right to benefits when enrolling for higher education;",
+        "13. 4 photographs 3x4 cm."
+      ]
+    }
+  }
+}
