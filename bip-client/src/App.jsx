@@ -14,16 +14,115 @@ import { LessonsPage } from './pages/Lessons/components/LessonsPage'
 import { TeachersPage } from './pages/Teachers/components/TeachersPage'
 import { DepartmentsPage } from './pages/Departments/components/DepartmentsPage'
 import { PostsPage } from './pages/Posts/components/PostsPage'
+import { MainSider } from './modules/MainSider'
+
+import {
+  BookOutlined,
+  CrownOutlined,
+  ContainerOutlined,
+  PhoneOutlined,
+  UsergroupAddOutlined,
+  AuditOutlined,
+  CalendarOutlined,
+  FileExclamationOutlined,
+  FileDoneOutlined,
+  FileWordOutlined,
+  DollarOutlined,
+  SolutionOutlined,
+} from '@ant-design/icons'
+import { getItem } from './helpers/getItem'
+import { useTranslation } from 'react-i18next'
+import { Documents } from './modules/Documents'
+import { Dates } from './modules/Dates'
+import { History } from './modules/History'
+import { Price } from './modules/Price'
+import { Departments } from './modules/Departments'
 
 function App() {
+  const { i18n } = useTranslation()
+
+  const icons1 = [
+    <ContainerOutlined />,
+    <UsergroupAddOutlined />,
+    <AuditOutlined />,
+    <BookOutlined />,
+    <PhoneOutlined />,
+  ]
+
+  const items1 = i18n
+    .t('sider_menu.main', { returnObjects: true })
+    .map((item, index) =>
+      getItem(
+        item.title,
+        item.path,
+        icons1[index],
+        item.sub_menu?.map((sub) => getItem(sub.title, sub.path))
+      )
+    )
+
+  const icons2 = [
+    <CalendarOutlined />,
+    <FileExclamationOutlined />,
+    <FileDoneOutlined />,
+  ]
+
+  const items2 = i18n
+    .t('sider_menu.about', { returnObjects: true })
+    .map((item, index) => getItem(item.title, item.path, icons2[index]))
+
+  const icons3 = [
+    <CalendarOutlined />,
+    <FileExclamationOutlined />,
+    <FileDoneOutlined />,
+    <FileWordOutlined />,
+  ]
+
+  const items3 = i18n
+    .t('sider_menu.applicant', { returnObjects: true })
+    .map((item, index) => getItem(item.title, item.path, icons3[index]))
+
+  const icons4 = [
+    <CalendarOutlined />,
+    <FileExclamationOutlined />,
+    <SolutionOutlined />,
+    <DollarOutlined />,
+  ]
+
+  const items4 = i18n
+    .t('sider_menu.student', { returnObjects: true })
+    .map((item, index) => getItem(item.title, item.path, icons4[index]))
+
+  const icons5 = [<CrownOutlined />]
+
+  const items5 = i18n
+    .t('sider_menu.achievements', { returnObjects: true })
+    .map((item, index) => getItem(item.title, item.path, icons5[index]))
+
   return (
     <>
       <Routes>
         <Route path='/' element={<MainLayoutPage />}>
-          <Route index element={<MainPostsPage />} />
-          <Route path='library' element={<LibraryPage />} />
-          <Route path='accreditation' element={<AccreditationPage />} />
-          <Route path='one-window' element={<OneWindowPage />} />
+          <Route path='/*' element={<MainSider items={items1} />}>
+            <Route index element={<MainPostsPage />} />
+            <Route path='library' element={<LibraryPage />} />
+            <Route path='contacts' element={<OneWindowPage />} />
+          </Route>
+          <Route path='about/*' element={<MainSider items={items2} />}>
+            <Route index element={<History />} />
+            <Route path='departments' element={<Departments />} />
+            <Route path='accreditation' element={<AccreditationPage />} />
+          </Route>
+          <Route path='applicant/*' element={<MainSider items={items3} />}>
+            <Route index element={<Dates />} />
+            <Route path='documents' element={<Documents />} />
+          </Route>
+          <Route path='student/*' element={<MainSider items={items4} />}>
+            <Route path='price' element={<Price />} />
+          </Route>
+          <Route
+            path='achievements/*'
+            element={<MainSider items={items5} />}
+          ></Route>
         </Route>
         <Route path='/auth/login' element={<LoginForm />} />
         <Route path='/auth/registration' element={<RegistrationForm />} />

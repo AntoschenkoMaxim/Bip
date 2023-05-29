@@ -1,17 +1,13 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { Collapse, List, Table, Tag, theme } from 'antd'
-import { rules } from '../../constants/rules'
-import { columns } from '../../constants/columns'
-import { dataSource } from '../../constants/dataSource'
+import { useTranslation } from 'react-i18next'
 const { Panel } = Collapse
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`
 
 export function Library() {
   const { token } = theme.useToken()
+
+  const { t, i18n } = useTranslation()
+
   const panelStyle = {
     marginBottom: 24,
     background: token.colorFillAlter,
@@ -19,12 +15,38 @@ export function Library() {
     border: 'none',
   }
 
+  const dataSource = i18n
+    .t('library.work_time', { returnObjects: true })
+    .map((item, index, arr) => ({
+      key: item.days,
+      days: item.days,
+      time: (
+        <Tag color={item === arr[arr.length - 1] ? 'error' : 'geekblue'}>
+          {item.time}
+        </Tag>
+      ),
+    }))
+
+  const columns = [
+    {
+      title: i18n.t('library.work_days_column'),
+      dataIndex: 'days',
+      key: 'days',
+    },
+    {
+      title: i18n.t('library.work_time_column'),
+      dataIndex: 'time',
+      key: 'time',
+    },
+  ]
+
   const mockdata = [
     {
       key: '1',
-      title: 'График работы',
+      title: t('library.work_time_title'),
       children: (
         <Table
+          tableLayout='fixed'
           bordered
           columns={columns}
           dataSource={dataSource}
@@ -34,7 +56,7 @@ export function Library() {
     },
     {
       key: '2',
-      title: 'Правила поведения в библиотеке',
+      title: t('library.rules_title'),
       children: (
         <Collapse
           ghost
@@ -43,8 +65,8 @@ export function Library() {
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
           )}
         >
-          {rules.map((item) => (
-            <Panel header={item.title} key={item.key} style={panelStyle}>
+          {i18n.t('library.rules', { returnObjects: true }).map((item) => (
+            <Panel header={item.title} key={item.title} style={panelStyle}>
               <List
                 dataSource={item.items}
                 renderItem={(item) => <List.Item>{item}</List.Item>}
