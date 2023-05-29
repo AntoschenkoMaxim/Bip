@@ -13,7 +13,7 @@ import { CreatePostsCategoryDto } from "./dto/create-posts-category.dto";
 import { UpdatePostsCategoryDto } from "./dto/update-posts-category.dto copy";
 import { ValidationPipe } from "src/pipes/validation.pipe";
 
-@Controller("posts-categories")
+@Controller("post-categories")
 export class PostsCategoriesController {
   constructor(private postsCategoriesService: PostsCategoriesService) {}
 

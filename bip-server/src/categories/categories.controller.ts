@@ -13,7 +13,7 @@ import { CreateCategoryDto } from "./dto/create-category.dto";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { ValidationPipe } from "src/pipes/validation.pipe";
 
-@Controller("categories")
+@Controller("image-categories")
 export class CategoriesController {
   constructor(private categoryService: CategoriesService) {}
 
