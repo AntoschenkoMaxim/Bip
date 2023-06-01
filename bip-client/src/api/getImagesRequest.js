@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { IMAGES_URL } from '../../../constants/imagesUrl'
+import { IMAGES_URL } from '../constants/imagesUrl'
 
 export async function getAllImages() {
   return axios({

@@ -38,6 +38,16 @@ export function TeachersTable() {
       key: 'phone',
     },
     {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Телеграм',
+      dataIndex: 'telegram',
+      key: 'telegram',
+    },
+    {
       title: 'Предметы',
       dataIndex: 'lessons',
       key: 'lessons',

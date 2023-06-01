@@ -2,7 +2,7 @@ import { Badge, Image, Popconfirm, Space, Table } from 'antd'
 import { useState } from 'react'
 import { UpdateImageForm } from '../UpdateImageForm/UpdateImageForm'
 import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
-import { useGetAllImagesQuery } from '../../hooks/useGetAllImagesQuery'
+import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
 
 export function ImagesTable() {
   const columns = [

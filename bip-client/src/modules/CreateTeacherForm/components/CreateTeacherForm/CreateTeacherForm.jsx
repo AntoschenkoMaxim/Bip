@@ -25,10 +25,13 @@ export function CreateTeacherForm({ isModalOpen, setIsModalOpen }) {
 
   const prefixSelector = (
     <Form.Item name='prefix' noStyle>
-      <Select defaultValue='375' style={{ width: 80 }}>
-        <Option value='375'>+375</Option>
-        <Option value='80'>80</Option>
-      </Select>
+      <Select
+        style={{ width: 80 }}
+        options={[
+          { value: '375', label: '375' },
+          { value: '80', label: '80' },
+        ]}
+      />
     </Form.Item>
   )
 
@@ -88,6 +91,22 @@ export function CreateTeacherForm({ isModalOpen, setIsModalOpen }) {
             placeholder='295553535'
             allowClear
           />
+        </Form.Item>
+        <Form.Item
+          label='Email'
+          name='email'
+          required
+          rules={[{ required: true, type: 'email' }]}
+        >
+          <Input placeholder='bip@gmail.com' allowClear />
+        </Form.Item>
+        <Form.Item
+          label='Телеграм'
+          name='telegram'
+          required
+          rules={[{ required: true }]}
+        >
+          <Input placeholder='@teacher' allowClear />
         </Form.Item>
         <Form.Item
           label='Должность'

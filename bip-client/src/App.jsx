@@ -15,6 +15,20 @@ import { TeachersPage } from './pages/Teachers/components/TeachersPage'
 import { DepartmentsPage } from './pages/Departments/components/DepartmentsPage'
 import { PostsPage } from './pages/Posts/components/PostsPage'
 import { MainSider } from './modules/MainSider'
+import { getItem } from './helpers/getItem'
+import { useTranslation } from 'react-i18next'
+import { Documents } from './modules/Documents'
+import { Dates } from './modules/Dates'
+import { History } from './modules/History'
+import { Price } from './modules/Price'
+import { Departments } from './modules/Departments'
+import { Brsm } from './modules/Brsm'
+import { EducationalDepartment } from './modules/EducationalDepartment/components/EducationalDepartment/EducationalDepartment'
+import { Schedule } from './modules/Schedule'
+import { Statements } from './modules/Statements'
+import { Regulations } from './modules/Regulations'
+import { Consultation } from './modules/Consultation'
+import { Images } from './modules/Images'
 
 import {
   BookOutlined,
@@ -30,13 +44,6 @@ import {
   DollarOutlined,
   SolutionOutlined,
 } from '@ant-design/icons'
-import { getItem } from './helpers/getItem'
-import { useTranslation } from 'react-i18next'
-import { Documents } from './modules/Documents'
-import { Dates } from './modules/Dates'
-import { History } from './modules/History'
-import { Price } from './modules/Price'
-import { Departments } from './modules/Departments'
 
 function App() {
   const { i18n } = useTranslation()
@@ -104,8 +111,17 @@ function App() {
         <Route path='/' element={<MainLayoutPage />}>
           <Route path='/*' element={<MainSider items={items1} />}>
             <Route index element={<MainPostsPage />} />
+            <Route path='gallery' element={<Images />} />
+            <Route path='brsm' element={<Brsm />} />
+            <Route path='consultation' element={<Consultation />} />
+            <Route path='regulations' element={<Regulations />} />
             <Route path='library' element={<LibraryPage />} />
             <Route path='contacts' element={<OneWindowPage />} />
+            <Route path='statements' element={<Statements />} />
+            <Route
+              path='educational-department'
+              element={<EducationalDepartment />}
+            />
           </Route>
           <Route path='about/*' element={<MainSider items={items2} />}>
             <Route index element={<History />} />
@@ -117,6 +133,7 @@ function App() {
             <Route path='documents' element={<Documents />} />
           </Route>
           <Route path='student/*' element={<MainSider items={items4} />}>
+            <Route path='schedule' element={<Schedule />} />
             <Route path='price' element={<Price />} />
           </Route>
           <Route
