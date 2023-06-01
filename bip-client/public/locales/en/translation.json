@@ -9,13 +9,14 @@
   "sider_menu": {
     "main": [
       { "title": "News", "path": "" },
+      { "title": "Gallery", "path": "gallery" },
       {
         "title": "OVRSM",
         "path": "ovrsm",
         "sub_menu": [
           { "title": "Clubs, circles, projects", "path": "projects" },
           { "title": "BRSM", "path": "brsm" },
-          { "title": "Psychologist's consultations", "path": "consultation" }
+          { "title": "SPPS", "path": "consultation" }
         ]
       },
       {
@@ -67,6 +68,193 @@
     ],
     "achievements": [{ "title": "Our achievements", "path": "achievements" }]
   },
+
+  "main": {
+    "brsm": {
+      "columns": [
+        { "title": "Fullname", "dataIndex": "fullname", "key": "fullname" },
+        { "title": "Role", "dataIndex": "role", "key": "role" },
+        {
+          "title": "Organization",
+          "dataIndex": "organization",
+          "key": "organization"
+        },
+        { "title": "Address", "dataIndex": "address", "key": "address" },
+        { "title": "Contacts", "dataIndex": "contacts", "key": "contacts" }
+      ],
+      "items": [
+        {
+          "key": "1",
+          "fullname": "Lukyanov Alexander Sergeevich",
+          "role": "First Secretary",
+          "organization": "Central Committee of NGO «BRYU»",
+          "address": "220030, Minsk, st. K. Marx, 40",
+          "contacts": "email: okrck@mail.ru"
+        },
+        {
+          "key": "2",
+          "fullname": "Esin Andrey Gennadievich",
+          "role": "First Secretary",
+          "organization": "Grodno Regional Committee of NGO «BRYU»",
+          "address": "230023, Grodno, Sovetskaya st., 31",
+          "contacts": "phone: 71-98-71"
+        },
+        {
+          "key": "3",
+          "fullname": "Makarevich Artyom Viktorovich",
+          "role": "First Secretary",
+          "organization": "Grodno City Committee of NGO «BRYU»",
+          "address": "230023, Grodno, Tyzengauz Square, 4-15",
+          "contacts": "phone: 62-07-65 email: gr_gk_brsm@mail.ru"
+        },
+        {
+          "key": "4",
+          "fullname": "Mandik Vladislav Andreevich",
+          "role": "First Secretary",
+          "organization": "Leninsky District Committee of NGO «BRYU»",
+          "address": "230023, Grodno, Tyzengauz Square, 4-15",
+          "contacts": "phone: 62-07-63 email: leninskiyrk_brsm_grodno@mail.ru"
+        },
+        {
+          "key": "5",
+          "fullname": "Kozel Kristina Alexandrovna",
+          "role": "Secretary",
+          "organization": "Primary organization of the Grodno branch of BIP NGO «BRYU»",
+          "address": " 230025, Grodno, Mostovaya st., 39",
+          "contacts": "phone: +375(29) 780-97-49"
+        }
+      ]
+    },
+
+    "consultation": {
+      "table": {
+        "title": "SPPS service workers",
+        "columns": [
+          {
+            "title": "Fullname",
+            "dataIndex": "fullname",
+            "key": "fullname"
+          },
+          {
+            "title": "Role",
+            "dataIndex": "role",
+            "key": "role"
+          },
+          {
+            "title": "Phone",
+            "dataIndex": "phone",
+            "key": "phone"
+          }
+        ],
+        "items": [
+          {
+            "fullname": "Labetskaya Natalya Sergeevna",
+            "role": "Educational psychologist",
+            "phone": "8 (0152) 71-81-27"
+          },
+          {
+            "fullname": "Kravchevskaya Oksana Vyacheslavovna",
+            "role": "Social teacher",
+            "phone": "8 (0152) 71-81-27"
+          },
+          {
+            "fullname": "Branch Helpline",
+            "role": "-",
+            "phone": "71-81-27"
+          },
+          {
+            "fullname": "Helpline Grodno",
+            "role": "-",
+            "phone": "170"
+          }
+        ],
+        "footer": [
+          "We are in office №303",
+          "Working hours: Mon-Fri from 8.30 to 17.00 - except weekends and holidays"
+        ]
+      },
+      "collapse": {
+        "title": "What does the SPPS do?",
+        "items": [
+          "The branch has a socio-pedagogical and psychological service, the main goal of which is to provide psychological assistance to students in situations of various psychological difficulties, as well as in case of a need to improve the quality of their own lives. You can contact the SPPS when you do not know what to do, or when exhausted all possibilities to deal with the problem on their own.",
+          "You can turn to the psychologist Labetskaya Natalya Sergeevna for help when you are in a state of mental disorder, when it seems to you that something incomprehensible is happening to you or your loved ones.",
+          "Social teacher Oksana Vyacheslavovna Kravchevskaya will help you understand legal issues, issues of interpersonal relationships, protect your moral and material interests.",
+          "If you feel unable to cope with intense feelings or experiences, if you feel tense, empty, if you suffer from insomnia or nightmares, if you feel that your relationships with family or friends have deteriorated, if you are especially vulnerable, you can always count on to our emotional support and attention to your problems, to respect for your interests and complete confidentiality!"
+        ]
+      }
+    },
+
+    "statements": {
+      "titles": [
+        "Application of termination of membership in a trade union",
+        "Application for a lump sum payment of anniversaries",
+        "Application for financial assistance",
+        "Application for trade union registration and withholding of dues (for trade union members who previously joined the trade union)",
+        "Application for entry and withholding contributions"
+      ]
+    },
+
+    "educational": {
+      "table": {
+        "title": "Department employees",
+        "columns": [
+          {
+            "title": "Fullname",
+            "dataIndex": "fullname",
+            "key": "fullname"
+          },
+          {
+            "title": "Role",
+            "dataIndex": "role",
+            "key": "role"
+          },
+          {
+            "title": "Phone",
+            "dataIndex": "phone",
+            "key": "phone"
+          }
+        ],
+        "items": [
+          {
+            "fullname": "Kirisyuk Svetlana Petrovna",
+            "role": "Head of the educational and methodological department",
+            "phone": "71-83-25 (304 cab.)"
+          },
+          {
+            "fullname": "Karpovich Natalia Anatolievna",
+            "role": "Methodist of the highest category UMO",
+            "phone": "71-81-24 (302 cab.)"
+          },
+          {
+            "fullname": "Milashevich Daria Dmitrievna",
+            "role": "Methodist of the highest category UMO",
+            "phone": "71-81-24 (302 cab.)"
+          },
+          {
+            "fullname": "Snopko Olga Vladimirovna",
+            "role": "Specialist of the 1st category in the educational process of UMO (specialist dispatcher, specialist in practice)",
+            "phone": "71-81-24 (302 cab.)"
+          }
+        ]
+      },
+      "collapse": {
+        "title": "The main tasks of the educational and methodological department are:",
+        "items": [
+          "1. Coordination of the activities of the dean's office and departments to create optimal conditions for effective training, professional and personal development of future specialists;",
+          "2. Planning and organization of the educational process in the branch;",
+          "3. Organization of monitoring and control of the state of the educational process;",
+          "4. Organization of registration, registration and issuance of documents on education;",
+          "5. Analysis of the quantitative and qualitative characteristics of the educational process in the branch;",
+          "6. Scheduling all types of training sessions;",
+          "7. Accounting and planning of the classroom fund for conducting training sessions;",
+          "8. Analysis of materials based on the results of the current and final certification, including state exams;",
+          "9. Planning, calculation of the teaching load of the departments and the needs of the departmental staff of the teaching staff;",
+          "10. Definition and consolidation of the bases of practice, which is carried out by the methodologists of the department on the basis of contracts with enterprises, institutions and organizations."
+        ]
+      }
+    }
+  },
+
   "library": {
     "work_time_title": "Work time",
     "rules_title": "Rules of conduct in the library",
