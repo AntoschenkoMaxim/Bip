@@ -1,17 +1,12 @@
-import { Col, Divider, Drawer, Row } from 'antd'
+import { Descriptions, Divider, Drawer, Tag, Typography } from 'antd'
+import { useGetTeacherByIdQuery } from '../../hooks/useGetTeacherByIdQuery'
 
-export function TeacherDrawer({ teacherId, setTeacherId, open, setOpen }) {
+export function TeacherDrawer({ teacherId, open, setOpen }) {
+  const { data: teacher, isSuccess } = useGetTeacherByIdQuery(teacherId)
+
   const onClose = () => {
-    setTeacherId(null)
     setOpen(false)
   }
-
-  const DescriptionItem = ({ title, content }) => (
-    <div className='site-description-item-profile-wrapper'>
-      <p className='site-description-item-profile-p-label'>{title}:</p>
-      {content}
-    </div>
-  )
 
   return (
     <Drawer
@@ -21,95 +16,48 @@ export function TeacherDrawer({ teacherId, setTeacherId, open, setOpen }) {
       onClose={onClose}
       open={open}
     >
-      <p
-        className='site-description-item-profile-p'
-        style={{
-          marginBottom: 24,
-        }}
-      >
-        Additional information
-      </p>
-      <p className='site-description-item-profile-p'>Teacher</p>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='Full Name' content='Lily' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Account' content='AntDesign@example.com' />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='City' content='HangZhou' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Country' content='China🇨🇳' />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='Birthday' content='February 2,1900' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Website' content='-' />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <DescriptionItem
-            title='Message'
-            content='Make things as simple as possible but no simpler.'
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <p className='site-description-item-profile-p'>Company</p>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='Position' content='Programmer' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Responsibilities' content='Coding' />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='Department' content='XTech' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Supervisor' content={<a>Lin</a>} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <DescriptionItem
-            title='Skills'
-            content='C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc.'
-          />
-        </Col>
-      </Row>
-      <Divider />
-      <p className='site-description-item-profile-p'>Contacts</p>
-      <Row>
-        <Col span={12}>
-          <DescriptionItem title='Email' content='AntDesign@example.com' />
-        </Col>
-        <Col span={12}>
-          <DescriptionItem title='Phone Number' content='+86 181 0000 0000' />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <DescriptionItem
-            title='Github'
-            content={
-              <a href='http://github.com/ant-design/ant-design/'>
-                github.com/ant-design/ant-design/
-              </a>
-            }
-          />
-        </Col>
-      </Row>
+      {isSuccess && (
+        <>
+          <Descriptions title='Информация преподавателя'>
+            <Descriptions.Item label='Имя'>
+              {teacher?.firstName}
+            </Descriptions.Item>
+            <Descriptions.Item label='Фамилия'>
+              {teacher?.surname}
+            </Descriptions.Item>
+            <Descriptions.Item label='Отчество'>
+              {teacher?.surname}
+            </Descriptions.Item>
+            <Descriptions.Item label='Ведет предметы'>
+              {teacher?.lessons.map((item) => (
+                <Tag color='geekblue'>{item.description}</Tag>
+              ))}
+            </Descriptions.Item>
+          </Descriptions>
+          <Divider />
+          <Descriptions title='Контактные данные'>
+            <Descriptions.Item label='Телефон'>
+              <Typography.Link href={`callto:${teacher?.phone}`}>
+                {teacher?.phone}
+              </Typography.Link>
+            </Descriptions.Item>
+            <Descriptions.Item label='Email'>
+              <Typography.Link href={`mailto:${teacher?.email}`}>
+                {teacher?.email}
+              </Typography.Link>
+            </Descriptions.Item>
+            <Descriptions.Item label='Телеграм'>
+              <Typography.Link
+                href={`https://t.me/${teacher?.telegram}`}
+                target='_blank'
+              >
+                {teacher?.telegram}
+              </Typography.Link>
+            </Descriptions.Item>
+          </Descriptions>
+          <Divider />
+        </>
+      )}
     </Drawer>
   )
 }

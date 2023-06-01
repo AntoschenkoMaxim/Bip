@@ -1,18 +1,13 @@
-import { Avatar, Col, Divider, Drawer, Image, List, Row, Tabs, Tag } from 'antd'
+import { List, Tabs } from 'antd'
 import { intlFormatDistance } from 'date-fns'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
 import { TeacherDrawer } from '../TeacherDrawer/TeacherDrawer'
 
 export function Departments() {
-  const [id, setId] = useState()
+  const [id, setId] = useState(null)
   const [teacherId, setTeacherId] = useState()
   const [open, setOpen] = useState(false)
-
-  const showDrawer = (id) => {
-    setTeacherId(id)
-    setOpen(true)
-  }
 
   const { data: departments, isSuccess } = useGetAllDepartmentsQuery()
 
@@ -21,31 +16,41 @@ export function Departments() {
     label: item.description,
   }))
 
-  const func = () => {
-    const lessons = departments?.rows
+  useEffect(() => {
+    if (items && !id) {
+      setId(items[0].key)
+    }
+  }, [items, id])
+
+  const getFilteredLessons = () => {
+    const filteredLessons = departments?.rows
       .filter((item) => item.id === id)
-      .map((item) => item.lessons)
-      .flat()
-    return lessons
+      .flatMap((item) => item.lessons)
+    return filteredLessons
   }
 
-  const onChange = (key) => {
+  const handleChange = (key) => {
     setId(key)
+  }
+
+  const showDrawer = (id) => {
+    setTeacherId(id)
+    setOpen(true)
   }
 
   return (
     <>
-      <Tabs items={items} onChange={onChange} />
+      <Tabs items={items} onChange={handleChange} />
       {isSuccess && (
         <List
-          dataSource={func()}
+          dataSource={getFilteredLessons()}
           bordered
           renderItem={(item) => (
             <List.Item
               key={item.id}
               actions={[
                 <a
-                  // onClick={() => showDrawer(item.teacherId)}
+                  onClick={() => showDrawer(item.teacherId)}
                   key={`a-${item.id}`}
                 >
                   Дополнительно
