@@ -11,4 +11,8 @@ export class CreateTeacherDto {
   readonly role: string;
   @IsString({ message: "Must be a string" })
   readonly phone: string;
+  @IsString({ message: "Must be a string" })
+  readonly email: string;
+  @IsString({ message: "Must be a string" })
+  readonly telegram: string;
 }

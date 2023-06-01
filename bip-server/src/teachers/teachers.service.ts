@@ -26,7 +26,10 @@ export class TeachersService {
   }
 
   async getTeacherById(id: number) {
-    const teacher = await this.teacherRepository.findOne({ where: { id } });
+    const teacher = await this.teacherRepository.findOne({
+      where: { id },
+      include: { all: true },
+    });
     if (!teacher) {
       throw new HttpException("Teacher not found!", HttpStatus.NOT_FOUND);
     }

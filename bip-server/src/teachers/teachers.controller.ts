@@ -33,6 +33,11 @@ export class TeachersController {
     return this.teacherService.getAllTeachers();
   }
 
+  @Get(":id")
+  getById(@Param("id") id: number) {
+    return this.teacherService.getTeacherById(id);
+  }
+
   // @Roles("moderator", "admin")
   // @UseGuards(RolesGuard)
   @UsePipes(ValidationPipe)

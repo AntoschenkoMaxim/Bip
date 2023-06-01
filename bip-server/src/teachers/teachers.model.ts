@@ -1,12 +1,4 @@
-import {
-  BelongsToMany,
-  Column,
-  DataType,
-  ForeignKey,
-  HasMany,
-  Model,
-  Table,
-} from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { Lesson } from "src/lessons/lessons.model";
 
 interface TeachersCreationAttrs {
@@ -15,6 +7,8 @@ interface TeachersCreationAttrs {
   surname: string;
   role: string;
   phone: string;
+  email: string;
+  telegram: string;
 }
 
 @Table({ tableName: "teachers" })
@@ -56,6 +50,16 @@ export class Teacher extends Model<Teacher, TeachersCreationAttrs> {
     allowNull: false,
   })
   phone: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  email: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  telegram: string;
 
   @HasMany(() => Lesson)
   lessons: Lesson[];
