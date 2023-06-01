@@ -1,10 +1,12 @@
 import { Image, List, Tabs, Tag } from 'antd'
 import { intlFormatDistance } from 'date-fns'
-import { useState } from 'react'
-import { useGetPostsByCategoryIdQuery } from '../../hooks/useGetPostsByCategoryIdQuery'
+import { useEffect, useState } from 'react'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
+import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 
 export function Posts() {
+  const [id, setId] = useState(null)
+
   const { data: postsCategories } = useGetAllPostCategoriesQuery()
 
   const items = postsCategories?.rows.map((item) => ({
@@ -12,9 +14,20 @@ export function Posts() {
     label: item.description,
   }))
 
-  const [id, setId] = useState(1)
+  const { data: posts, isSuccess } = useGetAllPostsQuery()
 
-  const { data: posts, isSuccess } = useGetPostsByCategoryIdQuery(id)
+  useEffect(() => {
+    if (items && !id) {
+      setId(items[0].key)
+    }
+  }, [items, id])
+
+  const getFilteredPosts = () => {
+    const filteredPosts = posts?.rows.filter(
+      (item) => item.postsCategoryId === id
+    )
+    return filteredPosts
+  }
 
   const onChange = (key) => {
     setId(key)
@@ -30,7 +43,7 @@ export function Posts() {
           pagination={{
             pageSize: 5,
           }}
-          dataSource={posts?.rows}
+          dataSource={getFilteredPosts()}
           renderItem={(item) => (
             <List.Item
               key={item.title}
