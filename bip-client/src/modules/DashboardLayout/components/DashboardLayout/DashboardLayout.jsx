@@ -6,10 +6,11 @@ import {
   FileProtectOutlined,
   ProfileOutlined,
   OrderedListOutlined,
+  StarOutlined,
 } from '@ant-design/icons'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { useState } from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { getItem } from '../../helpers/getItem'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -23,6 +24,7 @@ const items = [
   getItem('Новости', 'posts', <FileProtectOutlined />),
   getItem('Категории изображений', 'image-categories', <OrderedListOutlined />),
   getItem('Изображения', 'images', <PictureOutlined />),
+  getItem('Достижения', 'achievements', <StarOutlined />),
 ]
 
 export function DashboardLayout() {

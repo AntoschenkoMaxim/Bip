@@ -43,13 +43,17 @@ import {
   FileWordOutlined,
   DollarOutlined,
   SolutionOutlined,
+  FileImageOutlined,
 } from '@ant-design/icons'
+import { AchievementsPage } from './pages/Achievements/components/AchievementsPage'
+import { Achievements } from './modules/Achievements'
 
 function App() {
   const { i18n } = useTranslation()
 
   const icons1 = [
     <ContainerOutlined />,
+    <FileImageOutlined />,
     <UsergroupAddOutlined />,
     <AuditOutlined />,
     <BookOutlined />,
@@ -136,10 +140,9 @@ function App() {
             <Route path='schedule' element={<Schedule />} />
             <Route path='price' element={<Price />} />
           </Route>
-          <Route
-            path='achievements/*'
-            element={<MainSider items={items5} />}
-          ></Route>
+          <Route path='achievements/*' element={<MainSider items={items5} />}>
+            <Route index element={<Achievements />} />
+          </Route>
         </Route>
         <Route path='/auth/login' element={<LoginForm />} />
         <Route path='/auth/registration' element={<RegistrationForm />} />
@@ -152,6 +155,7 @@ function App() {
           <Route path='posts' element={<PostsPage />} />
           <Route path='image-categories' element={<ImageCategoriesPage />} />
           <Route path='images' element={<ImagesPage />} />
+          <Route path='achievements' element={<AchievementsPage />} />
         </Route>
         {/* <Route path='*' element={<NotFoundPage />} /> */}
       </Routes>
