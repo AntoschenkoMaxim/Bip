@@ -24,6 +24,7 @@ import { CategoriesModule } from "./categories/categories.module";
 import { Category } from "./categories/categories.model";
 import { PostsCategoriesModule } from "./posts-categories/posts-categories.module";
 import { PostsCategories } from "./posts-categories/posts-categories.model";
+import { AchievementsModule } from './achievements/achievements.module';
 
 @Module({
   controllers: [],
@@ -67,6 +68,7 @@ import { PostsCategories } from "./posts-categories/posts-categories.model";
     AuthModule,
     CategoriesModule,
     PostsCategoriesModule,
+    AchievementsModule,
   ],
 })
 export class AppModule {}
