@@ -47,6 +47,9 @@ import {
 } from '@ant-design/icons'
 import { AchievementsPage } from './pages/Achievements/components/AchievementsPage'
 import { Achievements } from './modules/Achievements'
+import { Admissions } from './modules/Admissions'
+import { Projects } from './modules/Projects'
+import { StudentRules } from './modules/StudentRules'
 
 function App() {
   const { i18n } = useTranslation()
@@ -116,6 +119,7 @@ function App() {
           <Route path='/*' element={<MainSider items={items1} />}>
             <Route index element={<MainPostsPage />} />
             <Route path='gallery' element={<Images />} />
+            <Route path='projects' element={<Projects />} />
             <Route path='brsm' element={<Brsm />} />
             <Route path='consultation' element={<Consultation />} />
             <Route path='regulations' element={<Regulations />} />
@@ -135,8 +139,10 @@ function App() {
           <Route path='applicant/*' element={<MainSider items={items3} />}>
             <Route index element={<Dates />} />
             <Route path='documents' element={<Documents />} />
+            <Route path='admission' element={<Admissions />} />
           </Route>
           <Route path='student/*' element={<MainSider items={items4} />}>
+            <Route path='rules' element={<StudentRules />} />
             <Route path='schedule' element={<Schedule />} />
             <Route path='price' element={<Price />} />
           </Route>
