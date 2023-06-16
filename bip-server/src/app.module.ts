@@ -25,6 +25,11 @@ import { Category } from "./categories/categories.model";
 import { PostsCategoriesModule } from "./posts-categories/posts-categories.module";
 import { PostsCategories } from "./posts-categories/posts-categories.model";
 import { AchievementsModule } from './achievements/achievements.module';
+import { AdmissionsModule } from './admissions/admissions.module';
+import { DatesModule } from './dates/dates.module';
+import { StatementsModule } from './statements/statements.module';
+import { SchedulesModule } from './schedules/schedules.module';
+import { PricesModule } from './prices/prices.module';
 
 @Module({
   controllers: [],
@@ -69,6 +74,11 @@ import { AchievementsModule } from './achievements/achievements.module';
     CategoriesModule,
     PostsCategoriesModule,
     AchievementsModule,
+    AdmissionsModule,
+    DatesModule,
+    StatementsModule,
+    SchedulesModule,
+    PricesModule,
   ],
 })
 export class AppModule {}
