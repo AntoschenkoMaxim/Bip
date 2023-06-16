@@ -70,6 +70,33 @@
   },
 
   "main": {
+    "projects": {
+      "title": "Clubs, circles, projects of an educational institution",
+      "items": [
+        {
+          "title": "Sports club «Vita»",
+          "description": [
+            "The goal of the Vita Sports Club is to form a healthy lifestyle for students and teachers for the comprehensive harmonious development of the individual. The sports club among its tasks involves the development of a negative attitude towards bad habits; support for youth initiatives, activation of the youth organizations of the branch, student self-government bodies in solving the social problems of the youth of the branch, development of leadership qualities, active personal and social position of students; development of a socio-pedagogical environment conducive to the comprehensive self-realization of the individual, organization of leisure, psychological support, social protection and health protection of students, as well as the development of socially safe behavior in social and professional activities. "
+          ]
+        },
+        {
+          "title": "Historical and legal club «Spadchyna»",
+          "description": [
+            "At the Department of Theory and History of Law, the historical and legal club «Spadchyna» operates. The scientific direction of the work of the historical and legal club «Spadchyna» is the history of the state, the history of law, local history. At the beginning of the academic year, the work plan and membership of the club were approved, as well as the topics of the problems under study and the main areas of activity were developed. The work of the club is aimed at identifying and researching topical problems in the history of the city of Grodno and the region, organizing and conducting excursions around Belarus, the city of Grodno and the region, holding actions, developing students' skills in completing term papers, abstracts, articles, scientific reports. All members of the club participated in intellectual tournaments, which were held as part of the week of the Department of Theory and History of Law. Circle «Oscar» was created and operates in order to create conditions for the development and realization of the creative potential of students in the field of musical culture and vocal singing, as well as in the field of choreography."
+          ]
+        },
+        {
+          "title": "Branch projects",
+          "description": [
+            "«Leader's School» - the formation of social activity, independence, responsibility of students, instilling in them practical experience in leadership work, promoting the development of leadership qualities, organizational skills and abilities of students, the formation of an active civic and social position, the development of students' creative initiative, public vigor, self-confidence , the ability to convince. The training of the student asset of the branch is carried out through classes with elements of training, film lectures, documentary films, round tables, discussions, etc.",
+            "«School of a young family» - guiding students to create a stable family through social, moral, motivational, psychological and pedagogical readiness for family life, expanding students' knowledge of state policy in the field of marriage and family relations, acquaintance with the ethical side of the issue of the relationship of love, sex and marriage, the formation of a psychological concept of family life, the creation of prerequisites for the formation of a responsible attitude to the future role of a parent. Project participants are students who are married or planning to marry, as well as those who have children. Training is carried out through classes with elements of training, film lectures, round tables, discussions, etc.",
+            "The branch implements its socially significant project “Give your heart”, the purpose of which is to promote the activation and dissemination of volunteering and the development of charitable activities of students of the branch, the development and implementation of socially significant experience in working with visually impaired children. The number of permanent participants is 15 people. This project is supervised by the State Educational Establishment «Grodno Special General Education School - Boarding School for Children with Visual Impairment»: they hold matinees, organize excursions to the zoo, give gifts, etc.",
+            "The branch is implementing a long-term project focused on the formation of a healthy lifestyle of student youth and increasing the mass character of physical culture «Health Marathon». This project included the holding of events that have a direct impact on the formation of a responsible attitude towards their health among students and the involvement of young people in the practice of a healthy lifestyle. Among them: carrying out preventive actions «Stop tobacco!», «Together against AIDS!»; information campaigns aimed at preventing the use of alcohol and drugs; development of booklets and memos to promote healthy lifestyles; conducting video lectures aimed at preventing the use of psychoactive substances; holding sports events within the framework of the activities of the existing Sports Club «Vita»; holding student tourist rallies in autumn and spring; joint tours with the head institute and Mogilev branches of BIP; participation in the city cultural and sports festivals «Snow Day» and «Maslenitsa - Seeing off winter».",
+            "For detailed information about the activities of clubs, circles, projects, contact room 303."
+          ]
+        }
+      ]
+    },
     "brsm": {
       "columns": [
         { "title": "Fullname", "dataIndex": "fullname", "key": "fullname" },
@@ -449,6 +476,28 @@
         "11. Medical certificate on the state of health in the form established by the Ministry of Health;",
         "12. Documents confirming the applicant's right to benefits when enrolling for higher education;",
         "13. 4 photographs 3x4 cm."
+      ]
+    }
+  },
+  "student": {
+    "rules": {
+      "title": "Inner order rules",
+      "items": [
+        {
+          "title": "General provisions",
+          "description": [
+            "1. The internal regulations for students at the Educational Establishment «BIP - University of Law and Social Information Technologies» (hereinafter referred to as the Rules) are intended to promote the formation of a conscious attitude to learning, strengthening the academic discipline of students, rational use of study time, and improving the quality of the educational process.",
+            "2. These Rules are binding on students and authorized officials of the Educational Institution «BIP - University of Law and Social Information Technologies» (hereinafter - BIP, University).",
+            "3. The number of students covered by these Rules includes all categories of persons enrolled in the prescribed manner in the number of trainees, students, undergraduates, graduate students, applicants, interns for training at the BIP.",
+            "4. The authorized officials of the BIP when applying these Rules are the rector, the first vice-rector, vice-rectors, deans and their deputies (assistants), directors of branches and their deputies, as well as heads of structural units (their deputies), who have the right to make independent decisions within their competence regarding education and upbringing."
+          ]
+        },
+        {
+          "title": "Rights and social guarantees of students",
+          "description": [
+            "5. BIP students have the right to: receive education in accordance with educational programs; free use of the library, educational, scientific, sports base of the BIP; safe study conditions in accordance with current state norms and requirements, protection of life and health during the educational process; use of textbooks and teaching aids; participation in olympiads, competitions, tournaments, festivals, conferences, seminars and other educational events held in BIP, the Republic of Belarus and abroad (с согласия руководства университета, факультета), спортивно-массовой, общественной, научной, инновационной деятельности; получение дополнительных платных услуг в сфере образования; поощрение за успехи в учебной, спортивно-массовой, общественной, научной, инновационной деятельности; (with the consent of the leadership of the university, faculty), sports, public, scientific, innovative activities; receiving additional paid services in the field of education; encouragement for success in educational, mass sports, public, scientific, innovative activities; participation in the management of the university (to elect and be elected to the University Council, councils of faculties and branches in the manner determined by the Charter of the BIP and the Regulations on Councils; create, elect and be elected to student self-government bodies); reinstatement in BIP to continue higher education, postgraduate education; transfer to another institution of higher education, another organization implementing educational programs of postgraduate education, in the manner established by the legislation of the Republic of Belarus; transfer for education in another specialty (specialty, specialization), including in the presence of medical contraindications to work in the received specialty (specialty, specialization) and the qualifications awarded, in another form of higher education in the manner established by the legislation of the Republic of Belarus and local regulatory legal acts of the BIP; training according to an individual plan within the content of the educational program in cases provided for by the legislation of the Republic of Belarus; creation of special conditions for education, taking into account the peculiarities of their psychophysical development; participation in trade unions, youth and other public associations, whose activities do not contradict the law; obtaining complete information related to the learning process; protection of their rights and legitimate interests; academic leave, vacation; medical care and rehabilitation in the manner prescribed by the legislation of the Republic of Belarus; encouragement for the implementation of measures (use of personal protective equipment and vaccination) taken at the university in order to ensure sanitary and epidemic safety; receiving socio-pedagogical and psychological assistance from BIP specialists; providing a place to stay in the BIP housing stock (subject to availability), in the manner determined by the current legislation and local legal acts of the BIP; familiarization with the certificate of state registration, constituent documents, special permission (license) for educational activities, certificates of state accreditation, as well as with the educational and program documentation of the BIP; appeal against decisions of authorized officials of the BIP in the manner prescribed by the legislation of the Republic of Belarus; familiarization with the order on the application of a disciplinary sanction and obtaining a copy of it; other rights established by the legislation, the Charter of the BIP, local regulatory legal acts of the BIP."
+          ]
+        }
       ]
     }
   }
