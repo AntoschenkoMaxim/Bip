@@ -1,40 +1,40 @@
-import { Table, Tag } from 'antd'
-import { useTranslation } from 'react-i18next'
+import { CaretRightOutlined } from '@ant-design/icons'
+import { Collapse, Image, theme } from 'antd'
+import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
+const { Panel } = Collapse
 
 export function Dates() {
-  const { i18n } = useTranslation()
+  const { token } = theme.useToken()
 
-  const colorHandler = (item, arr) => {
-    return arr[arr.length - 1] === item
-      ? 'error'
-      : arr[arr.length - 2] === item
-      ? 'purple'
-      : 'geekblue'
+  const panelStyle = {
+    marginBottom: 24,
+    background: token.colorFillAlter,
+    borderRadius: token.borderRadiusLG,
+    border: 'none',
   }
 
-  const dataSource = i18n
-    .t('applicant.dates.items', { returnObjects: true })
-    .map((item, index, arr) => ({
-      key: item.info,
-      info: item.info,
-      date: <Tag color={colorHandler(item, arr)}>{item.date}</Tag>,
-    }))
-
-  const columns = i18n
-    .t('applicant.dates.columns', { returnObjects: true })
-    .map((item) => ({
-      title: item.title,
-      dataIndex: item.dataIndex,
-      key: item.key,
-    }))
+  const { data: dates, isSuccess } = useGetAllDatesQuery()
 
   return (
-    <Table
-      tableLayout='fixed'
-      bordered
-      columns={columns}
-      dataSource={dataSource}
-      pagination={false}
-    />
+    <Collapse
+      bordered={false}
+      expandIcon={({ isActive }) => (
+        <CaretRightOutlined rotate={isActive ? 90 : 0} />
+      )}
+      style={{
+        background: token.colorBgContainer,
+      }}
+    >
+      {isSuccess &&
+        dates?.rows.map((item) => (
+          <Panel header={item.title} key={item.title} style={panelStyle}>
+            <Image
+              width={400}
+              src={`${import.meta.env.VITE_BASE_URL}/${item.image}`}
+              alt={item.image}
+            />
+          </Panel>
+        ))}
+    </Collapse>
   )
 }
