@@ -1,8 +1,24 @@
-import { Breadcrumb, Col, Layout, Menu, Row, Select, Typography } from 'antd'
+import {
+  Breadcrumb,
+  Col,
+  Divider,
+  Layout,
+  Menu,
+  Row,
+  Select,
+  Space,
+  Typography,
+} from 'antd'
 import { getItem } from '../../helpers/getItem'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import {
+  InstagramOutlined,
+  ChromeOutlined,
+  GlobalOutlined,
+} from '@ant-design/icons'
 const { Header, Content, Footer } = Layout
+const { Title } = Typography
 
 export function MainLayout() {
   const navigate = useNavigate()
@@ -70,30 +86,30 @@ export function MainLayout() {
         </Breadcrumb>
         <Outlet />
       </Content>
+
       <Footer>
-        <Row>
-          <Col span={24}>
-            <Typography.Link href='http://edu.gov.by/feedback/grafik-lichnogo-priema-grazhdan-i-yuridicheskikh-lits-rukovodstvom/'>
-              График личного приема граждан и юридических лиц руководством
-              Министерства образования РБ
+        <Divider />
+        <Row justify='space-between' align='middle'>
+          <Col>
+            <Typography.Link>
+              <Title level={3}>Bip.</Title>
             </Typography.Link>
           </Col>
-          <Col span={24}>
-            <Typography.Link href='http://edu.gov.by/feedback/lichnyy-priem/grafik-priema-grazhdan-i-yuridicheskikh-lits-nachalnikami-strukturnykh-podrazdeleniy/index.php'>
-              Прием граждан начальниками структурных подразделений Министерства
-              образования Республики Беларусь
-            </Typography.Link>
-          </Col>
-          <Col span={24}>
-            <Typography.Link href='https://edu-grodno.by/rezhim-raboty/'>
-              Прием граждан руководителями Главного управления образования
-              облисполкома
-            </Typography.Link>
-          </Col>
-          <Col span={24}>
-            <Typography.Link href='https://aor.gov.by/ru/appeal-473-ru#:~:text=Запись%20на%20прием%20к%20главе,(0152)%2049%2006%2092'>
-              Прием граждан в администрации Октябрьского района
-            </Typography.Link>
+          <Col>
+            <Space split={<Divider type='vertical' />}>
+              <Typography.Link href='http://bip-grodno.by/' target='_blank'>
+                <ChromeOutlined style={{ fontSize: 18 }} />
+              </Typography.Link>
+              <Typography.Link
+                href='https://instagram.com/bip_grodno_?igshid=MzRlODBiNWFlZA=='
+                target='_blank'
+              >
+                <InstagramOutlined style={{ fontSize: 18 }} />
+              </Typography.Link>
+              <Typography.Link href='https://vk.com/bipgrodno' target='_blank'>
+                <GlobalOutlined style={{ fontSize: 18 }} />
+              </Typography.Link>
+            </Space>
           </Col>
         </Row>
       </Footer>
