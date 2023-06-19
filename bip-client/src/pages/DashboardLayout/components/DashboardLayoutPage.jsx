@@ -1,10 +1,10 @@
 import React from 'react'
 import { DashboardLayout } from '../../../modules/DashboardLayout'
 
-export function DashboardLayoutPage() {
+export function DashboardLayoutPage({ items }) {
   return (
     <>
-      <DashboardLayout />
+      <DashboardLayout items={items} />
     </>
   )
 }
