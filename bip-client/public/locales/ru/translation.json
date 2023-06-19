@@ -66,6 +66,77 @@
     "achievements": [{ "title": "Наши достижения", "path": "achievements" }]
   },
 
+  "dashboard_menu": {
+    "main": [
+      { "title": "Главная", "path": "" },
+      { "title": "Кафедры", "path": "departments" },
+      { "title": "Предметы", "path": "lessons" },
+      { "title": "Преподаватели", "path": "teachers" },
+      {
+        "title": "Новости",
+        "path": "posts",
+        "sub_menu": [
+          { "title": "Категории новостей", "path": "post-categories" },
+          { "title": "Редактор новостей", "path": "posts" }
+        ]
+      },
+      {
+        "title": "Галерея",
+        "path": "images",
+        "sub_menu": [
+          { "title": "Категории изображений", "path": "image-categories" },
+          { "title": "Редактор изображений", "path": "images" }
+        ]
+      },
+      {
+        "title": "Достижения",
+        "path": "achievements"
+      },
+      {
+        "title": "Заявления",
+        "path": "statements"
+      },
+      {
+        "title": "Сроки вступления",
+        "path": "dates"
+      },
+      {
+        "title": "Порядок приема",
+        "path": "admissions"
+      },
+      {
+        "title": "График учебного процесса",
+        "path": "schedules"
+      },
+      {
+        "title": "Стоимость обучения",
+        "path": "prices"
+      }
+    ]
+  },
+
+  "breadcrumbs": {
+    "dashboard": {
+      "path": "/dashboard",
+      "name": "Кабинет",
+      "routes": [
+        { "path": "/dashboard/departments", "name": "Кафедры" },
+        { "path": "/dashboard/lessons", "name": "Предметы" },
+        { "path": "/dashboard/teachers", "name": "Преподаватели" },
+        { "path": "/dashboard/post-categories", "name": "Категории новостей" },
+        { "path": "/dashboard/posts", "name": "Редактор новостей" },
+        {
+          "path": "/dashboard/image-categories",
+          "name": "Категории изображений"
+        },
+        { "path": "/dashboard/statements", "name": "Заявления" },
+        { "path": "/dashboard/dates", "name": "Сроки вступления" },
+        { "path": "/dashboard/admissions", "name": "Порядок приема" },
+        { "path": "/dashboard/schedules", "name": "График учебного процесса" }
+      ]
+    }
+  },
+
   "main": {
     "projects": {
       "title": "Клубы, кружки, проекты учебного заведения",

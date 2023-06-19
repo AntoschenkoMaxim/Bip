@@ -69,6 +69,26 @@
     "achievements": [{ "title": "Our achievements", "path": "achievements" }]
   },
 
+  "breadcrumbs": {
+    "dashboard": {
+      "path": "/dashboard",
+      "name": "Кабинет",
+      "routes": [
+        { "path": "/dashboard/departments", "name": "Departments" },
+        { "path": "/dashboard/lessons", "name": "Lessons" },
+        { "path": "/dashboard/teachers", "name": "Teachers" },
+        { "path": "/dashboard/post-categories", "name": "Post categories" },
+        { "path": "/dashboard/posts", "name": "Post editor" },
+        {
+          "path": "/dashboard/image-categories",
+          "name": "Image categories"
+        },
+        { "path": "/dashboard/images", "name": "Image editor" },
+        { "path": "/dashboard/achievements", "name": "Achievements" }
+      ]
+    }
+  },
+
   "main": {
     "projects": {
       "title": "Clubs, circles, projects of an educational institution",

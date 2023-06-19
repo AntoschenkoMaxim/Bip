@@ -69,6 +69,26 @@
     "achievements": [{ "title": "Нашы дасягненні", "path": "achievements" }]
   },
 
+  "breadcrumbs": {
+    "dashboard": {
+      "path": "/dashboard",
+      "name": "Кабінет",
+      "routes": [
+        { "path": "/dashboard/departments", "name": "Кафедры" },
+        { "path": "/dashboard/lessons", "name": "Прадметы" },
+        { "path": "/dashboard/teachers", "name": "Выкладчыкі" },
+        { "path": "/dashboard/post-categories", "name": "Катэгорыі навін" },
+        { "path": "/dashboard/posts", "name": "Рэдактар ​​навін" },
+        {
+          "path": "/dashboard/image-categories",
+          "name": "Катэгорыі малюнкаў"
+        },
+        { "path": "/dashboard/images", "name": "Рэдактар ​​малюнкаў" },
+        { "path": "/dashboard/achievements", "name": "Дасягненні" }
+      ]
+    }
+  },
+
   "main": {
     "projects": {
       "title": "Клубы, гурткі, праекты навучальнай установы",
