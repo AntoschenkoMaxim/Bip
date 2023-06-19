@@ -29,7 +29,6 @@ import { Statements } from './modules/Statements'
 import { Regulations } from './modules/Regulations'
 import { Consultation } from './modules/Consultation'
 import { Images } from './modules/Images'
-
 import {
   BookOutlined,
   CrownOutlined,
@@ -44,15 +43,28 @@ import {
   DollarOutlined,
   SolutionOutlined,
   FileImageOutlined,
+  BarChartOutlined,
+  InboxOutlined,
+  FileProtectOutlined,
+  PictureOutlined,
+  StarOutlined,
+  TeamOutlined,
+  ProfileOutlined,
+  FileTextOutlined,
+  OrderedListOutlined,
 } from '@ant-design/icons'
 import { AchievementsPage } from './pages/Achievements/components/AchievementsPage'
 import { Achievements } from './modules/Achievements'
 import { Admissions } from './modules/Admissions'
 import { Projects } from './modules/Projects'
 import { StudentRules } from './modules/StudentRules'
+import { StatementsPage } from './pages/Statements/components/StatementsPage'
+import { DatesPage } from './pages/Dates/components/DatesPage'
+import { AdmissionsPage } from './pages/Admissions/components/AdmissionsPage'
+import { SchedulesPage } from './pages/Schedules/components/SchedulesPage'
 
 function App() {
-  const { i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const icons1 = [
     <ContainerOutlined />,
@@ -63,16 +75,15 @@ function App() {
     <PhoneOutlined />,
   ]
 
-  const items1 = i18n
-    .t('sider_menu.main', { returnObjects: true })
-    .map((item, index) =>
+  const items1 = t('sider_menu.main', { returnObjects: true }).map(
+    (item, index) =>
       getItem(
         item.title,
         item.path,
         icons1[index],
         item.sub_menu?.map((sub) => getItem(sub.title, sub.path))
       )
-    )
+  )
 
   const icons2 = [
     <CalendarOutlined />,
@@ -80,9 +91,9 @@ function App() {
     <FileDoneOutlined />,
   ]
 
-  const items2 = i18n
-    .t('sider_menu.about', { returnObjects: true })
-    .map((item, index) => getItem(item.title, item.path, icons2[index]))
+  const items2 = t('sider_menu.about', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, icons2[index])
+  )
 
   const icons3 = [
     <CalendarOutlined />,
@@ -91,9 +102,9 @@ function App() {
     <FileWordOutlined />,
   ]
 
-  const items3 = i18n
-    .t('sider_menu.applicant', { returnObjects: true })
-    .map((item, index) => getItem(item.title, item.path, icons3[index]))
+  const items3 = t('sider_menu.applicant', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, icons3[index])
+  )
 
   const icons4 = [
     <CalendarOutlined />,
@@ -102,15 +113,40 @@ function App() {
     <DollarOutlined />,
   ]
 
-  const items4 = i18n
-    .t('sider_menu.student', { returnObjects: true })
-    .map((item, index) => getItem(item.title, item.path, icons4[index]))
+  const items4 = t('sider_menu.student', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, icons4[index])
+  )
 
   const icons5 = [<CrownOutlined />]
 
-  const items5 = i18n
-    .t('sider_menu.achievements', { returnObjects: true })
-    .map((item, index) => getItem(item.title, item.path, icons5[index]))
+  const items5 = t('sider_menu.achievements', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, icons5[index])
+  )
+
+  const dashboardIcons = [
+    <BarChartOutlined />,
+    <InboxOutlined />,
+    <ProfileOutlined />,
+    <TeamOutlined />,
+    <FileProtectOutlined />,
+    <PictureOutlined />,
+    <StarOutlined />,
+    <FileTextOutlined />,
+    <CalendarOutlined />,
+    <OrderedListOutlined />,
+    <ContainerOutlined />,
+    <DollarOutlined />,
+  ]
+
+  const dashboardItems = t('dashboard_menu.main', { returnObjects: true }).map(
+    (item, index) =>
+      getItem(
+        item.title,
+        item.path,
+        dashboardIcons[index],
+        item.sub_menu?.map((sub) => getItem(sub.title, sub.path))
+      )
+  )
 
   return (
     <>
@@ -152,7 +188,10 @@ function App() {
         </Route>
         <Route path='/auth/login' element={<LoginForm />} />
         <Route path='/auth/registration' element={<RegistrationForm />} />
-        <Route path='/dashboard' element={<DashboardLayoutPage />}>
+        <Route
+          path='/dashboard'
+          element={<DashboardLayoutPage items={dashboardItems} />}
+        >
           <Route index element={<LoginForm />} />
           <Route path='teachers' element={<TeachersPage />} />
           <Route path='departments' element={<DepartmentsPage />} />
@@ -162,6 +201,10 @@ function App() {
           <Route path='image-categories' element={<ImageCategoriesPage />} />
           <Route path='images' element={<ImagesPage />} />
           <Route path='achievements' element={<AchievementsPage />} />
+          <Route path='statements' element={<StatementsPage />} />
+          <Route path='dates' element={<DatesPage />} />
+          <Route path='admissions' element={<AdmissionsPage />} />
+          <Route path='schedules' element={<SchedulesPage />} />
         </Route>
         {/* <Route path='*' element={<NotFoundPage />} /> */}
       </Routes>

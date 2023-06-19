@@ -12,6 +12,7 @@ import accreditation4 from './accreditation/accreditation4.jpg'
 import accreditation5 from './accreditation/accreditation5.jpg'
 import accreditation6 from './accreditation/accreditation6.jpg'
 import schedule from './others/schedule.jpg'
+import logo from './others/logo.png'
 import anniversary from './statements/anniversary.jpg'
 import contributions from './statements/contributions.jpg'
 import financial from './statements/financial-assistance.jpg'
@@ -38,4 +39,5 @@ export {
   financial,
   new_trade_union,
   trade_union,
+  logo,
 }

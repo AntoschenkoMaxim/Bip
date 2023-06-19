@@ -17,6 +17,7 @@ import {
   ChromeOutlined,
   GlobalOutlined,
 } from '@ant-design/icons'
+import * as images from '../../../../assets/index'
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
 
@@ -56,18 +57,20 @@ export function MainLayout() {
     >
       <Header
         style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
           width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
+        <img src={images.logo} style={{ width: 48 }} />
         <Menu
-          theme='dark'
+          style={{ width: '33%' }}
           mode='horizontal'
+          theme='dark'
           defaultSelectedKeys={['']}
           items={items}
-          onClick={({ keyPath }) => navigate(`/${keyPath}`)}
+          onSelect={({ selectedKeys }) => navigate(`/${selectedKeys}`)}
         />
         <Select options={options} defaultValue='ru' onChange={changeLanguage} />
       </Header>
@@ -90,24 +93,29 @@ export function MainLayout() {
       <Footer>
         <Divider />
         <Row justify='space-between' align='middle'>
-          <Col>
-            <Typography.Link>
-              <Title level={3}>Bip.</Title>
-            </Typography.Link>
+          <Col
+            style={{
+              margin: 4,
+            }}
+          >
+            <img src={images.logo} style={{ width: 48 }} />
+          </Col>
+          <Col style={{ textAlign: 'center' }}>
+            <Title level={5}>Bip University ©2023 All rights reserved.</Title>
           </Col>
           <Col>
             <Space split={<Divider type='vertical' />}>
               <Typography.Link href='http://bip-grodno.by/' target='_blank'>
-                <ChromeOutlined style={{ fontSize: 18 }} />
+                <ChromeOutlined style={{ fontSize: 24 }} />
               </Typography.Link>
               <Typography.Link
                 href='https://instagram.com/bip_grodno_?igshid=MzRlODBiNWFlZA=='
                 target='_blank'
               >
-                <InstagramOutlined style={{ fontSize: 18 }} />
+                <InstagramOutlined style={{ fontSize: 24 }} />
               </Typography.Link>
               <Typography.Link href='https://vk.com/bipgrodno' target='_blank'>
-                <GlobalOutlined style={{ fontSize: 18 }} />
+                <GlobalOutlined style={{ fontSize: 24 }} />
               </Typography.Link>
             </Space>
           </Col>
