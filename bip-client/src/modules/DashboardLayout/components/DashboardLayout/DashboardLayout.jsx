@@ -1,38 +1,26 @@
-import {
-  BarChartOutlined,
-  TeamOutlined,
-  PictureOutlined,
-  InboxOutlined,
-  FileProtectOutlined,
-  ProfileOutlined,
-  OrderedListOutlined,
-  StarOutlined,
-} from '@ant-design/icons'
-import { Breadcrumb, Layout, Menu, theme } from 'antd'
+import { Layout, Menu, Typography, theme } from 'antd'
 import { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { getItem } from '../../helpers/getItem'
+import { useTranslation } from 'react-i18next'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Breadcrumbs } from '../../../../components'
+import * as images from '../../../../assets/index'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const items = [
-  getItem('Главная', '/', <BarChartOutlined />),
-  getItem('Кафедры', 'departments', <InboxOutlined />),
-  getItem('Преподаватели', 'teachers', <TeamOutlined />),
-  getItem('Предметы', 'lessons', <ProfileOutlined />),
-  getItem('Категории новостей', 'post-categories', <OrderedListOutlined />),
-  getItem('Новости', 'posts', <FileProtectOutlined />),
-  getItem('Категории изображений', 'image-categories', <OrderedListOutlined />),
-  getItem('Изображения', 'images', <PictureOutlined />),
-  getItem('Достижения', 'achievements', <StarOutlined />),
-]
-
-export function DashboardLayout() {
+export function DashboardLayout({ items }) {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+
+  const { t } = useTranslation()
+
+  const routes = [t('breadcrumbs.dashboard', { returnObjects: true })]
+
+  const location = useLocation()
+  const selectedKey = location.pathname.slice('/dashboard/'.length)
+
   return (
     <Layout
       style={{
@@ -46,17 +34,24 @@ export function DashboardLayout() {
       >
         <div
           style={{
-            height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 4,
           }}
-        />
+        >
+          <img src={images.logo} style={{ width: 48 }} />
+        </div>
+
         <Menu
           theme='dark'
-          defaultSelectedKeys={['/']}
+          defaultSelectedKeys={['']}
           mode='inline'
           items={items}
-          onClick={({ keyPath }) => navigate(`/dashboard/${keyPath}`)}
+          selectedKeys={[selectedKey]}
+          onSelect={({ selectedKeys }) =>
+            navigate(`/dashboard/${selectedKeys}`)
+          }
         />
       </Sider>
       <Layout className='site-layout'>
@@ -71,14 +66,7 @@ export function DashboardLayout() {
             margin: '0 16px',
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>Модератор</Breadcrumb.Item>
-            <Breadcrumb.Item>Преподаватели</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumbs routes={routes} />
           <Outlet />
         </Content>
         <Footer
