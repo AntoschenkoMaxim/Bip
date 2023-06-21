@@ -1,8 +1,9 @@
-import { Image, List, Tabs, Tag } from 'antd'
+import { Image, Input, List, Tabs, Tag } from 'antd'
 import { intlFormatDistance } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
+import useListSearch from '../../../../hooks/useListSearch'
 
 export function Posts() {
   const [id, setId] = useState(null)
@@ -22,11 +23,10 @@ export function Posts() {
     }
   }, [items, id])
 
+  const { searchText, handleSearch, filteredData } = useListSearch(posts?.rows)
+
   const getFilteredPosts = () => {
-    const filteredPosts = posts?.rows.filter(
-      (item) => item.postsCategoryId === id
-    )
-    return filteredPosts
+    return filteredData.filter((item) => item.postsCategoryId === id)
   }
 
   const onChange = (key) => {
@@ -35,6 +35,12 @@ export function Posts() {
 
   return (
     <>
+      <Input
+        placeholder='Поиск по заголовку'
+        value={searchText}
+        onChange={(e) => handleSearch(e.target.value)}
+        style={{ marginBottom: 16, maxWidth: '20%' }}
+      />
       <Tabs items={items} onChange={onChange} />
       {isSuccess && (
         <List
