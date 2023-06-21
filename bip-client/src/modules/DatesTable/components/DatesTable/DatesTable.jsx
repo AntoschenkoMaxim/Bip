@@ -3,8 +3,12 @@ import { useState } from 'react'
 import { UpdateDateForm } from '../UpdateDatesForm/UpdateDatesForm'
 import { useRemoveDateByIdQuery } from '../../hooks/useRemoveDateByIdQuery'
 import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function DatesTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
+
   const columns = [
     {
       title: 'Id',
@@ -16,6 +20,7 @@ export function DatesTable() {
       title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
+      ...getColumnSearchProps('title', 'заголовку'),
     },
     {
       title: 'Изображение',
@@ -35,15 +40,11 @@ export function DatesTable() {
       key: 'operations',
       render: (_, record) =>
         dates?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeDate(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeDate}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

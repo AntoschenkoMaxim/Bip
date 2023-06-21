@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { UpdateImageForm } from '../UpdateImageForm/UpdateImageForm'
 import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
 import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function ImagesTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,6 +19,7 @@ export function ImagesTable() {
       title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
+      ...getColumnSearchProps('title', 'заголовку'),
     },
     {
       title: 'Категория',
@@ -40,15 +44,11 @@ export function ImagesTable() {
       key: 'operations',
       render: (_, record) =>
         images?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeImage(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeImage}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

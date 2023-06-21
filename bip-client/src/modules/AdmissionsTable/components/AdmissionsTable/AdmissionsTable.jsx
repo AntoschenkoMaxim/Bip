@@ -3,8 +3,12 @@ import { useState } from 'react'
 import { UpdateAdmissionForm } from '../UpdateAdmissionForm/UpdateAdmissionForm'
 import { useRemoveAdmissionByIdQuery } from '../../hooks/useRemoveAdmissionByIdQuery'
 import { useGetAllAdmissionsQuery } from '../../../../hooks/useGetAllAdmissionsQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function AdmissionsTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
+
   const columns = [
     {
       title: 'Id',
@@ -16,6 +20,7 @@ export function AdmissionsTable() {
       title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
+      ...getColumnSearchProps('title', 'заголовку'),
     },
     {
       title: 'Изображение',
@@ -35,15 +40,11 @@ export function AdmissionsTable() {
       key: 'operations',
       render: (_, record) =>
         admissions?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeAdmission(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeAdmission}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

@@ -3,8 +3,12 @@ import { useState } from 'react'
 import { UpdateDepartmentForm } from '../UpdateDepartmentForm/UpdateDepartmentForm'
 import { useRemoveDepartmentByIdQuery } from '../../hooks/useRemoveDepartmentByIdQuery'
 import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function DepartmentsTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
+
   const columns = [
     {
       title: 'Id',
@@ -16,11 +20,13 @@ export function DepartmentsTable() {
       title: 'Значение',
       dataIndex: 'value',
       key: 'value',
+      ...getColumnSearchProps('value', 'значению'),
     },
     {
       title: 'Описание',
       dataIndex: 'description',
       key: 'description',
+      ...getColumnSearchProps('description', 'описанию'),
     },
     {
       title: 'Предметы',
@@ -48,15 +54,11 @@ export function DepartmentsTable() {
       key: 'operations',
       render: (_, record) =>
         departments?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeDepartment(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeDepartment}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

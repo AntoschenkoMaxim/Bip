@@ -3,8 +3,11 @@ import { UpdateLessonForm } from '../UpdateLessonForm/UpdateLessonForm'
 import { useState } from 'react'
 import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
 import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function LessonsTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,11 +19,13 @@ export function LessonsTable() {
       title: 'Значение',
       dataIndex: 'value',
       key: 'value',
+      ...getColumnSearchProps('value', 'значению'),
     },
     {
       title: 'Описание',
       dataIndex: 'description',
       key: 'description',
+      ...getColumnSearchProps('description', 'описанию'),
     },
     {
       title: 'Действия',
@@ -28,15 +33,11 @@ export function LessonsTable() {
       key: 'operations',
       render: (_, record) =>
         lessons?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeLesson(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeLesson}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

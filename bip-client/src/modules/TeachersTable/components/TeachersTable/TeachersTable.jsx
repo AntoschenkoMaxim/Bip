@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { UpdateTeacherForm } from '../UpdateTeacherForm/UpdateTeacherForm'
 import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
 import { useRemoveTeacherByIdQuery } from '../../hooks/useRemoveTeacherByIdQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function TeachersTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,36 +19,43 @@ export function TeachersTable() {
       title: 'Фамилия',
       dataIndex: 'lastName',
       key: 'lastName',
+      ...getColumnSearchProps('lastName', 'фамилии'),
     },
     {
       title: 'Имя',
       dataIndex: 'firstName',
       key: 'firstName',
+      ...getColumnSearchProps('firstName', 'имени'),
     },
     {
       title: 'Отчество',
       dataIndex: 'surname',
       key: 'surname',
+      ...getColumnSearchProps('surname', 'отчеству'),
     },
     {
       title: 'Должность',
       dataIndex: 'role',
       key: 'role',
+      ...getColumnSearchProps('role', 'должности'),
     },
     {
       title: 'Телефон',
       dataIndex: 'phone',
       key: 'phone',
+      ...getColumnSearchProps('phone', 'телефону'),
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      ...getColumnSearchProps('email', 'email'),
     },
     {
       title: 'Телеграм',
       dataIndex: 'telegram',
       key: 'telegram',
+      ...getColumnSearchProps('telegram', 'telegram'),
     },
     {
       title: 'Предметы',
@@ -73,15 +83,11 @@ export function TeachersTable() {
       key: 'operations',
       render: (_, record) =>
         teachers?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeTeacher(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeTeacher}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

@@ -62,6 +62,10 @@ import { StatementsPage } from './pages/Statements/components/StatementsPage'
 import { DatesPage } from './pages/Dates/components/DatesPage'
 import { AdmissionsPage } from './pages/Admissions/components/AdmissionsPage'
 import { SchedulesPage } from './pages/Schedules/components/SchedulesPage'
+import { Timetables } from './modules/Timetables'
+import { TimetablesPage } from './pages/Timetables/components/TimetablesPage'
+import { PricesPage } from './pages/Prices/components/PricesPage'
+import { Reception } from './modules/Reception'
 
 function App() {
   const { t } = useTranslation()
@@ -162,6 +166,7 @@ function App() {
             <Route path='library' element={<LibraryPage />} />
             <Route path='contacts' element={<OneWindowPage />} />
             <Route path='statements' element={<Statements />} />
+            <Route path='reception' element={<Reception />} />
             <Route
               path='educational-department'
               element={<EducationalDepartment />}
@@ -174,10 +179,12 @@ function App() {
           </Route>
           <Route path='applicant/*' element={<MainSider items={items3} />}>
             <Route index element={<Dates />} />
+            {/* <Route path='rules' element={<Rules />} /> */}
             <Route path='documents' element={<Documents />} />
             <Route path='admission' element={<Admissions />} />
           </Route>
           <Route path='student/*' element={<MainSider items={items4} />}>
+            <Route index element={<Timetables />} />
             <Route path='rules' element={<StudentRules />} />
             <Route path='schedule' element={<Schedule />} />
             <Route path='price' element={<Price />} />
@@ -200,11 +207,13 @@ function App() {
           <Route path='posts' element={<PostsPage />} />
           <Route path='image-categories' element={<ImageCategoriesPage />} />
           <Route path='images' element={<ImagesPage />} />
+          <Route path='timetables' element={<TimetablesPage />} />
           <Route path='achievements' element={<AchievementsPage />} />
           <Route path='statements' element={<StatementsPage />} />
           <Route path='dates' element={<DatesPage />} />
           <Route path='admissions' element={<AdmissionsPage />} />
           <Route path='schedules' element={<SchedulesPage />} />
+          <Route path='prices' element={<PricesPage />} />
         </Route>
         {/* <Route path='*' element={<NotFoundPage />} /> */}
       </Routes>

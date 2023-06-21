@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { UpdateScheduleForm } from '../UpdateScheduleForm/UpdateScheduleForm'
 import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
 import { useRemoveScheduleByIdQuery } from '../../hooks/useRemoveScheduleByIdQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function SchedulesTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,6 +19,7 @@ export function SchedulesTable() {
       title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
+      ...getColumnSearchProps('title', 'заголовку'),
     },
     {
       title: 'Изображение',
@@ -35,15 +39,11 @@ export function SchedulesTable() {
       key: 'operations',
       render: (_, record) =>
         schedules?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeSchedule(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeSchedule}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

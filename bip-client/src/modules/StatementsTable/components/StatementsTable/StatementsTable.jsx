@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { useGetAllStatementsQuery } from '../../../../hooks/useGetAllStatementsQuery'
 import { UpdateStatementForm } from '../UpdateStatementForm/UpdateStatementForm'
 import { useRemoveStatementByIdQuery } from '../../hooks/useRemoveStatementByIdQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function StatementsTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,6 +19,7 @@ export function StatementsTable() {
       title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
+      ...getColumnSearchProps('title', 'заголовку'),
     },
     {
       title: 'Изображение',
@@ -35,15 +39,11 @@ export function StatementsTable() {
       key: 'operations',
       render: (_, record) =>
         statements?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeStatement(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeStatement}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

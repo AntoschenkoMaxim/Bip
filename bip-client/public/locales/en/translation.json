@@ -39,6 +39,10 @@
           {
             "title": "Educational and Methodological Department",
             "path": "educational-department"
+          },
+          {
+            "title": "Reception of citizens",
+            "path": "reception"
           }
         ]
       }
@@ -238,6 +242,28 @@
         "Application for financial assistance",
         "Application for trade union registration and withholding of dues (for trade union members who previously joined the trade union)",
         "Application for entry and withholding contributions"
+      ]
+    },
+
+    "reception": {
+      "title": "Reception of citizens in higher state bodies and organizations",
+      "items": [
+        {
+          "title": "Schedule of personal receptions of citizens and legal entities of the Ministry of Education of the Republic of Belarus",
+          "link": "http://edu.gov.by/feedback/grafik-lichnogo-priema-grazhdan-i-yuridicheskikh-lits-rukovodstvom/"
+        },
+        {
+          "title": "Reception of citizens by the heads of structural divisions of the Ministry of Education of the Republic of Belarus",
+          "link": "http://edu.gov.by/feedback/lichnyy-priem/grafik-priema-grazhdan-i-yuridicheskikh-lits-nachalnikami-strukturnykh-podrazdeleniy/index.php"
+        },
+        {
+          "title": "Reception of citizens by the heads of the Main Department of Education of the Regional Executive Committee",
+          "link": "https://edu-grodno.by/rezhim-raboty/"
+        },
+        {
+          "title": "Reception of citizens in the administration of the Oktyabrsky district",
+          "link": "https://aor.gov.by/ru/appeal-473-ru#:~:text=%D0%97%D0%B0%D0%BF%D0%B8%D1%81%D1%8C%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%B5%D0%BC%20%D0%BA%20%D0%B3%D0%BB%D0%B0%D0%B2%D0%B5,(0152)%2049%2006%2092."
+        }
       ]
     },
 

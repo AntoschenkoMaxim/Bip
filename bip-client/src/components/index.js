@@ -1,3 +1,4 @@
+import { ActionsColumn } from './ActionsColumn/ActionsColumn'
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs'
 
-export { Breadcrumbs }
+export { ActionsColumn, Breadcrumbs }

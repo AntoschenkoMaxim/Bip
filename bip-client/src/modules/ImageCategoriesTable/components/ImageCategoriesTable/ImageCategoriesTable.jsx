@@ -3,8 +3,11 @@ import { UpdateImageCategoryForm } from '../UpdateCategoryForm/UpdateImageCatego
 import { useState } from 'react'
 import { useRemoveImageCategoryByIdQuery } from '../../hooks/useRemoveImageCategoryByIdQuery'
 import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function ImageCategoriesTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,11 +19,13 @@ export function ImageCategoriesTable() {
       title: 'Значение',
       dataIndex: 'value',
       key: 'value',
+      ...getColumnSearchProps('value', 'значению'),
     },
     {
       title: 'Описание',
       dataIndex: 'description',
       key: 'description',
+      ...getColumnSearchProps('description', 'описанию'),
     },
     {
       title: 'Изображения',
@@ -53,15 +58,11 @@ export function ImageCategoriesTable() {
       key: 'operations',
       render: (_, record) =>
         imageCategories?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removeCategory(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removeCategory}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

@@ -39,6 +39,10 @@
           {
             "title": "Вучэбна-метадычны аддзел",
             "path": "educational-department"
+          },
+          {
+            "title": "Прыём грамадзян",
+            "path": "reception"
           }
         ]
       }
@@ -239,6 +243,28 @@
         "Заява на аказанне матэрыяльнай дапамогі",
         "Заява на пастаноўку на прафсаюзны ўлік і ўтрыманне ўзносаў (для членаў прафсаюза тых, хто раней уступіў у прафсаюз)",
         "Заява на ўступленне і ўтрыманне ўзносаў"
+      ]
+    },
+
+    "reception": {
+      "title": "Прыём грамадзян у вышэйстаячых дзяржаўных органах і арганізацыях",
+      "items": [
+        {
+          "title": "Графік асабістага прыёму грамадзян і юрыдычных асоб кіраўніцтвам Міністэрства адукацыі РБ",
+          "link": "http://edu.gov.by/feedback/grafik-lichnogo-priema-grazhdan-i-yuridicheskikh-lits-rukovodstvom/"
+        },
+        {
+          "title": "Прыём грамадзян начальнікамі структурных падраздзяленняў Міністэрства адукацыі Рэспублікі Беларусь",
+          "link": "http://edu.gov.by/feedback/lichnyy-priem/grafik-priema-grazhdan-i-yuridicheskikh-lits-nachalnikami-strukturnykh-podrazdeleniy/index.php"
+        },
+        {
+          "title": "Прыём грамадзян кіраўнікамі Галоўнага ўпраўлення адукацыі аблвыканкама",
+          "link": "https://edu-grodno.by/rezhim-raboty/"
+        },
+        {
+          "title": "Прыём грамадзян у адміністрацыі Кастрычніцкага раёна",
+          "link": "https://aor.gov.by/ru/appeal-473-ru#:~:text=%D0%97%D0%B0%D0%BF%D0%B8%D1%81%D1%8C%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B8%D0%B5%D0%BC%20%D0%BA%20%D0%B3%D0%BB%D0%B0%D0%B2%D0%B5,(0152)%2049%2006%2092."
+        }
       ]
     },
 

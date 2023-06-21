@@ -3,8 +3,11 @@ import { useState } from 'react'
 import { UpdatePostCategoryForm } from '../UpdatePostCategoryForm/UpdatePostCategoryForm'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 import { useRemovePostCategoryByIdQuery } from '../../hooks/useRemovePostCategoryByIdQuery'
+import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
+import { ActionsColumn } from '../../../../components'
 
 export function PostCategoriesTable() {
+  const { getColumnSearchProps } = useTableFilterAndSearch()
   const columns = [
     {
       title: 'Id',
@@ -16,6 +19,7 @@ export function PostCategoriesTable() {
       title: 'Значение',
       dataIndex: 'value',
       key: 'value',
+      ...getColumnSearchProps('value', 'значению'),
     },
     {
       title: 'Описание',
@@ -29,6 +33,7 @@ export function PostCategoriesTable() {
           {description}
         </Tooltip>
       ),
+      ...getColumnSearchProps('description', 'описанию'),
     },
     {
       title: 'Действия',
@@ -36,15 +41,11 @@ export function PostCategoriesTable() {
       key: 'operations',
       render: (_, record) =>
         postCategories?.rows.length >= 1 ? (
-          <Space>
-            <Popconfirm
-              title='Вы уверены?'
-              onConfirm={() => removePostCategory(record.id)}
-            >
-              <a>Удалить</a>
-            </Popconfirm>
-            <a onClick={() => showModal(record.id)}>Изменить</a>
-          </Space>
+          <ActionsColumn
+            record={record}
+            removeItem={removePostCategory}
+            showModal={showModal}
+          />
         ) : null,
     },
   ]

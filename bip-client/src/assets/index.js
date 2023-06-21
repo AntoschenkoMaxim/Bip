@@ -18,6 +18,7 @@ import contributions from './statements/contributions.jpg'
 import financial from './statements/financial-assistance.jpg'
 import new_trade_union from './statements/new-trade-union.jpg'
 import trade_union from './statements/trade-union.jpg'
+import rules from './documents/rules.pdf'
 
 export {
   regulation1,
@@ -40,4 +41,5 @@ export {
   new_trade_union,
   trade_union,
   logo,
+  rules,
 }
