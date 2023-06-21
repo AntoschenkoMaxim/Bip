@@ -93,6 +93,10 @@
         ]
       },
       {
+        "title": "Расписание",
+        "path": "timetables"
+      },
+      {
         "title": "Достижения",
         "path": "achievements"
       },
@@ -141,6 +145,7 @@
           "path": "/dashboard/achievements",
           "name": "Достижения"
         },
+        { "path": "/dashboard/timetables", "name": "Расписание" },
         { "path": "/dashboard/statements", "name": "Заявления" },
         { "path": "/dashboard/dates", "name": "Сроки вступления" },
         { "path": "/dashboard/admissions", "name": "Порядок приема" },

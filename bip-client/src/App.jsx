@@ -52,6 +52,7 @@ import {
   ProfileOutlined,
   FileTextOutlined,
   OrderedListOutlined,
+  FieldTimeOutlined,
 } from '@ant-design/icons'
 import { AchievementsPage } from './pages/Achievements/components/AchievementsPage'
 import { Achievements } from './modules/Achievements'
@@ -134,6 +135,7 @@ function App() {
     <TeamOutlined />,
     <FileProtectOutlined />,
     <PictureOutlined />,
+    <FieldTimeOutlined />,
     <StarOutlined />,
     <FileTextOutlined />,
     <CalendarOutlined />,
