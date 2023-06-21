@@ -30,6 +30,7 @@ import { DatesModule } from './dates/dates.module';
 import { StatementsModule } from './statements/statements.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { PricesModule } from './prices/prices.module';
+import { TimetablesModule } from './timetables/timetables.module';
 
 @Module({
   controllers: [],
@@ -79,6 +80,7 @@ import { PricesModule } from './prices/prices.module';
     StatementsModule,
     SchedulesModule,
     PricesModule,
+    TimetablesModule,
   ],
 })
 export class AppModule {}

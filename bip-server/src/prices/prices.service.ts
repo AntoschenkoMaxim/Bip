@@ -14,17 +14,33 @@ export class PricesService {
 
   async createPrice(
     createPriceDto: CreatePriceDto,
-    price_image: any,
-    payment_image: any
+    files: {
+      price_image?: Express.Multer.File[];
+      payment_image?: Express.Multer.File[];
+    }
   ) {
-    const priceFileName = await this.fileService.createFile(price_image);
-    // const paymentFileName = await this.fileService.createFile(payment_image);
-    const price = await this.priceRepository.create({
-      ...createPriceDto,
-      price_image: priceFileName,
-      payment_image: priceFileName,
-    });
-    return price;
+    if (
+      files &&
+      files.price_image &&
+      files.price_image.length > 0 &&
+      files.payment_image &&
+      files.payment_image.length > 0
+    ) {
+      const priceFileName = await this.fileService.createFile(
+        files.price_image[0]
+      );
+      const paymentFileName = await this.fileService.createFile(
+        files.payment_image[0]
+      );
+      const price = await this.priceRepository.create({
+        ...createPriceDto,
+        price_image: priceFileName,
+        payment_image: paymentFileName,
+      });
+      return price;
+    } else {
+      throw new Error("Invalid file(s) provided!");
+    }
   }
 
   async getAllPrices() {
@@ -43,23 +59,39 @@ export class PricesService {
   async updatePriceById(
     id: number,
     updatePriceDto: UpdatePriceDto,
-    price_image: any,
-    payment_image: any
+    files: {
+      price_image?: Express.Multer.File[];
+      payment_image?: Express.Multer.File[];
+    }
   ) {
     const price = await this.getPriceById(id);
     if (price) {
-      await this.fileService.removeFile(price_image);
-      await this.fileService.removeFile(payment_image);
-      const priceFileName = await this.fileService.createFile(price_image);
-      const paymentFileName = await this.fileService.createFile(payment_image);
-      await this.priceRepository.update(
-        {
-          ...updatePriceDto,
-          price_image: priceFileName,
-          payment_image: paymentFileName,
-        },
-        { where: { id } }
-      );
+      await this.fileService.removeFile(price.price_image);
+      await this.fileService.removeFile(price.payment_image);
+      if (
+        files &&
+        files.price_image &&
+        files.price_image.length > 0 &&
+        files.payment_image &&
+        files.payment_image.length > 0
+      ) {
+        const priceFileName = await this.fileService.createFile(
+          files.price_image[0]
+        );
+        const paymentFileName = await this.fileService.createFile(
+          files.payment_image[0]
+        );
+        await this.priceRepository.update(
+          {
+            ...updatePriceDto,
+            price_image: priceFileName,
+            payment_image: paymentFileName,
+          },
+          { where: { id } }
+        );
+      } else {
+        throw new Error("Invalid file(s) provided!");
+      }
     }
   }
 
