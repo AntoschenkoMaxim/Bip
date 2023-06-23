@@ -37,7 +37,7 @@ export function Feature() {
       <Title level={2}>{t('landing.features.title')}</Title>
       <Row gutter={[16, 16]}>
         {items.map((item) => (
-          <Col xs={24} sm={12} md={8}>
+          <Col xs={24} sm={12} md={8} key={item.title}>
             <Card>
               {item.icon}
               <Title level={4}>{item.title}</Title>

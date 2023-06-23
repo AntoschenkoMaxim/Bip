@@ -67,6 +67,8 @@ import { Timetables } from './modules/Timetables'
 import { TimetablesPage } from './pages/Timetables/components/TimetablesPage'
 import { PricesPage } from './pages/Prices/components/PricesPage'
 import { Reception } from './modules/Reception'
+import { Hero } from './modules/Hero'
+import { LandingPage } from './pages/Landing/components/LandingPage'
 
 function App() {
   const { t } = useTranslation()
@@ -158,7 +160,8 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<MainLayoutPage />}>
-          <Route path='/*' element={<MainSider items={items1} />}>
+          <Route index element={<LandingPage />} />
+          <Route path='posts/*' element={<MainSider items={items1} />}>
             <Route index element={<MainPostsPage />} />
             <Route path='gallery' element={<Images />} />
             <Route path='projects' element={<Projects />} />

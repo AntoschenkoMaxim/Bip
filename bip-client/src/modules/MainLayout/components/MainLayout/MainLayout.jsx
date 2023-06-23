@@ -10,7 +10,7 @@ import {
   Typography,
 } from 'antd'
 import { getItem } from '../../helpers/getItem'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   InstagramOutlined,
@@ -49,6 +49,9 @@ export function MainLayout() {
     i18n.changeLanguage(language)
   }
 
+  const location = useLocation()
+  const selectedKey = location.pathname.replace('/', '')
+
   return (
     <Layout
       style={{
@@ -68,7 +71,7 @@ export function MainLayout() {
           style={{ width: '33%' }}
           mode='horizontal'
           theme='dark'
-          defaultSelectedKeys={['']}
+          selectedKeys={[selectedKey]}
           items={items}
           onSelect={({ selectedKeys }) => navigate(`/${selectedKeys}`)}
         />
@@ -79,14 +82,7 @@ export function MainLayout() {
           padding: '0 50px',
         }}
       >
-        <Breadcrumb
-          style={{
-            margin: '16px 0',
-          }}
-        >
-          <Breadcrumb.Item>Главная</Breadcrumb.Item>
-          <Breadcrumb.Item>Новости</Breadcrumb.Item>
-        </Breadcrumb>
+        {/* {breadcrumbs} */}
         <Outlet />
       </Content>
 

@@ -12,6 +12,7 @@ export function MainSider({ items, icons }) {
   return (
     <Layout
       style={{
+        marginTop: '24px',
         padding: '24px 0',
         background: colorBgContainer,
       }}

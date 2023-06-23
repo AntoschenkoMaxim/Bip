@@ -24,7 +24,7 @@ export function Team() {
       <Title level={2}>{t('landing.team.title')}</Title>
       <Row gutter={16}>
         {items.map((item) => (
-          <Col xs={24} sm={12} md={8}>
+          <Col xs={24} sm={12} md={8} key={item.name}>
             <div className={styles.teamCard}>
               <Card>
                 <Avatar size={64} src={item.image} />

@@ -26,11 +26,11 @@ export function Testimonials() {
     <div className={styles.testimonialsSection}>
       <Title level={2}>{t('landing.testimonials.title')}</Title>
       <Carousel autoplay>
-        {items.map((testimonial, index) => (
-          <Card key={index} className={styles.testimonialCard}>
-            <Avatar src={testimonial.image} size={64} />
-            <Title level={4}>{testimonial.name}</Title>
-            <Text>{testimonial.comment}</Text>
+        {items.map((item) => (
+          <Card key={item.name} className={styles.testimonialCard}>
+            <Avatar src={item.image} size={64} />
+            <Title level={4}>{item.name}</Title>
+            <Text>{item.comment}</Text>
           </Card>
         ))}
       </Carousel>
