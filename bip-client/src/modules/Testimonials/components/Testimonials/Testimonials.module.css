@@ -1,0 +1,11 @@
+.testimonialsSection {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.testimonialCard {
+  width: 300px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 8px;
+}
