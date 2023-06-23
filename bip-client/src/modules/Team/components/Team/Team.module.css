@@ -1,0 +1,21 @@
+.teamSection {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.teamCard {
+  margin-bottom: 16px;
+}
+
+.teamCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.adaptiveTag {
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+}
