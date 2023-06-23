@@ -1,22 +1,97 @@
 {
   "main_menu": [
     { "title": "Main", "path": "" },
+    { "title": "News", "path": "posts" },
     { "title": "About branch", "path": "about" },
     { "title": "Applicant", "path": "applicant" },
     { "title": "Student", "path": "student" },
     { "title": "Achievements", "path": "achievements" }
   ],
+
+  "landing": {
+    "title": "Welcome to the Grodno branch!",
+    "description": "Welcome to the website of the Grodno branch of the Educational Establishment «BIP - University of Law and Social Information Technologies»! On this site you can get all the necessary information about the university.",
+    "button": "More",
+    "features": {
+      "title": "Our advantages",
+      "items": [
+        {
+          "title": "Best location",
+          "description": "The building of the educational institution is located in the very center of the city, a five-minute walk from the bus stop. Nearby are the best sights of Grodno. Near the university there is a beautiful bank of the Neman along with a fountain."
+        },
+        {
+          "title": "Schedule for employees",
+          "description": "The University of Grodno branch provides an individual training plan for students working in their specialty so that students can acquire the necessary skills directly in practice."
+        },
+        {
+          "title": "Newest technologies",
+          "description": "The educational institution provides all students with the use of modern information and communication technologies in teaching for the best development of advanced systems in the legal and economic areas."
+        },
+        {
+          "title": "Scientific conferences",
+          "description": "The best students of the faculties actively participate in research projects, international scientific conferences, demonstrating the acquired skills at the university and winning prizes. Students participate in scientific conferences to exchange knowledge and experience."
+        },
+        {
+          "title": "Practical skills",
+          "description": "The university has the opportunity to acquire practical skills in the scientific and practical laboratory «Legal Clinic» and the voluntary law enforcement squad, seeing the work of professionals live and participating in their kind of activity."
+        },
+        {
+          "title": "Live practices",
+          "description": "Places of practice are based on such places in Grodno as: the courts of Grodno and the Grodno region, the Office of the Investigative Committee for the Grodno region, district inspections of the Ministry of Taxation of the Ministry of Taxes and Taxes of Grodno, the prosecutor's office, the Executive Committees of local Councils of Deputies."
+        }
+      ]
+    },
+    "team": {
+      "title": "Branch management",
+      "items": [
+        {
+          "name": "Filipchik Tatyana Viktorovna",
+          "role": "Director",
+          "phone": "8 (0152) 71-82-89"
+        },
+        {
+          "name": "Murina Elena Edmundovna",
+          "role": "Deputy director for educational work",
+          "phone": "8 (0152) 71-84-47"
+        },
+        {
+          "name": "Kirisyuk Svetlana Petrovna",
+          "role": "Head of the educational and methodological department",
+          "phone": "8 (0152) 71-83-25"
+        }
+      ]
+    },
+
+    "testimonials": {
+      "title": "Reviews of graduates",
+      "items": [
+        {
+          "name": "Victoria Vasilevskaya",
+          "comment": "The university made my childhood dream come true! Now I am a lawyer in the Grodno court. All this would not have been possible without the knowledge and practices that I have acquired here. Great place, great establishment!"
+        },
+        {
+          "name": "Arseny Nikolaevich",
+          "comment": "The tower is what you need. There are a lot of different places nearby that you can visit in between couples. Wonderful dining room, a good arsenal of books in the library. I love studying here!"
+        },
+        {
+          "name": "Daria Babina",
+          "comment": "The university has a wonderful, modern education system. Fresh articles on various topics. It was a pleasure to attend conferences, it is an indescribable experience. I recommend!"
+        }
+      ]
+    }
+  },
+
   "sider_menu": {
     "main": [
-      { "title": "News", "path": "" },
-      { "title": "Gallery", "path": "gallery" },
+      { "title": "News", "path": "posts" },
+      { "title": "Gallery", "path": "posts/gallery" },
       {
         "title": "OVRSM",
         "path": "ovrsm",
         "sub_menu": [
-          { "title": "Clubs, circles, projects", "path": "projects" },
-          { "title": "BRSM", "path": "brsm" },
-          { "title": "SPPS", "path": "consultation" }
+          { "title": "Clubs, circles, projects", "path": "posts/projects" },
+          { "title": "BRSM", "path": "posts/brsm" },
+          { "title": "SPPS", "path": "posts/consultation" }
         ]
       },
       {
@@ -25,24 +100,24 @@
         "sub_menu": [
           {
             "title": "Regulations governing the activities of the primary trade union organization",
-            "path": "regulations"
+            "path": "posts/regulations"
           }
         ]
       },
-      { "title": "Library", "path": "library" },
+      { "title": "Library", "path": "posts/library" },
       {
         "title": "One window",
         "path": "one-window",
         "sub_menu": [
-          { "title": "Contacts", "path": "contacts" },
-          { "title": "Sample applications", "path": "statements" },
+          { "title": "Contacts", "path": "posts/contacts" },
+          { "title": "Sample applications", "path": "posts/statements" },
           {
             "title": "Educational and Methodological Department",
-            "path": "educational-department"
+            "path": "posts/educational-department"
           },
           {
             "title": "Reception of citizens",
-            "path": "reception"
+            "path": "posts/reception"
           }
         ]
       }
