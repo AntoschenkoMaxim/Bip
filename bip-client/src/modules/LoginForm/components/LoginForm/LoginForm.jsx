@@ -1,9 +1,9 @@
-import { Button, Card, Form, Input } from 'antd'
+import { Button, Card, Col, Form, Input, Row, Space } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useNavigate } from 'react-router-dom'
 import { useLoginQuery } from '../../hooks/useLoginQuery'
+import { Link, useNavigate } from 'react-router-dom'
 
-export function LoginForm() {
+export function LoginForm({ onLogin }) {
   const [form] = Form.useForm()
 
   const navigate = useNavigate()
@@ -11,9 +11,9 @@ export function LoginForm() {
   const { mutate: login } = useLoginQuery()
 
   const handleSubmit = (values) => {
-    login(values)
+    const accessToken = login(values)
+    onLogin(accessToken)
     form.resetFields()
-    navigate('/dashboard')
   }
 
   return (
@@ -50,9 +50,16 @@ export function LoginForm() {
         </Form.Item>
 
         <Form.Item style={{ marginBottom: 0 }}>
-          <Button block type='primary' htmlType='submit'>
-            Sign In
-          </Button>
+          <Row style={{ marginBottom: 8 }}>
+            <Button block type='primary' htmlType='submit'>
+              Авторизоваться
+            </Button>
+          </Row>
+          <Row>
+            <Button block type='link'>
+              <Link to={'/auth/registration'}>Зарегистрироваться</Link>
+            </Button>
+          </Row>
         </Form.Item>
       </Form>
     </Card>

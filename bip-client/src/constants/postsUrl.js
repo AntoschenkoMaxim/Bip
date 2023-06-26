@@ -1,1 +1,1 @@
-export const POSTS_URL = `${import.meta.env.VITE_BASE_URL}/posts`
+export const POSTS_URL = `/posts`

@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { ACHIEVEMENTS_URL } from '../constants/achievementsUrl'
+import { api } from './interceptors'
 
 export async function getAllAchievements() {
-  return axios({
+  return api({
     method: 'GET',
     url: ACHIEVEMENTS_URL,
   })

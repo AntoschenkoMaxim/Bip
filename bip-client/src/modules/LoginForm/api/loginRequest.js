@@ -1,11 +1,11 @@
-import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { LOGIN_URL } from '../constants/loginUrl'
 import { message } from 'antd'
+import { api } from '../../../api/interceptors'
 
 export async function loginUser(loginData) {
-  return axios({
+  return api({
     method: 'POST',
-    url: BASE_URL,
+    url: LOGIN_URL,
     data: loginData,
     headers: {
       'Content-Type': 'application/json',

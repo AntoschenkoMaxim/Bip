@@ -28,31 +28,6 @@ export function ImageCategoriesTable() {
       ...getColumnSearchProps('description', 'описанию'),
     },
     {
-      title: 'Изображения',
-      dataIndex: 'images',
-      key: 'images',
-      render: (_, { images }) => (
-        <>
-          {images.length ? (
-            <Image.PreviewGroup>
-              {images.map((item) => {
-                return (
-                  <Image
-                    key={item.id}
-                    src={`${import.meta.env.VITE_BASE_URL}/${item.image}`}
-                    alt='image'
-                    width={100}
-                  />
-                )
-              })}
-            </Image.PreviewGroup>
-          ) : (
-            <Tag color='volcano'>НЕТ ИЗОБРАЖЕНИЙ</Tag>
-          )}
-        </>
-      ),
-    },
-    {
       title: 'Действия',
       dataIndex: 'operations',
       key: 'operations',

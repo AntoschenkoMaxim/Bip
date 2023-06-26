@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { DATES_URL } from '../constants/datesUrl'
+import { api } from './interceptors'
 
 export async function getAllDates() {
-  return axios({
+  return api({
     method: 'GET',
     url: DATES_URL,
   })

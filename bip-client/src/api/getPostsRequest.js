@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { POSTS_URL } from '../constants/postsUrl'
+import { api } from './interceptors'
 
 export async function getAllPosts() {
-  return axios({
+  return api({
     method: 'GET',
     url: POSTS_URL,
   })

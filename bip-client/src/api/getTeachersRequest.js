@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { TEACHERS_URL } from '../constants/teachersUrl'
+import { api } from './interceptors'
 
 export async function getAllTeachers() {
-  return axios({
+  return api({
     method: 'GET',
     url: TEACHERS_URL,
   })

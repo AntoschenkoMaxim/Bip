@@ -16,7 +16,7 @@ export function ActionsColumn({ record, removeItem, showModal }) {
           Удалить
         </Button>
       </Popconfirm>
-      <Button type='link' onClick={() => showModal(record.id)}>
+      <Button type='link' onClick={() => showModal(record)}>
         Изменить
       </Button>
     </Space>

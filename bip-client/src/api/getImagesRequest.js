@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { IMAGES_URL } from '../constants/imagesUrl'
+import { api } from './interceptors'
 
 export async function getAllImages() {
-  return axios({
+  return api({
     method: 'GET',
     url: IMAGES_URL,
   })

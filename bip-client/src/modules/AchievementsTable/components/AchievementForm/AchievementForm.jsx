@@ -1,22 +1,25 @@
 import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from 'react'
-import { useUpdateAchievementByIdQuery } from '../../hooks/useUpdateAchievementByIdQuery'
+import { useEffect, useState } from 'react'
 
-export function UpdateAchievementForm({
+export function AchievementForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
-
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
       setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
@@ -25,30 +28,25 @@ export function UpdateAchievementForm({
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateAchievement } = useUpdateAchievementByIdQuery()
-
-  const getAchievementData = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const achievementData = new FormData()
-    achievementData.append('id', id)
+    if (initialData) {
+      achievementData.append('id', id)
+    }
     achievementData.append('title', values.title)
     achievementData.append('description', values.description)
     achievementData.append('image', file)
-    return achievementData
-  }
-
-  const handleSubmit = (values) => {
-    console.log(values)
-    const achievement = getAchievementData(values)
-    updateAchievement(achievement)
+    onSubmit(achievementData)
     form.resetFields()
     handleOk()
   }
@@ -58,27 +56,26 @@ export function UpdateAchievementForm({
       Закрыть
     </Button>,
     <Button
-      form='update_achievement_form'
+      form='achievement_form'
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {title}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование достижения'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_achievement_form'
+        name='achievement_form'
         form={form}
-        validateMessages={validateMessages}
         onFinish={handleSubmit}
       >
         <Form.Item
@@ -86,6 +83,7 @@ export function UpdateAchievementForm({
           label='Заголовок'
           name='title'
           required
+          initialValue={initialData?.title}
           rules={[{ required: true }]}
         >
           <Input placeholder='Новое достижение' allowClear />
@@ -95,17 +93,16 @@ export function UpdateAchievementForm({
           label='Описание'
           name='description'
           required
+          initialValue={initialData?.description}
           rules={[{ required: true }]}
         >
           <Input.TextArea
             placeholder='Достижение в области науки...'
             allowClear
-            autoSize={{
-              minRows: 3,
-              maxRows: 7,
-            }}
+            autoSize={{ minRows: 3, maxRows: 7 }}
           />
         </Form.Item>
+
         <Form.Item
           name='image'
           label='Изображение'

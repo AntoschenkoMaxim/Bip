@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { SCHEDULES_URL } from '../constants/schedulesUrl'
+import { api } from './interceptors'
 
 export async function getAllSchedules() {
-  return axios({
+  return api({
     method: 'GET',
     url: SCHEDULES_URL,
   })

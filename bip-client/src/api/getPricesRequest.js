@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { PRICES_URL } from '../constants/pricesUrl'
+import { api } from './interceptors'
 
 export async function getAllPrices() {
-  return axios({
+  return api({
     method: 'GET',
     url: PRICES_URL,
   })

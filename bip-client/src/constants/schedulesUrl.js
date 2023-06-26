@@ -1,1 +1,1 @@
-export const SCHEDULES_URL = `${import.meta.env.VITE_BASE_URL}/schedules`
+export const SCHEDULES_URL = `/schedules`

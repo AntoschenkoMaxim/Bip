@@ -1,3 +1,1 @@
-export const IMAGE_CATEGORIES_URL = `${
-  import.meta.env.VITE_BASE_URL
-}/image-categories`
+export const IMAGE_CATEGORIES_URL = `/image-categories`

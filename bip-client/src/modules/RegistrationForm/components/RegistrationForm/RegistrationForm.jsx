@@ -3,14 +3,11 @@ import { useState } from 'react'
 import { steps } from '../../constants/steps'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
-import { useNavigate } from 'react-router-dom'
 import { useRegistrationQuery } from '../../hooks/useRegistrationQuery'
 
-export function RegistrationForm() {
+export function RegistrationForm({ onRegistration }) {
   const [form] = Form.useForm()
   const [current, setCurrent] = useState(0)
-
-  const navigate = useNavigate()
 
   const { mutate: registration } = useRegistrationQuery()
 
@@ -29,10 +26,10 @@ export function RegistrationForm() {
 
   const handleSubmit = (values) => {
     const registrationData = getRegistrationData(values)
-    registration(registrationData)
+    const accessToken = registration(registrationData)
+    onRegistration(accessToken)
     setCurrent(0)
     form.resetFields()
-    navigate('/dashboard')
   }
 
   const items = steps.map((step) => ({
@@ -89,7 +86,7 @@ export function RegistrationForm() {
 
             <Form.Item
               name='password'
-              label='Password'
+              label='Пароль'
               required
               rules={[{ required: true }]}
             >
@@ -98,7 +95,7 @@ export function RegistrationForm() {
 
             <Form.Item
               name='confirm'
-              label='Confirm Password'
+              label='Подтвердите пароль'
               dependencies={['password']}
               hasFeedback
               rules={[
@@ -120,7 +117,7 @@ export function RegistrationForm() {
         {current === 1 && (
           <>
             <Form.Item
-              label='First Name'
+              label='Имя'
               name='firstName'
               required
               rules={[{ required: true }]}
@@ -129,7 +126,7 @@ export function RegistrationForm() {
             </Form.Item>
 
             <Form.Item
-              label='Last name'
+              label='Фамилия'
               name='lastName'
               required
               rules={[{ required: true }]}
@@ -138,7 +135,7 @@ export function RegistrationForm() {
             </Form.Item>
 
             <Form.Item
-              label='Surname'
+              label='Отчество'
               name='surname'
               required
               rules={[{ required: true }]}

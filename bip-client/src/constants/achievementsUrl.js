@@ -1,1 +1,1 @@
-export const ACHIEVEMENTS_URL = `${import.meta.env.VITE_BASE_URL}/achievements`
+export const ACHIEVEMENTS_URL = `/achievements`

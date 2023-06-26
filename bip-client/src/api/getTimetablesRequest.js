@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { TIMETABLES_URL } from '../constants/timetablesUrl'
+import { api } from './interceptors'
 
 export async function getAllTimetables() {
-  return axios({
+  return api({
     method: 'GET',
     url: TIMETABLES_URL,
   })

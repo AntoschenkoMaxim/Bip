@@ -1,11 +1,11 @@
-import axios from 'axios'
-import { BASE_URL } from '../constants/baseUrl'
+import { REGISTRATION_URL } from '../constants/registrationUrl'
 import { message } from 'antd'
+import { api } from '../../../api/interceptors'
 
 export async function userRegistration(registrationData) {
-  return axios({
+  return api({
     method: 'POST',
-    url: BASE_URL,
+    url: REGISTRATION_URL,
     data: registrationData,
     headers: {
       'Content-Type': 'application/json',

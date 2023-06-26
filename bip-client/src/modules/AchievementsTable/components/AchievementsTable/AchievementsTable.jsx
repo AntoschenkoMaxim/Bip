@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Image, Table, Tooltip } from 'antd'
 import { useState } from 'react'
-import { UpdateAchievementForm } from '../UpdateAchievementForm/UpdateAchievementForm'
 import { useRemoveAchievementByIdQuery } from '../../hooks/useRemoveAchievementByIdQuery'
 import { useGetAllAchievementsQuery } from '../../../../hooks/useGetAllAchievementsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { AchievementForm } from '../AchievementForm/AchievementForm'
+import { useUpdateAchievementByIdQuery } from '../../hooks/useUpdateAchievementByIdQuery'
+import { useCreateAchievementQuery } from '../../hooks/useCreateAchievementQuery'
 
 export function AchievementsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -57,32 +59,59 @@ export function AchievementsTable() {
           <ActionsColumn
             record={record}
             removeItem={removeAchievement}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = (id) => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: achievements, isSuccess } = useGetAllAchievementsQuery()
+
+  const { mutate: createAchievement } = useCreateAchievementQuery()
+
+  const { mutate: updateAchievement } = useUpdateAchievementByIdQuery()
 
   const { mutate: removeAchievement } = useRemoveAchievementByIdQuery()
 
   return (
     <>
-      <UpdateAchievementForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить достижение</Button>
+      <AchievementForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание достижения'
+        onSubmit={createAchievement}
       />
+      <Divider />
+      {selectedRecord && (
+        <AchievementForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование достижения'
+          initialData={{
+            title: selectedRecord.title,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateAchievement}
+        />
+      )}
+
       {isSuccess && (
         <Badge count={achievements?.count} color='blue'>
           <Table

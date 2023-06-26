@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import { LoginForm } from './modules/LoginForm/components/LoginForm/LoginForm'
 import { RegistrationForm } from './modules/RegistrationForm/components/RegistrationForm/RegistrationForm'
 import { ImagesPage } from './pages/Images/components/ImagesPage'
@@ -67,8 +67,9 @@ import { Timetables } from './modules/Timetables'
 import { TimetablesPage } from './pages/Timetables/components/TimetablesPage'
 import { PricesPage } from './pages/Prices/components/PricesPage'
 import { Reception } from './modules/Reception'
-import { Hero } from './modules/Hero'
 import { LandingPage } from './pages/Landing/components/LandingPage'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 function App() {
   const { t } = useTranslation()
@@ -156,6 +157,30 @@ function App() {
       )
   )
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const accessToken = Cookies.get('accessToken')
+    if (accessToken) {
+      setIsLoggedIn(true)
+    }
+  }, [])
+
+  const handleRegistration = (accessToken) => {
+    Cookies.set('accessToken', accessToken)
+    setIsLoggedIn(true)
+  }
+
+  const handleLogin = (accessToken) => {
+    Cookies.set('accessToken', accessToken)
+    setIsLoggedIn(true)
+  }
+
+  const handleLogout = () => {
+    Cookies.remove('accessToken')
+    setIsLoggedIn(false)
+  }
+
   return (
     <>
       <Routes>
@@ -198,28 +223,52 @@ function App() {
             <Route index element={<Achievements />} />
           </Route>
         </Route>
-        <Route path='/auth/login' element={<LoginForm />} />
-        <Route path='/auth/registration' element={<RegistrationForm />} />
-        <Route
-          path='/dashboard'
-          element={<DashboardLayoutPage items={dashboardItems} />}
-        >
-          <Route index element={<LoginForm />} />
-          <Route path='teachers' element={<TeachersPage />} />
-          <Route path='departments' element={<DepartmentsPage />} />
-          <Route path='lessons' element={<LessonsPage />} />
-          <Route path='post-categories' element={<PostCategoriesPage />} />
-          <Route path='posts' element={<PostsPage />} />
-          <Route path='image-categories' element={<ImageCategoriesPage />} />
-          <Route path='images' element={<ImagesPage />} />
-          <Route path='timetables' element={<TimetablesPage />} />
-          <Route path='achievements' element={<AchievementsPage />} />
-          <Route path='statements' element={<StatementsPage />} />
-          <Route path='dates' element={<DatesPage />} />
-          <Route path='admissions' element={<AdmissionsPage />} />
-          <Route path='schedules' element={<SchedulesPage />} />
-          <Route path='prices' element={<PricesPage />} />
-        </Route>
+        {isLoggedIn ? (
+          <Route path='*' element={<Navigate to='/dashboard' replace />} />
+        ) : (
+          <Route
+            path='/auth/login'
+            element={<LoginForm onLogin={handleLogin} />}
+          />
+        )}
+        {isLoggedIn ? (
+          <Route path='*' element={<Navigate to='/dashboard' replace />} />
+        ) : (
+          <Route
+            path='/auth/registration'
+            element={<RegistrationForm onRegistration={handleRegistration} />}
+          />
+        )}
+        {isLoggedIn ? (
+          <Route
+            path='/dashboard'
+            element={
+              <DashboardLayoutPage
+                items={dashboardItems}
+                onLogout={handleLogout}
+              />
+            }
+          >
+            <Route index element={<LoginForm />} />
+            <Route path='teachers' element={<TeachersPage />} />
+            <Route path='departments' element={<DepartmentsPage />} />
+            <Route path='lessons' element={<LessonsPage />} />
+            <Route path='post-categories' element={<PostCategoriesPage />} />
+            <Route path='posts' element={<PostsPage />} />
+            <Route path='image-categories' element={<ImageCategoriesPage />} />
+            <Route path='images' element={<ImagesPage />} />
+            <Route path='timetables' element={<TimetablesPage />} />
+            <Route path='achievements' element={<AchievementsPage />} />
+            <Route path='statements' element={<StatementsPage />} />
+            <Route path='dates' element={<DatesPage />} />
+            <Route path='admissions' element={<AdmissionsPage />} />
+            <Route path='schedules' element={<SchedulesPage />} />
+            <Route path='prices' element={<PricesPage />} />
+          </Route>
+        ) : (
+          <Route path='*' element={<Navigate to='/auth/login' replace />} />
+        )}
+
         {/* <Route path='*' element={<NotFoundPage />} /> */}
       </Routes>
     </>

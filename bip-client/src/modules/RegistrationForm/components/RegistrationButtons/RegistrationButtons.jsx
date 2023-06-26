@@ -6,21 +6,21 @@ export function RegistrationButtons({ current, next, prev }) {
     <>
       {current < steps.length - 1 && (
         <Button block type='primary' onClick={() => next()}>
-          Next
+          Следующий
         </Button>
       )}
       <Row gutter={16}>
         <Col span={12}>
           {current > 0 && (
             <Button block type='dashed' onClick={() => prev()}>
-              Previous
+              Предыдущий
             </Button>
           )}
         </Col>
         <Col span={12}>
           {current === steps.length - 1 && (
             <Button block type='primary' htmlType='submit'>
-              Done
+              Начать
             </Button>
           )}
         </Col>

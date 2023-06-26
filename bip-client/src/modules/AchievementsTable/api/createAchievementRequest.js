@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { ACHIEVEMENTS_URL } from '../../../constants/achievementsUrl'
+import { api } from '../../../api/interceptors'
 
 export async function createAchievement(postData) {
-  return axios({
+  return api({
     method: 'POST',
     url: ACHIEVEMENTS_URL,
     data: postData,
