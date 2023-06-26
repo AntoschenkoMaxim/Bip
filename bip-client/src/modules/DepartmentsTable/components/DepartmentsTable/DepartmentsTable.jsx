@@ -1,10 +1,13 @@
-import { Badge, Popconfirm, Space, Table, Tag } from 'antd'
+import { Badge, Button, Divider, Space, Table, Tag } from 'antd'
 import { useState } from 'react'
-import { UpdateDepartmentForm } from '../UpdateDepartmentForm/UpdateDepartmentForm'
 import { useRemoveDepartmentByIdQuery } from '../../hooks/useRemoveDepartmentByIdQuery'
 import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { DepartmentForm } from '../DepartmentForm/DepartmentForm'
+import { useCreateDepartmentQuery } from '../../hooks/useCreateDepartmentQuery'
+import { useUpdateDepartmentByIdQuery } from '../../hooks/useUpdateDepartmentByIdQuery'
+import { AddLessonForm } from '../AddLessonForm/AddLessonForm'
 
 export function DepartmentsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -57,32 +60,72 @@ export function DepartmentsTable() {
           <ActionsColumn
             record={record}
             removeItem={removeDepartment}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showAddModal = () => {
+    setIsAddModalOpen(true)
+  }
+
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: departments, isSuccess } = useGetAllDepartmentsQuery()
+
+  const { mutate: createDepartment } = useCreateDepartmentQuery()
+
+  const { mutate: updateDepartment } = useUpdateDepartmentByIdQuery()
 
   const { mutate: removeDepartment } = useRemoveDepartmentByIdQuery()
 
   return (
     <>
-      <UpdateDepartmentForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Space>
+        <Button onClick={showCreateModal}>Добавить кафедру</Button>
+        <Button onClick={showAddModal}>Добавить предмет</Button>
+      </Space>
+      <AddLessonForm
+        isAddModalOpen={isAddModalOpen}
+        setIsAddModalOpen={setIsAddModalOpen}
       />
+      <DepartmentForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание кафедры'
+        btnTitle='Создать'
+        onSubmit={createDepartment}
+      />
+      <Divider />
+      {selectedRecord && (
+        <DepartmentForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование кафедры'
+          btnTitle='Обновить'
+          initialData={{
+            value: selectedRecord.value,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateDepartment}
+        />
+      )}
       {isSuccess && (
         <Badge count={departments?.count} color='blue'>
           <Table

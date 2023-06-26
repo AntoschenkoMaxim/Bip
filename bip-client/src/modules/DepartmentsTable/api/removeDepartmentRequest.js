@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { DEPARTMENTS_URL } from '../../../constants/departmentsUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removeDepartmentById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${DEPARTMENTS_URL}/${id}`,
   })

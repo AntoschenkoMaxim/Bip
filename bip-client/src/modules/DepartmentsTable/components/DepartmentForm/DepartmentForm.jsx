@@ -1,24 +1,25 @@
 import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useUpdateDepartmentByIdQuery } from '../../hooks/useUpdateDepartmentByIdQuery'
 
-export function UpdateDepartmentForm({
+export function DepartmentForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
 
-  const { mutate: updateDepartment } = useUpdateDepartmentByIdQuery()
-
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
@@ -31,9 +32,10 @@ export function UpdateDepartmentForm({
     return department
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const department = getDepartmentData(values)
-    updateDepartment(department)
+    onSubmit(department)
     form.resetFields()
     handleOk()
   }
@@ -43,25 +45,25 @@ export function UpdateDepartmentForm({
       Закрыть
     </Button>,
     <Button
-      form='update_department_form'
+      form='department_form'
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование предмета'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_department_form'
+        name='department_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -71,6 +73,7 @@ export function UpdateDepartmentForm({
           name='value'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.value}
         >
           <Input placeholder='math' allowClear />
         </Form.Item>
@@ -80,6 +83,7 @@ export function UpdateDepartmentForm({
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input placeholder='Кафедра математики' allowClear />
         </Form.Item>

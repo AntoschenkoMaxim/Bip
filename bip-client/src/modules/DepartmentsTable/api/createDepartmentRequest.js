@@ -1,11 +1,10 @@
 import { DEPARTMENTS_URL } from '../../../constants/departmentsUrl'
 import { api } from '../../../api/interceptors'
 
-export async function updateDepartmentById(departmentData) {
-  const id = departmentData.id
+export async function createDepartment(departmentData) {
   return api({
-    method: 'PATCH',
-    url: `${DEPARTMENTS_URL}/${id}`,
+    method: 'POST',
+    url: DEPARTMENTS_URL,
     data: departmentData,
     headers: {
       'Content-Type': 'application/json',
