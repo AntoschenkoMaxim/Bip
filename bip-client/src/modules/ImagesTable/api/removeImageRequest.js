@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { IMAGES_URL } from '../../../constants/imagesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removeImageById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${IMAGES_URL}/${id}`,
   })

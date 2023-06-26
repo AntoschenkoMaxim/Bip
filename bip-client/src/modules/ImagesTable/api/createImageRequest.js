@@ -1,11 +1,10 @@
 import { IMAGES_URL } from '../../../constants/imagesUrl'
 import { api } from '../../../api/interceptors'
 
-export async function updateImageById(imageData) {
-  const id = imageData.get('id')
+export async function createImage(imageData) {
   return api({
-    method: 'PATCH',
-    url: `${IMAGES_URL}/${id}`,
+    method: 'POST',
+    url: IMAGES_URL,
     data: imageData,
     headers: {
       'Content-Type': 'multipart/form-data',

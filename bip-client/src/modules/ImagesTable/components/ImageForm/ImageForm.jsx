@@ -3,31 +3,40 @@ import { useState } from 'react'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
-import { useUpdateImageByIdQuery } from '../../hooks/useUpdateImageByIdQuery'
 
-export function UpdateImageForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function ImageForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
-
-  const handleCancel = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const handleOk = () => {
-    setId(null)
-    setIsModalOpen(false)
-  }
-
-  const [file, setFile] = useState()
+  const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
-      setFile()
+      setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
       return false
     },
+  }
+
+  const handleCancel = () => {
+    setSelectedRecord(null)
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    setSelectedRecord(null)
+    setIsModalOpen(false)
   }
 
   const { data: imageCategories, isSuccess } = useGetAllImageCategoriesQuery()
@@ -37,20 +46,16 @@ export function UpdateImageForm({ id, setId, isModalOpen, setIsModalOpen }) {
     label: item.description,
   }))
 
-  const { mutate: updateImage } = useUpdateImageByIdQuery()
-
-  const getImageData = (values) => {
-    const formData = new FormData()
-    formData.append('id', id)
-    formData.append('title', values.title)
-    formData.append('categoryId', values.categoryId)
-    formData.append('image', file)
-    return formData
-  }
-
-  const handleSubmit = (values) => {
-    const image = getImageData(values)
-    updateImage(image)
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
+    const imageData = new FormData()
+    if (initialData) {
+      imageData.append('id', id)
+    }
+    imageData.append('title', values.title)
+    imageData.append('categoryId', values.categoryId)
+    imageData.append('image', file)
+    onSubmit(imageData)
     form.resetFields()
     handleOk()
   }
@@ -59,26 +64,21 @@ export function UpdateImageForm({ id, setId, isModalOpen, setIsModalOpen }) {
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_image_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='image_form' key='submit' type='primary' htmlType='submit'>
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование предмета'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_image_form'
+        name='image_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -88,6 +88,7 @@ export function UpdateImageForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input placeholder='Олимпиада' allowClear />
         </Form.Item>

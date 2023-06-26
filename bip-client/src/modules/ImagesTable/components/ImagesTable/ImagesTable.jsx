@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { UpdateImageForm } from '../UpdateImageForm/UpdateImageForm'
 import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
 import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { useUpdateImageByIdQuery } from '../../hooks/useUpdateImageByIdQuery'
+import { useCreateImageQuery } from '../../hooks/useCreateImageQuery'
+import { ImageForm } from '../ImageForm/ImageForm'
 
 export function ImagesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -20,11 +22,6 @@ export function ImagesTable() {
       dataIndex: 'title',
       key: 'title',
       ...getColumnSearchProps('title', 'заголовку'),
-    },
-    {
-      title: 'Категория',
-      dataIndex: 'categoryId',
-      key: 'categoryId',
     },
     {
       title: 'Изображение',
@@ -47,32 +44,60 @@ export function ImagesTable() {
           <ActionsColumn
             record={record}
             removeItem={removeImage}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: images, isSuccess } = useGetAllImagesQuery()
+
+  const { mutate: createImage } = useCreateImageQuery()
+
+  const { mutate: updateImage } = useUpdateImageByIdQuery()
 
   const { mutate: removeImage } = useRemoveImageByIdQuery()
 
   return (
     <>
-      <UpdateImageForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить изображение</Button>
+      <ImageForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание изображения'
+        btnTitle='Создать'
+        onSubmit={createImage}
       />
+      <Divider />
+      {selectedRecord && (
+        <ImageForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование изображения'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateImage}
+        />
+      )}
       {isSuccess && (
         <Badge count={images?.count} color='blue'>
           <Table
