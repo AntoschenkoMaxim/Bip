@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { IMAGE_CATEGORIES_URL } from '../../../constants/imageCategoriesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function updateImageCategoryById(categoryData) {
   const id = categoryData.id
-  return axios({
+  return api({
     method: 'PATCH',
     url: `${IMAGE_CATEGORIES_URL}/${id}`,
     data: categoryData,

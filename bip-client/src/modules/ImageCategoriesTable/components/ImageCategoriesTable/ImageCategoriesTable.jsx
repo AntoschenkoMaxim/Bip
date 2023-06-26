@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tag } from 'antd'
-import { UpdateImageCategoryForm } from '../UpdateCategoryForm/UpdateImageCategoryForm'
+import { Badge, Button, Divider, Table } from 'antd'
+import { ImageCategoryForm } from '../ImageCategoryForm/ImageCategoryForm'
 import { useState } from 'react'
 import { useRemoveImageCategoryByIdQuery } from '../../hooks/useRemoveImageCategoryByIdQuery'
 import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { useUpdateImageCategoryByIdQuery } from '../../hooks/useUpdateImageCategoryByIdQuery'
+import { useCreateImageCategoryQuery } from '../../hooks/useCreateImageCategoryQuery'
 
 export function ImageCategoriesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -35,33 +37,61 @@ export function ImageCategoriesTable() {
         imageCategories?.rows.length >= 1 ? (
           <ActionsColumn
             record={record}
-            removeItem={removeCategory}
-            showModal={showModal}
+            removeItem={removeImageCategory}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: imageCategories, isSuccess } = useGetAllImageCategoriesQuery()
 
-  const { mutate: removeCategory } = useRemoveImageCategoryByIdQuery()
+  const { mutate: createImageCategory } = useCreateImageCategoryQuery()
+
+  const { mutate: updateImageCategory } = useUpdateImageCategoryByIdQuery()
+
+  const { mutate: removeImageCategory } = useRemoveImageCategoryByIdQuery()
 
   return (
     <>
-      <UpdateImageCategoryForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить категорию</Button>
+      <ImageCategoryForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание категории'
+        btnTitle='Создать'
+        onSubmit={createImageCategory}
       />
+      <Divider />
+      {selectedRecord && (
+        <ImageCategoryForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование категории'
+          btnTitle='Обновить'
+          initialData={{
+            value: selectedRecord.value,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateImageCategory}
+        />
+      )}
       {isSuccess && (
         <Badge count={imageCategories?.count} color='blue'>
           <Table

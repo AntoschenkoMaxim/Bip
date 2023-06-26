@@ -1,39 +1,41 @@
 import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useUpdateImageCategoryByIdQuery } from '../../hooks/useUpdateImageCategoryByIdQuery'
 
-export function UpdateImageCategoryForm({
+export function ImageCategoryForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateCategory } = useUpdateImageCategoryByIdQuery()
-
-  const getCategoryData = (values) => {
-    const category = {
+  const getImageCategoryData = (values) => {
+    const imageCategory = {
       id: id,
       value: values.value,
       description: values.description,
     }
-    return category
+    return imageCategory
   }
 
-  const handleSubmit = (values) => {
-    const category = getCategoryData(values)
-    updateCategory(category)
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
+    const imageCategory = getImageCategoryData(values)
+    onSubmit(imageCategory)
     form.resetFields()
     handleOk()
   }
@@ -43,25 +45,25 @@ export function UpdateImageCategoryForm({
       Закрыть
     </Button>,
     <Button
-      form='update_category_form'
+      form='image_category_form'
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование категории'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_category_form'
+        name='image_category_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -71,6 +73,7 @@ export function UpdateImageCategoryForm({
           name='value'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.value}
         >
           <Input placeholder='new' allowClear />
         </Form.Item>
@@ -80,6 +83,7 @@ export function UpdateImageCategoryForm({
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input placeholder='Новые' allowClear />
         </Form.Item>
