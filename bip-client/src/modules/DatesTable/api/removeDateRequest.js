@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { DATES_URL } from '../../../constants/datesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removeDateById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${DATES_URL}/${id}`,
     headers: {

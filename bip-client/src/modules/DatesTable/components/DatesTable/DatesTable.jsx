@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { UpdateDateForm } from '../UpdateDatesForm/UpdateDatesForm'
 import { useRemoveDateByIdQuery } from '../../hooks/useRemoveDateByIdQuery'
 import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { DateForm } from '../DateForm/DateForm'
+import { useUpdateDateByIdQuery } from '../../hooks/useUpdateDateByIdQuery'
+import { useCreateDateQuery } from '../../hooks/useCreateDateQuery'
 
 export function DatesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -43,32 +45,59 @@ export function DatesTable() {
           <ActionsColumn
             record={record}
             removeItem={removeDate}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: dates, isSuccess } = useGetAllDatesQuery()
+
+  const { mutate: createDate } = useCreateDateQuery()
+
+  const { mutate: updateDate } = useUpdateDateByIdQuery()
 
   const { mutate: removeDate } = useRemoveDateByIdQuery()
 
   return (
     <>
-      <UpdateDateForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить срок поступления</Button>
+      <DateForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание срока поступления'
+        btnTitle='Создать'
+        onSubmit={createDate}
       />
+      <Divider />
+      {selectedRecord && (
+        <DateForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование срока поступления'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+          }}
+          onSubmit={updateDate}
+        />
+      )}
       {isSuccess && (
         <Badge count={dates?.count} color='blue'>
           <Table

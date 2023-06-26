@@ -1,11 +1,10 @@
 import { DATES_URL } from '../../../constants/datesUrl'
 import { api } from '../../../api/interceptors'
 
-export async function updateDateById(dateData) {
-  const id = dateData.get('id')
+export async function createDate(dateData) {
   return api({
-    method: 'PATCH',
-    url: `${DATES_URL}/${id}`,
+    method: 'POST',
+    url: DATES_URL,
     data: dateData,
     headers: {
       'Content-Type': 'multipart/form-data',

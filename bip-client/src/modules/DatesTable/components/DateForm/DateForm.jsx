@@ -2,16 +2,25 @@ import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdateDateByIdQuery } from '../../hooks/useUpdateDateByIdQuery'
 
-export function UpdateDateForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function DateForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
-
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
       setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
@@ -20,28 +29,24 @@ export function UpdateDateForm({ id, setId, isModalOpen, setIsModalOpen }) {
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateDate } = useUpdateDateByIdQuery()
-
-  const getDateData = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const dateData = new FormData()
-    dateData.append('id', id)
+    if (initialData) {
+      dateData.append('id', id)
+    }
     dateData.append('title', values.title)
     dateData.append('image', file)
-    return dateData
-  }
-
-  const handleSubmit = (values) => {
-    const date = getDateData(values)
-    updateDate(date)
+    onSubmit(dateData)
     form.resetFields()
     handleOk()
   }
@@ -50,26 +55,21 @@ export function UpdateDateForm({ id, setId, isModalOpen, setIsModalOpen }) {
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_date_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='date_form' key='submit' type='primary' htmlType='submit'>
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование сроков'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_date_form'
+        name='date_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -80,6 +80,7 @@ export function UpdateDateForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input placeholder='Сроки вступления на 2023 год' allowClear />
         </Form.Item>
