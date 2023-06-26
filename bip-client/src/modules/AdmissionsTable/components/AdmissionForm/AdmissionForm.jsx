@@ -2,21 +2,24 @@ import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdateAdmissionByIdQuery } from '../../hooks/useUpdateAdmissionByIdQuery'
 
-export function UpdateAdmissionForm({
+export function AdmissionForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
-
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
       setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
@@ -25,29 +28,25 @@ export function UpdateAdmissionForm({
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateAdmission } = useUpdateAdmissionByIdQuery()
-
-  const getAdmissionData = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const admissionData = new FormData()
-    admissionData.append('id', id)
+    if (initialData) {
+      admissionData.append('id', id)
+    }
     admissionData.append('title', values.title)
     admissionData.append('description', values.description)
     admissionData.append('image', file)
-    return admissionData
-  }
-
-  const handleSubmit = (values) => {
-    const admission = getAdmissionData(values)
-    updateAdmission(admission)
+    onSubmit(admissionData)
     form.resetFields()
     handleOk()
   }
@@ -56,26 +55,21 @@ export function UpdateAdmissionForm({
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_admission_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='admission_form' key='submit' type='primary' htmlType='submit'>
+      {title}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование порядка приема'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_admission_form'
+        name='admission_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -86,6 +80,7 @@ export function UpdateAdmissionForm({
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input placeholder='Порядок приема на 2023 год' allowClear />
         </Form.Item>
@@ -94,6 +89,7 @@ export function UpdateAdmissionForm({
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input.TextArea
             placeholder='В 2023 году будет осуществляться прием...'

@@ -1,12 +1,13 @@
 import { ADMISSIONS_URL } from '../../../constants/admissionsUrl'
 import { api } from '../../../api/interceptors'
 
-export async function removeAdmissionById(id) {
+export async function createAdmission(admissionData) {
   return api({
-    method: 'DELETE',
-    url: `${ADMISSIONS_URL}/${id}`,
+    method: 'POST',
+    url: ADMISSIONS_URL,
+    data: admissionData,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
     .then((response) => response.data)
