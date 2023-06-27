@@ -1,10 +1,12 @@
-import { Badge, Popconfirm, Space, Table } from 'antd'
-import { UpdateLessonForm } from '../UpdateLessonForm/UpdateLessonForm'
+import { Badge, Button, Divider, Popconfirm, Space, Table } from 'antd'
 import { useState } from 'react'
 import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
 import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { LessonForm } from '../LessonForm/LessonForm'
+import { useUpdateLessonByIdQuery } from '../../hooks/useUpdateLessonByIdQuery'
+import { useCreateLessonQuery } from '../../hooks/useCreateLessonQuery'
 
 export function LessonsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -36,32 +38,63 @@ export function LessonsTable() {
           <ActionsColumn
             record={record}
             removeItem={removeLesson}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setSelectedRecord(null)
+    setIsCreateModalOpen(true)
   }
 
   const { data: lessons, isSuccess } = useGetAllLessonsQuery()
+
+  const { mutate: createLesson } = useCreateLessonQuery()
+
+  const { mutate: updateLesson } = useUpdateLessonByIdQuery()
 
   const { mutate: removeLesson } = useRemoveLessonByIdQuery()
 
   return (
     <>
-      <UpdateLessonForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить предмет</Button>
+      <LessonForm
+        key='create'
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание предмета'
+        btnTitle='Создать'
+        onSubmit={createLesson}
       />
+      <Divider />
+      {selectedRecord && (
+        <LessonForm
+          key='update'
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Обновление предмета'
+          btnTitle='Обновить'
+          initialData={{
+            value: selectedRecord.value,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateLesson}
+        />
+      )}
       {isSuccess && (
         <Badge count={lessons?.count} color='blue'>
           <Table

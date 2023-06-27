@@ -1,24 +1,31 @@
 import { Button, Form, Input, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useUpdateLessonByIdQuery } from '../../hooks/useUpdateLessonByIdQuery'
 import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
 
-export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function LessonForm({
+  key,
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
 
-  const { mutate: updateLesson } = useUpdateLessonByIdQuery()
-
-  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
-
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
+
+  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
 
   const options = teachers?.rows.map((item) => ({
     value: item.id,
@@ -35,9 +42,10 @@ export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
     return lesson
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const lesson = getLessonData(values)
-    updateLesson(lesson)
+    onSubmit(lesson)
     form.resetFields()
     handleOk()
   }
@@ -46,26 +54,21 @@ export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_lesson_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='lesson_form' key='submit' type='primary' htmlType='submit'>
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование предмета'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_lesson_form'
+        name='lesson_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -75,6 +78,7 @@ export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='value'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.value}
         >
           <Input placeholder='new' allowClear />
         </Form.Item>
@@ -84,6 +88,7 @@ export function UpdateLessonForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input placeholder='Новые' allowClear />
         </Form.Item>

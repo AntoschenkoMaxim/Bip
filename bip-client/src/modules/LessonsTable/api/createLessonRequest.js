@@ -1,10 +1,10 @@
 import { LESSONS_URL } from '../../../constants/lessonsUrl'
 import { api } from '../../../api/interceptors'
 
-export async function updateLessonById(lessonData) {
+export async function createLesson(lessonData) {
   return api({
-    method: 'PATCH',
-    url: `${LESSONS_URL}/${lessonData.id}`,
+    method: 'POST',
+    url: LESSONS_URL,
     data: lessonData,
     headers: {
       'Content-Type': 'application/json',
