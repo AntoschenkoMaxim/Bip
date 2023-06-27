@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { POSTS_URL } from '../../../constants/postsUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removePostById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${POSTS_URL}/${id}`,
     headers: {

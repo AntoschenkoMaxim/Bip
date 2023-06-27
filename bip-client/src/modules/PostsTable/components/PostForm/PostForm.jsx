@@ -1,18 +1,27 @@
-import { Button, Form, Input, Modal, Select, Upload, message } from 'antd'
+import { Button, DatePicker, Form, Input, Modal, Select, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdatePostQuery } from '../../hooks/useUpdatePostQuery'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 
-export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function PostForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
-
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
       setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
@@ -21,12 +30,12 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
@@ -37,21 +46,24 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
     label: item.description,
   }))
 
-  const { mutate: updatePost } = useUpdatePostQuery()
-
   const getPostData = (values) => {
+    const date = values.date.toISOString()
     const postData = new FormData()
-    postData.append('id', id)
+    if (initialData) {
+      postData.append('id', id)
+    }
     postData.append('title', values.title)
     postData.append('description', values.description)
+    postData.append('date', date)
     postData.append('postsCategoryId', values.postsCategoryId)
     postData.append('image', file)
     return postData
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const post = getPostData(values)
-    updatePost(post)
+    onSubmit(post)
     form.resetFields()
     handleOk()
   }
@@ -60,26 +72,21 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_post_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='post_form' key='submit' type='primary' htmlType='submit'>
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование новости'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_post_form'
+        name='post_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -90,6 +97,7 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input placeholder='Новая новость' allowClear />
         </Form.Item>
@@ -99,6 +107,7 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input.TextArea
             placeholder='Новость о наших успехах...'
@@ -108,6 +117,15 @@ export function UpdatePostForm({ id, setId, isModalOpen, setIsModalOpen }) {
               maxRows: 7,
             }}
           />
+        </Form.Item>
+        <Form.Item
+          key='date'
+          label='Дата'
+          name='date'
+          required
+          rules={[{ required: true }]}
+        >
+          <DatePicker placeholder='Выберите дату' format='YYYY-MM-DD' />
         </Form.Item>
         <Form.Item
           label='Категория'

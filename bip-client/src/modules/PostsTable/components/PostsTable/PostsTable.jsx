@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Image, Table, Tooltip } from 'antd'
 import { useState } from 'react'
-import { UpdatePostForm } from '../UpdatePostForm/UpdatePostForm'
+import { PostForm } from '../PostForm/PostForm'
 import { useRemovePostByIdQuery } from '../../hooks/useRemovePostByIdQuery'
 import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { useUpdatePostQuery } from '../../hooks/useUpdatePostQuery'
+import { useCreatePostQuery } from '../../hooks/useCreatePostQuery'
 
 export function PostsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -36,6 +38,11 @@ export function PostsTable() {
       ...getColumnSearchProps('description', 'описанию'),
     },
     {
+      title: 'Дата',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
       title: 'Изображение',
       dataIndex: 'image',
       key: 'image',
@@ -56,32 +63,61 @@ export function PostsTable() {
           <ActionsColumn
             record={record}
             removeItem={removePost}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: posts, isSuccess } = useGetAllPostsQuery()
+
+  const { mutate: createPost } = useCreatePostQuery()
+
+  const { mutate: updatePost } = useUpdatePostQuery()
 
   const { mutate: removePost } = useRemovePostByIdQuery()
 
   return (
     <>
-      <UpdatePostForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить новость</Button>
+      <PostForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание новости'
+        btnTitle='Создать'
+        onSubmit={createPost}
       />
+      <Divider />
+      {selectedRecord && (
+        <PostForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование новости'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            description: selectedRecord.description,
+            date: selectedRecord.date,
+          }}
+          onSubmit={updatePost}
+        />
+      )}
       {isSuccess && (
         <Badge count={posts?.count} color='blue'>
           <Table
