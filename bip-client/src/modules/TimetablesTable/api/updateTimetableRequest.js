@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { TIMETABLES_URL } from '../../../constants/timetablesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function updateTimetableById(timetableData) {
   const id = timetableData.get('id')
-  return axios({
+  return api({
     method: 'PATCH',
     url: `${TIMETABLES_URL}/${id}`,
     data: timetableData,

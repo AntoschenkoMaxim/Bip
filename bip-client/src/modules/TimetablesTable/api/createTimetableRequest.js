@@ -1,12 +1,13 @@
 import { TIMETABLES_URL } from '../../../constants/timetablesUrl'
 import { api } from '../../../api/interceptors'
 
-export async function removeTimetableById(id) {
+export async function createTimetable(timetableData) {
   return api({
-    method: 'DELETE',
-    url: `${TIMETABLES_URL}/${id}`,
+    method: 'POST',
+    url: TIMETABLES_URL,
+    data: timetableData,
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
     .then((response) => response.data)

@@ -1,10 +1,12 @@
-import { Badge, Image, Table } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { UpdateTimetableForm } from '../UpdateTimetableForm/UpdateTimetableForm'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useGetAllTimetablesQuery } from '../../../../hooks/useGetAllTimetablesQuery'
 import { useRemoveTimetableByIdQuery } from '../../hooks/useRemoveTimetableByIdQuery'
+import { useUpdateTimetableByIdQuery } from '../../hooks/useUpdateTimetableByIdQuery'
+import { useCreateTimetableQuery } from '../../hooks/useCreateTimetableQuery'
+import { TimetableForm } from '../TimetableForm/TimetableForm'
 
 export function TimetablesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -42,32 +44,60 @@ export function TimetablesTable() {
           <ActionsColumn
             record={record}
             removeItem={removeTimetable}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: timetables, isSuccess } = useGetAllTimetablesQuery()
+
+  const { mutate: createTimetable } = useCreateTimetableQuery()
+
+  const { mutate: updateTimetable } = useUpdateTimetableByIdQuery()
 
   const { mutate: removeTimetable } = useRemoveTimetableByIdQuery()
 
   return (
     <>
-      <UpdateTimetableForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить расписание</Button>
+      <TimetableForm
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание расписания'
+        btnTitle='Создать'
+        onSubmit={createTimetable}
       />
+      <Divider />
+      {selectedRecord && (
+        <TimetableForm
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование расписания'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updateTimetable}
+        />
+      )}
       {isSuccess && (
         <Badge count={timetables?.count} color='blue'>
           <Table

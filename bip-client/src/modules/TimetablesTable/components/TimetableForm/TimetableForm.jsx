@@ -1,23 +1,27 @@
-import { Button, DatePicker, Form, Input, Modal, Upload } from 'antd'
+import { Button, DatePicker, Form, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdateTimetableByIdQuery } from '../../hooks/useUpdateTimetableByIdQuery'
 import dayjs from 'dayjs'
 
-export function UpdateTimetableForm({
+export function TimetableForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
-
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null)
 
   const props = {
     onRemove: () => {
       setFile(null)
+      setImageUrl(null)
     },
     beforeUpload: (file) => {
       setFile(file)
@@ -26,16 +30,14 @@ export function UpdateTimetableForm({
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
-
-  const { mutate: updateTimetable } = useUpdateTimetableByIdQuery()
 
   const disabledDate = (current) => {
     return current && current < dayjs().startOf('day')
@@ -44,15 +46,18 @@ export function UpdateTimetableForm({
   const getTimetableData = (values) => {
     const date = values.date.toISOString()
     const timetableData = new FormData()
-    timetableData.append('id', id)
+    if (initialData) {
+      timetableData.append('id', id)
+    }
     timetableData.append('date', date)
     timetableData.append('image', file)
     return timetableData
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const timetable = getTimetableData(values)
-    updateTimetable(timetable)
+    onSubmit(timetable)
     form.resetFields()
     handleOk()
   }
@@ -61,26 +66,21 @@ export function UpdateTimetableForm({
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button
-      form='update_timetable_form'
-      key='submit'
-      type='primary'
-      htmlType='submit'
-    >
-      Обновить
+    <Button form='timetable_form' key='submit' type='primary' htmlType='submit'>
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование расписания'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_timetable_form'
+        name='timetable_form'
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
