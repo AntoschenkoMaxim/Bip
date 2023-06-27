@@ -24,13 +24,13 @@ import { CategoriesModule } from "./categories/categories.module";
 import { Category } from "./categories/categories.model";
 import { PostsCategoriesModule } from "./posts-categories/posts-categories.module";
 import { PostsCategories } from "./posts-categories/posts-categories.model";
-import { AchievementsModule } from './achievements/achievements.module';
-import { AdmissionsModule } from './admissions/admissions.module';
-import { DatesModule } from './dates/dates.module';
-import { StatementsModule } from './statements/statements.module';
-import { SchedulesModule } from './schedules/schedules.module';
-import { PricesModule } from './prices/prices.module';
-import { TimetablesModule } from './timetables/timetables.module';
+import { AchievementsModule } from "./achievements/achievements.module";
+import { AdmissionsModule } from "./admissions/admissions.module";
+import { DatesModule } from "./dates/dates.module";
+import { StatementsModule } from "./statements/statements.module";
+import { SchedulesModule } from "./schedules/schedules.module";
+import { PricesModule } from "./prices/prices.module";
+import { TimetablesModule } from "./timetables/timetables.module";
 
 @Module({
   controllers: [],
@@ -49,6 +49,12 @@ import { TimetablesModule } from './timetables/timetables.module';
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
       models: [
         Lesson,
         Department,
