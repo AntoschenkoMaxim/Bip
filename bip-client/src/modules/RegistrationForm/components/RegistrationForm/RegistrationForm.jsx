@@ -1,9 +1,10 @@
-import { Card, Form, Input, Steps } from 'antd'
+import { Button, Card, Form, Input, Row, Steps } from 'antd'
 import { useState } from 'react'
 import { steps } from '../../constants/steps'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { RegistrationButtons } from '../RegistrationButtons/RegistrationButtons'
 import { useRegistrationQuery } from '../../hooks/useRegistrationQuery'
+import { Link } from 'react-router-dom'
 
 export function RegistrationForm({ onRegistration }) {
   const [form] = Form.useForm()
@@ -50,10 +51,10 @@ export function RegistrationForm({ onRegistration }) {
 
   return (
     <Card
-      title='Sign Up'
+      title='Регистрация'
       bordered={true}
       style={{
-        width: 300,
+        minWidth: 400,
       }}
     >
       <Steps
@@ -144,7 +145,14 @@ export function RegistrationForm({ onRegistration }) {
             </Form.Item>
           </>
         )}
-        <RegistrationButtons current={current} next={next} prev={prev} />
+        <Row style={{ marginBottom: 8 }}>
+          <RegistrationButtons current={current} next={next} prev={prev} />
+        </Row>
+        <Row>
+          <Button block type='link'>
+            <Link to={'/auth/login'}>Авторизоваться</Link>
+          </Button>
+        </Row>
       </Form>
     </Card>
   )

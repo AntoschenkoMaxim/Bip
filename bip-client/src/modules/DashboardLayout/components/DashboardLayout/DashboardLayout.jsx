@@ -91,11 +91,13 @@ export function DashboardLayout({ items, onLogout }) {
           style={{
             padding: 0,
             background: colorBgContainer,
+            display: 'flex',
+            justifyContent: 'flex-end',
           }}
         >
-          <Popover placement='bottomRight' content={content} trigger='click'>
-            <Avatar src={'/'} />
-          </Popover>
+          <Button style={{ margin: 16 }} type='primary' onClick={onLogout}>
+            Выйти
+          </Button>
         </Header>
         <Content
           style={{

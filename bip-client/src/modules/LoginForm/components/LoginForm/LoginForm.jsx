@@ -1,27 +1,26 @@
 import { Button, Card, Col, Form, Input, Row, Space } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useLoginQuery } from '../../hooks/useLoginQuery'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export function LoginForm({ onLogin }) {
   const [form] = Form.useForm()
-
-  const navigate = useNavigate()
 
   const { mutate: login } = useLoginQuery()
 
   const handleSubmit = (values) => {
     const accessToken = login(values)
+    console.log(accessToken)
     onLogin(accessToken)
     form.resetFields()
   }
 
   return (
     <Card
-      title='Sign In'
+      title='Авторизация'
       bordered={true}
       style={{
-        width: 300,
+        width: 400,
       }}
     >
       <Form
@@ -41,7 +40,7 @@ export function LoginForm({ onLogin }) {
         </Form.Item>
 
         <Form.Item
-          label='Password'
+          label='Пароль'
           name='password'
           required
           rules={[{ required: true }]}

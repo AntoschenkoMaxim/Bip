@@ -54,6 +54,7 @@ export function ImageCategoriesTable() {
   }
 
   const showCreateModal = () => {
+    setSelectedRecord(null)
     setIsCreateModalOpen(true)
   }
 
@@ -69,6 +70,7 @@ export function ImageCategoriesTable() {
     <>
       <Button onClick={showCreateModal}>Добавить категорию</Button>
       <ImageCategoryForm
+        key='create'
         setSelectedRecord={setSelectedRecord}
         isModalOpen={isCreateModalOpen}
         setIsModalOpen={setIsCreateModalOpen}
@@ -79,6 +81,7 @@ export function ImageCategoriesTable() {
       <Divider />
       {selectedRecord && (
         <ImageCategoryForm
+          key='update'
           id={selectedRecord.id}
           setSelectedRecord={setSelectedRecord}
           isModalOpen={isUpdateModalOpen}

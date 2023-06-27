@@ -2,6 +2,7 @@ import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 
 export function ImageCategoryForm({
+  key,
   id,
   setSelectedRecord,
   isModalOpen,
@@ -62,6 +63,7 @@ export function ImageCategoryForm({
       footer={buttons}
     >
       <Form
+        key={key}
         layout='vertical'
         name='image_category_form'
         form={form}

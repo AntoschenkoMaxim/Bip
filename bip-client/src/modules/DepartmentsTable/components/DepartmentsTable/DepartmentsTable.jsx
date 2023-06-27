@@ -103,6 +103,7 @@ export function DepartmentsTable() {
         setIsAddModalOpen={setIsAddModalOpen}
       />
       <DepartmentForm
+        key='create'
         setSelectedRecord={setSelectedRecord}
         isModalOpen={isCreateModalOpen}
         setIsModalOpen={setIsCreateModalOpen}
@@ -113,6 +114,7 @@ export function DepartmentsTable() {
       <Divider />
       {selectedRecord && (
         <DepartmentForm
+          key='update'
           id={selectedRecord.id}
           setSelectedRecord={setSelectedRecord}
           isModalOpen={isUpdateModalOpen}

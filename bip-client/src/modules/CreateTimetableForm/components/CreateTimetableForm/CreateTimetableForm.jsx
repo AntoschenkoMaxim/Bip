@@ -2,7 +2,7 @@ import { Button, DatePicker, Form, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useCreateTimetableQuery } from '../../hooks/useCreateTimetableQuery'
+import { useCreateTimetableQuery } from '../../../TimetablesTable/hooks/useCreateTimetableQuery'
 import dayjs from 'dayjs'
 
 export function CreateTimetableForm({ isModalOpen, setIsModalOpen }) {

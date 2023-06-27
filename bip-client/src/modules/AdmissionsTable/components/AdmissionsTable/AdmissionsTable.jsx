@@ -28,7 +28,7 @@ export function AdmissionsTable() {
       title: 'Описание',
       dataIndex: 'description',
       key: 'description',
-      ...getColumnSearchProps('title', 'описанию'),
+      ...getColumnSearchProps('description', 'описанию'),
     },
     {
       title: 'Изображение',

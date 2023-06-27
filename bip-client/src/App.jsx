@@ -1,6 +1,4 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
-import { LoginForm } from './modules/LoginForm/components/LoginForm/LoginForm'
-import { RegistrationForm } from './modules/RegistrationForm/components/RegistrationForm/RegistrationForm'
 import { ImagesPage } from './pages/Images/components/ImagesPage'
 import { DashboardLayoutPage } from './pages/DashboardLayout/components/DashboardLayoutPage'
 import { MainLayoutPage } from './pages/MainLayout/components/MainLayoutPage'
@@ -70,6 +68,9 @@ import { Reception } from './modules/Reception'
 import { LandingPage } from './pages/Landing/components/LandingPage'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
+import { Statistics } from './modules/Statistics'
+import { RegistrationPage } from './pages/Registration/components/RegistrationPage'
+import { LoginPage } from './pages/Login/components/LoginPage'
 
 function App() {
   const { t } = useTranslation()
@@ -228,7 +229,7 @@ function App() {
         ) : (
           <Route
             path='/auth/login'
-            element={<LoginForm onLogin={handleLogin} />}
+            element={<LoginPage onLogin={handleLogin} />}
           />
         )}
         {isLoggedIn ? (
@@ -236,7 +237,7 @@ function App() {
         ) : (
           <Route
             path='/auth/registration'
-            element={<RegistrationForm onRegistration={handleRegistration} />}
+            element={<RegistrationPage onRegistration={handleRegistration} />}
           />
         )}
         {isLoggedIn ? (
@@ -249,7 +250,7 @@ function App() {
               />
             }
           >
-            <Route index element={<LoginForm />} />
+            <Route index element={<Statistics />} />
             <Route path='teachers' element={<TeachersPage />} />
             <Route path='departments' element={<DepartmentsPage />} />
             <Route path='lessons' element={<LessonsPage />} />
