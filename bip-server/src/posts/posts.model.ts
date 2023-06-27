@@ -12,6 +12,7 @@ interface PostsCreationAttrs {
   title: string;
   description: string;
   image: string;
+  date: Date;
 }
 
 @Table({ tableName: "posts" })
@@ -35,6 +36,12 @@ export class Post extends Model<Post, PostsCreationAttrs> {
     allowNull: false,
   })
   description: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+  })
+  date: Date;
 
   @Column({
     type: DataType.STRING,

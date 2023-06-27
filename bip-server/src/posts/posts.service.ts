@@ -23,7 +23,7 @@ export class PostsService {
 
   async getAllPosts() {
     const posts = await this.postRepository.findAndCountAll({
-      order: [["createdAt", "DESC"]],
+      order: [["date", "DESC"]],
     });
     return posts;
   }
