@@ -1,10 +1,12 @@
-import { Badge, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Table, Tooltip } from 'antd'
 import { useState } from 'react'
-import { UpdatePostCategoryForm } from '../UpdatePostCategoryForm/UpdatePostCategoryForm'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 import { useRemovePostCategoryByIdQuery } from '../../hooks/useRemovePostCategoryByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { useUpdatePostCategoryByIdQuery } from '../../hooks/useUpdatePostCategoryByIdQuery'
+import { useCreatePostCategoryQuery } from '../../hooks/useCreatePostCategoryQuery'
+import { PostCategoryForm } from '../PostCategoryForm/PostCategoryForm'
 
 export function PostCategoriesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -44,32 +46,63 @@ export function PostCategoriesTable() {
           <ActionsColumn
             record={record}
             removeItem={removePostCategory}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setSelectedRecord(null)
+    setIsCreateModalOpen(true)
   }
 
   const { data: postCategories, isSuccess } = useGetAllPostCategoriesQuery()
+
+  const { mutate: createPostCategory } = useCreatePostCategoryQuery()
+
+  const { mutate: updatePostCategory } = useUpdatePostCategoryByIdQuery()
 
   const { mutate: removePostCategory } = useRemovePostCategoryByIdQuery()
 
   return (
     <>
-      <UpdatePostCategoryForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить категорию</Button>
+      <PostCategoryForm
+        key='create'
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание категории'
+        btnTitle='Создать'
+        onSubmit={createPostCategory}
       />
+      <Divider />
+      {selectedRecord && (
+        <PostCategoryForm
+          key='update'
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование категории'
+          btnTitle='Обновить'
+          initialData={{
+            value: selectedRecord.value,
+            description: selectedRecord.description,
+          }}
+          onSubmit={updatePostCategory}
+        />
+      )}
       {isSuccess && (
         <Badge count={postCategories?.count} color='blue'>
           <Table

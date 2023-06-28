@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { POST_CATEGORIES_URL } from '../../../constants/postCategoriesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function updatePostCategoryById(categoryData) {
   const id = categoryData.id
-  return axios({
+  return api({
     method: 'PATCH',
     url: `${POST_CATEGORIES_URL}/${id}`,
     data: categoryData,

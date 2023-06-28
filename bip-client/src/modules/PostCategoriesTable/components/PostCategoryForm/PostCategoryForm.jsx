@@ -1,39 +1,42 @@
 import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useUpdatePostCategoryByIdQuery } from '../../hooks/useUpdatePostCategoryByIdQuery'
 
-export function UpdatePostCategoryForm({
+export function PostCategoryForm({
+  key,
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const getPostCategoryData = (values) => {
-    const category = {
+    const postCategory = {
       id: id,
       value: values.value,
       description: values.description,
     }
-    return category
+    return postCategory
   }
 
-  const { mutate: updatePostCategory } = useUpdatePostCategoryByIdQuery()
-
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const postCategory = getPostCategoryData(values)
-    updatePostCategory(postCategory)
+    onSubmit(postCategory)
     form.resetFields()
     handleOk()
   }
@@ -43,25 +46,25 @@ export function UpdatePostCategoryForm({
       Закрыть
     </Button>,
     <Button
-      form='update_post_category_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование новости'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_post_category_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -71,6 +74,7 @@ export function UpdatePostCategoryForm({
           name='value'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.value}
         >
           <Input placeholder='new' allowClear />
         </Form.Item>
@@ -80,6 +84,7 @@ export function UpdatePostCategoryForm({
           name='description'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.description}
         >
           <Input placeholder='Новые' allowClear />
         </Form.Item>

@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { POST_CATEGORIES_URL } from '../../../constants/postCategoriesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removePostCategoryById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${POST_CATEGORIES_URL}/${id}`,
   })

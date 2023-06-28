@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { POST_CATEGORIES_URL } from '../../../constants/postCategoriesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function createPostCategory(categoryData) {
-  return axios({
+  return api({
     method: 'POST',
     url: POST_CATEGORIES_URL,
     data: categoryData,
