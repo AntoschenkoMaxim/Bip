@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useGetAllStatementsQuery } from '../../../../hooks/useGetAllStatementsQuery'
-import { UpdateStatementForm } from '../UpdateStatementForm/UpdateStatementForm'
+import { StatementForm } from '../StatementForm/StatementForm'
 import { useRemoveStatementByIdQuery } from '../../hooks/useRemoveStatementByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { useUpdateStatementByIdQuery } from '../../hooks/useUpdateStatementByIdQuery'
+import { useCreateStatementQuery } from '../../hooks/useCreateStatementQuery'
 
 export function StatementsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -42,32 +44,62 @@ export function StatementsTable() {
           <ActionsColumn
             record={record}
             removeItem={removeStatement}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: statements, isSuccess } = useGetAllStatementsQuery()
+
+  const { mutate: createStatement } = useCreateStatementQuery()
+
+  const { mutate: updateStatement } = useUpdateStatementByIdQuery()
 
   const { mutate: removeStatement } = useRemoveStatementByIdQuery()
 
   return (
     <>
-      <UpdateStatementForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить заявление</Button>
+      <StatementForm
+        key='create'
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание заявления'
+        btnTitle='Создать'
+        onSubmit={createStatement}
       />
+      <Divider />
+      {selectedRecord && (
+        <StatementForm
+          key='update'
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование заявления'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            image: selectedRecord.image,
+          }}
+          onSubmit={updateStatement}
+        />
+      )}
       {isSuccess && (
         <Badge count={statements?.count} color='blue'>
           <Table

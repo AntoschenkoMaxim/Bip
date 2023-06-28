@@ -2,13 +2,16 @@ import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdateStatementByIdQuery } from '../../hooks/useUpdateStatementByIdQuery'
 
-export function UpdateStatementForm({
+export function StatementForm({
   id,
-  setId,
+  setSelectedRecord,
   isModalOpen,
   setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
 }) {
   const [form] = Form.useForm()
 
@@ -25,28 +28,29 @@ export function UpdateStatementForm({
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateStatement } = useUpdateStatementByIdQuery()
-
   const getStatementData = (values) => {
     const statementData = new FormData()
-    statementData.append('id', id)
+    if (initialData) {
+      statementData.append('id', id)
+    }
     statementData.append('title', values.title)
     statementData.append('image', file)
     return statementData
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const statement = getStatementData(values)
-    updateStatement(statement)
+    onSubmit(statement)
     form.resetFields()
     handleOk()
   }
@@ -56,25 +60,25 @@ export function UpdateStatementForm({
       Закрыть
     </Button>,
     <Button
-      form='update_statement_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование заявления'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_statement_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -85,8 +89,9 @@ export function UpdateStatementForm({
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
-          <Input placeholder='Новая новость' allowClear />
+          <Input placeholder='Заявление на мат. помощь' allowClear />
         </Form.Item>
         <Form.Item
           name='image'

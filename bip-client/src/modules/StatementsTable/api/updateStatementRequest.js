@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { STATEMENTS_URL } from '../../../constants/statementsUrl'
+import { api } from '../../../api/interceptors'
 
 export async function updateStatementById(statementData) {
   const id = statementData.get('id')
-  return axios({
+  return api({
     method: 'PATCH',
     url: `${STATEMENTS_URL}/${id}`,
     data: statementData,

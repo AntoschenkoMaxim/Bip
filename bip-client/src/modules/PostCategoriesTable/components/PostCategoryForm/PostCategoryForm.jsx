@@ -2,7 +2,6 @@ import { Button, Form, Input, Modal } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 
 export function PostCategoryForm({
-  key,
   id,
   setSelectedRecord,
   isModalOpen,

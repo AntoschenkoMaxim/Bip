@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { STATEMENTS_URL } from '../../../constants/statementsUrl'
+import { api } from '../../../api/interceptors'
 
 export async function createStatement(statementData) {
-  return axios({
+  return api({
     method: 'POST',
     url: STATEMENTS_URL,
     data: statementData,
