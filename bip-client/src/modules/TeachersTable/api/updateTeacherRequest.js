@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { TEACHERS_URL } from '../../../constants/teachersUrl'
+import { api } from '../../../api/interceptors'
 
 export async function updateTeacherById(teacherData) {
-  return axios({
+  return api({
     method: 'PATCH',
     url: `${TEACHERS_URL}/${teacherData.id}`,
     data: teacherData,

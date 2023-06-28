@@ -94,6 +94,7 @@ export function PostsTable() {
     <>
       <Button onClick={showCreateModal}>Добавить новость</Button>
       <PostForm
+        key='create'
         setSelectedRecord={setSelectedRecord}
         isModalOpen={isCreateModalOpen}
         setIsModalOpen={setIsCreateModalOpen}
@@ -104,6 +105,7 @@ export function PostsTable() {
       <Divider />
       {selectedRecord && (
         <PostForm
+          key='update'
           id={selectedRecord.id}
           setSelectedRecord={setSelectedRecord}
           isModalOpen={isUpdateModalOpen}

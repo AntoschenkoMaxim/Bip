@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { TEACHERS_URL } from '../../../constants/teachersUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removeTeacherById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${TEACHERS_URL}/${id}`,
     headers: {

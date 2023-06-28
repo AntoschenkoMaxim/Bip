@@ -45,7 +45,7 @@ export function DepartmentForm({
       Закрыть
     </Button>,
     <Button
-      form='department_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
@@ -63,7 +63,7 @@ export function DepartmentForm({
     >
       <Form
         layout='vertical'
-        name='department_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
