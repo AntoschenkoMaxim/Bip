@@ -1,22 +1,28 @@
 import { Button, Form, Input, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { options } from '../../constants/options'
-import { useUpdateTeacherByIdQuery } from '../../hooks/useUpdateTeacherByIdQuery'
 
-export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function TeacherForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
-
-  const { mutate: updateTeacher } = useUpdateTeacherByIdQuery()
 
   const getTeacherData = (values) => {
     const teacher = {
@@ -34,7 +40,7 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
 
   const handleSubmit = (values) => {
     const teacher = getTeacherData(values)
-    updateTeacher(teacher)
+    onSubmit(teacher)
     form.resetFields()
     handleOk()
   }
@@ -44,17 +50,17 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
       Закрыть
     </Button>,
     <Button
-      form='update_teacher_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   const prefixSelector = (
-    <Form.Item name='prefix' noStyle>
+    <Form.Item name='prefix' noStyle required>
       <Select
         style={{ width: 80 }}
         options={[
@@ -67,14 +73,14 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
 
   return (
     <Modal
-      title='Редактирование преподавателя'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_teacher_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -84,6 +90,7 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='lastName'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.lastName}
         >
           <Input placeholder='Дмитриенко' allowClear />
         </Form.Item>
@@ -93,6 +100,7 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='firstName'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.firstName}
         >
           <Input placeholder='Дмитрий' allowClear />
         </Form.Item>
@@ -102,6 +110,7 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='surname'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.surname}
         >
           <Input placeholder='Дмитриевич' allowClear />
         </Form.Item>
@@ -129,6 +138,7 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='email'
           required
           rules={[{ required: true, type: 'email' }]}
+          initialValue={initialData?.email}
         >
           <Input placeholder='bip@gmail.com' allowClear />
         </Form.Item>
@@ -137,8 +147,9 @@ export function UpdateTeacherForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='telegram'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.telegram}
         >
-          <Input placeholder='@teacher' allowClear />
+          <Input placeholder='teacher' allowClear />
         </Form.Item>
         <Form.Item
           label='Должность'
