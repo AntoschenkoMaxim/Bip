@@ -46,7 +46,7 @@ export function ImageCategoryForm({
       Закрыть
     </Button>,
     <Button
-      form='image_category_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
@@ -65,7 +65,7 @@ export function ImageCategoryForm({
       <Form
         key={key}
         layout='vertical'
-        name='image_category_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}

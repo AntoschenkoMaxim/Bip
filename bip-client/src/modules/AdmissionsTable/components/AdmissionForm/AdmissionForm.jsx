@@ -9,6 +9,7 @@ export function AdmissionForm({
   isModalOpen,
   setIsModalOpen,
   title,
+  btnTitle,
   initialData,
   onSubmit,
 }) {
@@ -55,8 +56,13 @@ export function AdmissionForm({
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button form='admission_form' key='submit' type='primary' htmlType='submit'>
-      {title}
+    <Button
+      form={initialData ? 'update_form' : 'create_form'}
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
+      {btnTitle}
     </Button>,
   ]
 
@@ -69,7 +75,7 @@ export function AdmissionForm({
     >
       <Form
         layout='vertical'
-        name='admission_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}

@@ -94,6 +94,7 @@ export function AchievementsTable() {
         isModalOpen={isCreateModalOpen}
         setIsModalOpen={setIsCreateModalOpen}
         title='Создание достижения'
+        btnTitle='Создать'
         onSubmit={createAchievement}
       />
       <Divider />
@@ -104,6 +105,7 @@ export function AchievementsTable() {
           isModalOpen={isUpdateModalOpen}
           setIsModalOpen={setIsUpdateModalOpen}
           title='Редактирование достижения'
+          btnTitle='Обновить'
           initialData={{
             title: selectedRecord.title,
             description: selectedRecord.description,

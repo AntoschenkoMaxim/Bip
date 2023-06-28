@@ -9,6 +9,7 @@ export function AchievementForm({
   isModalOpen,
   setIsModalOpen,
   title,
+  btnTitle,
   initialData,
   onSubmit,
 }) {
@@ -56,12 +57,12 @@ export function AchievementForm({
       Закрыть
     </Button>,
     <Button
-      form='achievement_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      {title}
+      {btnTitle}
     </Button>,
   ]
 
@@ -74,7 +75,7 @@ export function AchievementForm({
     >
       <Form
         layout='vertical'
-        name='achievement_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         onFinish={handleSubmit}
       >

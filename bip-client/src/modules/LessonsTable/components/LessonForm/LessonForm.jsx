@@ -54,7 +54,12 @@ export function LessonForm({
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button form='lesson_form' key='submit' type='primary' htmlType='submit'>
+    <Button
+      form={initialData ? 'update_form' : 'create_form'}
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
       {btnTitle}
     </Button>,
   ]
@@ -68,7 +73,7 @@ export function LessonForm({
     >
       <Form
         layout='vertical'
-        name='lesson_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}

@@ -86,6 +86,7 @@ export function AdmissionsTable() {
         isModalOpen={isCreateModalOpen}
         setIsModalOpen={setIsCreateModalOpen}
         title='Создание порядка приема'
+        btnTitle='Создать'
         onSubmit={createAdmission}
       />
       <Divider />
@@ -96,6 +97,7 @@ export function AdmissionsTable() {
           isModalOpen={isUpdateModalOpen}
           setIsModalOpen={setIsUpdateModalOpen}
           title='Редактирование порядка приема'
+          btnTitle='Обновить'
           initialData={{
             title: selectedRecord.title,
             description: selectedRecord.description,

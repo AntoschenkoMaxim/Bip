@@ -64,7 +64,12 @@ export function ImageForm({
     <Button key='back' onClick={handleCancel}>
       Закрыть
     </Button>,
-    <Button form='image_form' key='submit' type='primary' htmlType='submit'>
+    <Button
+      form={initialData ? 'update_form' : 'create_form'}
+      key='submit'
+      type='primary'
+      htmlType='submit'
+    >
       {btnTitle}
     </Button>,
   ]
@@ -78,7 +83,7 @@ export function ImageForm({
     >
       <Form
         layout='vertical'
-        name='image_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
