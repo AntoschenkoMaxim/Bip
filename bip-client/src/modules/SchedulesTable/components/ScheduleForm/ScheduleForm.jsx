@@ -2,9 +2,17 @@ import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdateScheduleByIdQuery } from '../../hooks/useUpdateScheduleByIdQuery'
 
-export function UpdateScheduleForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function ScheduleForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
 
   const [file, setFile] = useState(null)
@@ -20,28 +28,29 @@ export function UpdateScheduleForm({ id, setId, isModalOpen, setIsModalOpen }) {
   }
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updateSchedule } = useUpdateScheduleByIdQuery()
-
   const getScheduleData = (values) => {
     const scheduleData = new FormData()
-    scheduleData.append('id', id)
+    if (initialData) {
+      scheduleData.append('id', id)
+    }
     scheduleData.append('title', values.title)
     scheduleData.append('image', file)
     return scheduleData
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const schedule = getScheduleData(values)
-    updateSchedule(schedule)
+    onSubmit(schedule)
     form.resetFields()
     handleOk()
   }
@@ -51,25 +60,25 @@ export function UpdateScheduleForm({ id, setId, isModalOpen, setIsModalOpen }) {
       Закрыть
     </Button>,
     <Button
-      form='update_schedule_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование графика'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_schedule_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -80,6 +89,7 @@ export function UpdateScheduleForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input
             placeholder='График учебного процесса на 2023 год'

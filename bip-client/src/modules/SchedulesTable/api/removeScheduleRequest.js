@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { SCHEDULES_URL } from '../../../constants/schedulesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removeScheduleById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${SCHEDULES_URL}/${id}`,
     headers: {

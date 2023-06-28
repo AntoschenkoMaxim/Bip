@@ -1,10 +1,12 @@
-import { Badge, Image, Popconfirm, Space, Table, Tooltip } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { UpdateScheduleForm } from '../UpdateScheduleForm/UpdateScheduleForm'
 import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
 import { useRemoveScheduleByIdQuery } from '../../hooks/useRemoveScheduleByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
+import { ScheduleForm } from '../ScheduleForm/ScheduleForm'
+import { useCreateScheduleQuery } from '../../hooks/useCreateScheduleQuery'
+import { useUpdateScheduleByIdQuery } from '../../hooks/useUpdateScheduleByIdQuery'
 
 export function SchedulesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -42,32 +44,64 @@ export function SchedulesTable() {
           <ActionsColumn
             record={record}
             removeItem={removeSchedule}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: schedules, isSuccess } = useGetAllSchedulesQuery()
+
+  const { mutate: createSchedule } = useCreateScheduleQuery()
+
+  const { mutate: updateSchedule } = useUpdateScheduleByIdQuery()
 
   const { mutate: removeSchedule } = useRemoveScheduleByIdQuery()
 
   return (
     <>
-      <UpdateScheduleForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>
+        Добавить график учебного процесса
+      </Button>
+      <ScheduleForm
+        key='create'
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание графика'
+        btnTitle='Создать'
+        onSubmit={createSchedule}
       />
+      <Divider />
+      {selectedRecord && (
+        <ScheduleForm
+          key='update'
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование графика'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            image: selectedRecord.image,
+          }}
+          onSubmit={updateSchedule}
+        />
+      )}
       {isSuccess && (
         <Badge count={schedules?.count} color='blue'>
           <Table

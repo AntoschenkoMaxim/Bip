@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { SCHEDULES_URL } from '../../../constants/schedulesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function createSchedule(scheduleData) {
-  return axios({
+  return api({
     method: 'POST',
     url: SCHEDULES_URL,
     data: scheduleData,
