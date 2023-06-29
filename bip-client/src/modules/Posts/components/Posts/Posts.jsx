@@ -1,9 +1,10 @@
 import { Image, Input, List, Tabs, Tag } from 'antd'
-import { intlFormatDistance } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
 import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 import useListSearch from '../../../../hooks/useListSearch'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 
 export function Posts() {
   const [id, setId] = useState(null)
@@ -66,8 +67,8 @@ export function Posts() {
                 description={item.description}
               />
               <Tag color='geekblue'>
-                {intlFormatDistance(new Date(item.createdAt), Date.now(), {
-                  locale: 'ru',
+                {format(new Date(item.date), 'iiii (dd.MM.yyyy)', {
+                  locale: ru,
                 })}
               </Tag>
             </List.Item>

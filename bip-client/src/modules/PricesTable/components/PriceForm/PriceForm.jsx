@@ -2,49 +2,72 @@ import { Button, Form, Input, Modal, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useUpdatePriceByIdQuery } from '../../hooks/useUpdatePriceByIdQuery'
 
-export function UpdatePriceForm({ id, setId, isModalOpen, setIsModalOpen }) {
+export function PriceForm({
+  id,
+  setSelectedRecord,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+  btnTitle,
+  initialData,
+  onSubmit,
+}) {
   const [form] = Form.useForm()
-
-  const [file, setFile] = useState(null)
-
-  const props = {
-    onRemove: () => {
-      setFile(null)
-    },
-    beforeUpload: (file) => {
-      setFile(file)
-      return false
-    },
-  }
+  const [priceImage, setPriceImage] = useState(null)
+  const [paymentImage, setPaymentImage] = useState(null)
 
   const handleCancel = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
   const handleOk = () => {
-    setId(null)
+    setSelectedRecord(null)
     setIsModalOpen(false)
   }
 
-  const { mutate: updatePrice } = useUpdatePriceByIdQuery()
-
   const getPriceData = (values) => {
     const priceData = new FormData()
-    priceData.append('id', id)
+    if (initialData) {
+      priceData.append('id', id)
+    }
     priceData.append('title', values.title)
-    priceData.append('price_image', file)
-    priceData.append('payment_image', file)
+    if (priceImage) {
+      priceData.append('price_image', priceImage)
+    }
+    if (paymentImage) {
+      priceData.append('payment_image', paymentImage)
+    }
     return priceData
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
+    const values = form.getFieldsValue()
     const price = getPriceData(values)
-    updatePrice(price)
+    onSubmit(price)
     form.resetFields()
     handleOk()
+  }
+
+  const priceProps = {
+    onRemove: () => {
+      setPriceImage(null)
+    },
+    beforeUpload: (file) => {
+      setPriceImage(file)
+      return false
+    },
+  }
+
+  const paymentProps = {
+    onRemove: () => {
+      setPaymentImage(null)
+    },
+    beforeUpload: (file) => {
+      setPaymentImage(file)
+      return false
+    },
   }
 
   const buttons = [
@@ -52,25 +75,25 @@ export function UpdatePriceForm({ id, setId, isModalOpen, setIsModalOpen }) {
       Закрыть
     </Button>,
     <Button
-      form='update_price_form'
+      form={initialData ? 'update_form' : 'create_form'}
       key='submit'
       type='primary'
       htmlType='submit'
     >
-      Обновить
+      {btnTitle}
     </Button>,
   ]
 
   return (
     <Modal
-      title='Редактирование стоимости'
+      title={title}
       open={isModalOpen}
       onCancel={handleCancel}
       footer={buttons}
     >
       <Form
         layout='vertical'
-        name='update_price_form'
+        name={initialData ? 'update_form' : 'create_form'}
         form={form}
         validateMessages={validateMessages}
         onFinish={handleSubmit}
@@ -81,6 +104,7 @@ export function UpdatePriceForm({ id, setId, isModalOpen, setIsModalOpen }) {
           name='title'
           required
           rules={[{ required: true }]}
+          initialValue={initialData?.title}
         >
           <Input placeholder='Стоимость обучения на 2024 год' allowClear />
         </Form.Item>
@@ -91,7 +115,7 @@ export function UpdatePriceForm({ id, setId, isModalOpen, setIsModalOpen }) {
           rules={[{ required: true }]}
           valuePropName='file'
         >
-          <Upload {...props} listType='picture' maxCount={1}>
+          <Upload {...priceProps} listType='picture' maxCount={1}>
             <Button icon={<UploadOutlined />}>Выберите изображение</Button>
           </Upload>
         </Form.Item>
@@ -102,7 +126,7 @@ export function UpdatePriceForm({ id, setId, isModalOpen, setIsModalOpen }) {
           rules={[{ required: true }]}
           valuePropName='file'
         >
-          <Upload {...props} listType='picture' maxCount={1}>
+          <Upload {...paymentProps} listType='picture' maxCount={1}>
             <Button icon={<UploadOutlined />}>Выберите изображение</Button>
           </Upload>
         </Form.Item>

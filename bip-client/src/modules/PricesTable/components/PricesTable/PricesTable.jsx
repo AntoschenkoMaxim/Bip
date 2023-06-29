@@ -1,10 +1,12 @@
-import { Badge, Image, Table } from 'antd'
+import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { UpdatePriceForm } from '../UpdatePriceForm/UpdatePriceForm'
+import { PriceForm } from '../PriceForm/PriceForm'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useRemovePriceByIdQuery } from '../../hooks/useRemovePriceByIdQuery'
 import { useGetAllPricesQuery } from '../../../../hooks/useGetAllPricesQuery'
+import { useUpdatePriceByIdQuery } from '../../hooks/useUpdatePriceByIdQuery'
+import { useCreatePriceQuery } from '../../hooks/useCreatePriceQuery'
 
 export function PricesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -54,32 +56,63 @@ export function PricesTable() {
           <ActionsColumn
             record={record}
             removeItem={removePrice}
-            showModal={showModal}
+            showModal={showUpdateModal}
           />
         ) : null,
     },
   ]
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [id, setId] = useState(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState()
 
-  const showModal = (id) => {
-    setId(id)
-    setIsModalOpen(true)
+  const showUpdateModal = (record) => {
+    setSelectedRecord(record)
+    setIsUpdateModalOpen(true)
+  }
+
+  const showCreateModal = () => {
+    setIsCreateModalOpen(true)
   }
 
   const { data: prices, isSuccess } = useGetAllPricesQuery()
+
+  const { mutate: createPrice } = useCreatePriceQuery()
+
+  const { mutate: updatePrice } = useUpdatePriceByIdQuery()
 
   const { mutate: removePrice } = useRemovePriceByIdQuery()
 
   return (
     <>
-      <UpdatePriceForm
-        id={id}
-        setId={setId}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+      <Button onClick={showCreateModal}>Добавить стоимость обучения</Button>
+      <PriceForm
+        key='create'
+        setSelectedRecord={setSelectedRecord}
+        isModalOpen={isCreateModalOpen}
+        setIsModalOpen={setIsCreateModalOpen}
+        title='Создание стоимости'
+        btnTitle='Создать'
+        onSubmit={createPrice}
       />
+      <Divider />
+      {selectedRecord && (
+        <PriceForm
+          key='update'
+          id={selectedRecord.id}
+          setSelectedRecord={setSelectedRecord}
+          isModalOpen={isUpdateModalOpen}
+          setIsModalOpen={setIsUpdateModalOpen}
+          title='Редактирование стоимости'
+          btnTitle='Обновить'
+          initialData={{
+            title: selectedRecord.title,
+            price_image: selectedRecord.price_image,
+            payment_image: selectedRecord.payment_image,
+          }}
+          onSubmit={updatePrice}
+        />
+      )}
       {isSuccess && (
         <Badge count={prices?.count} color='blue'>
           <Table

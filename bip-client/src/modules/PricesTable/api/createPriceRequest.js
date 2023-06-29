@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { PRICES_URL } from '../../../constants/pricesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function createPrice(priceData) {
-  return axios({
+  return api({
     method: 'POST',
     url: PRICES_URL,
     data: priceData,

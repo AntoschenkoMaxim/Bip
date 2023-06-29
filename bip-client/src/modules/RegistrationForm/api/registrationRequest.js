@@ -11,10 +11,7 @@ export async function userRegistration(registrationData) {
       'Content-Type': 'application/json',
     },
   })
-    .then(
-      (response) => response.data,
-      message.success('Успешно зарегистрирован!')
-    )
+    .then((response) => response, message.success('Успешно зарегистрирован!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })

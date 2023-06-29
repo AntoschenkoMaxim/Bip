@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { PRICES_URL } from '../../../constants/pricesUrl'
+import { api } from '../../../api/interceptors'
 
 export async function removePriceById(id) {
-  return axios({
+  return api({
     method: 'DELETE',
     url: `${PRICES_URL}/${id}`,
     headers: {

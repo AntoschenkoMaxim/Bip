@@ -1,5 +1,4 @@
 import { List, Tabs } from 'antd'
-import { intlFormatDistance } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
 import { TeacherDrawer } from '../TeacherDrawer/TeacherDrawer'

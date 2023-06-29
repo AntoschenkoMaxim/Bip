@@ -1,6 +1,7 @@
 import { Image, List, Tag } from 'antd'
-import { intlFormatDistance } from 'date-fns'
 import { useGetAllAchievementsQuery } from '../../../../hooks/useGetAllAchievementsQuery'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 
 export function Achievements() {
   const { data: achievements, isSuccess } = useGetAllAchievementsQuery()
@@ -31,8 +32,8 @@ export function Achievements() {
                 description={item.description}
               />
               <Tag color='geekblue'>
-                {intlFormatDistance(new Date(item.createdAt), Date.now(), {
-                  locale: 'ru',
+                {format(new Date(item.createdAt), 'iiii (dd.MM.yyyy)', {
+                  locale: ru,
                 })}
               </Tag>
             </List.Item>

@@ -621,5 +621,9 @@
         }
       ]
     }
+  },
+  "error404": {
+    "subtitle": "Page not found.",
+    "button": "Go back"
   }
 }
