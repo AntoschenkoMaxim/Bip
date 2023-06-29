@@ -10,7 +10,6 @@ export function LoginForm({ onLogin }) {
 
   const handleSubmit = (values) => {
     const accessToken = login(values)
-    console.log(accessToken)
     onLogin(accessToken)
     form.resetFields()
   }

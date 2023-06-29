@@ -107,8 +107,8 @@ export function PricesTable() {
           btnTitle='Обновить'
           initialData={{
             title: selectedRecord.title,
-            price_image: selectedRecord.price_image,
-            payment_image: selectedRecord.payment_image,
+            priceImage: selectedRecord.priceImage,
+            paymentImage: selectedRecord.paymentImage,
           }}
           onSubmit={updatePrice}
         />

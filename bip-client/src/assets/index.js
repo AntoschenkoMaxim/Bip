@@ -29,7 +29,12 @@ import testimonial3 from './landing/testimonial3.jpg'
 import team1 from './landing/team1.jpg'
 import team2 from './landing/team2.jpg'
 import team3 from './landing/team3.jpg'
-import rules from './documents/rules.pdf'
+import rules1 from './rules/rules1.jpg'
+import rules2 from './rules/rules2.jpg'
+import rules3 from './rules/rules3.jpg'
+import rules4 from './rules/rules4.jpg'
+import rules5 from './rules/rules5.jpg'
+import rules6 from './rules/rules6.jpg'
 
 export {
   regulation1,
@@ -63,4 +68,10 @@ export {
   team1,
   team2,
   team3,
+  rules1,
+  rules2,
+  rules3,
+  rules4,
+  rules5,
+  rules6,
 }

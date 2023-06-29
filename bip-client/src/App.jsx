@@ -233,14 +233,10 @@ function App() {
             element={<LoginPage onLogin={handleLogin} />}
           />
         )}
-        {isLoggedIn ? (
-          <Route path='*' element={<Navigate to='/dashboard' replace />} />
-        ) : (
-          <Route
-            path='/auth/registration'
-            element={<RegistrationPage onRegistration={handleRegistration} />}
-          />
-        )}
+        <Route
+          path='/auth/registration'
+          element={<RegistrationPage onRegistration={handleRegistration} />}
+        />
         {isLoggedIn ? (
           <Route
             path='/dashboard'
@@ -268,7 +264,10 @@ function App() {
             <Route path='prices' element={<PricesPage />} />
           </Route>
         ) : (
-          <Route path='*' element={<Navigate to='/auth/login' replace />} />
+          <Route
+            path='/dashboard'
+            element={<Navigate to='/auth/login' replace />}
+          />
         )}
 
         <Route path='*' element={<Error404Page />} />

@@ -34,25 +34,6 @@ export function DashboardLayout({ items, onLogout }) {
   const location = useLocation()
   const selectedKey = location.pathname.slice('/dashboard/'.length)
 
-  useEffect(() => {
-    const accessToken = Cookies.get('accessToken')
-    if (accessToken) {
-      setAccessToken(accessToken)
-    }
-  }, [])
-
-  console.log(accessToken)
-
-  const content = (
-    <div>
-      <p>Имя: {'asdasd'}</p>
-      <p>Email: {'asdasdasd'}</p>
-      <Button type='primary' onClick={onLogout}>
-        Выйти
-      </Button>
-    </div>
-  )
-
   return (
     <Layout
       style={{
