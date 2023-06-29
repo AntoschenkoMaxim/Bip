@@ -72,6 +72,7 @@ import { Statistics } from './modules/Statistics'
 import { RegistrationPage } from './pages/Registration/components/RegistrationPage'
 import { LoginPage } from './pages/Login/components/LoginPage'
 import { Error404Page } from './pages/Error404/components/Error404Page'
+import { Rules } from './modules/Rules'
 
 function App() {
   const { t } = useTranslation()
@@ -211,7 +212,7 @@ function App() {
           </Route>
           <Route path='applicant/*' element={<MainSider items={items3} />}>
             <Route index element={<Dates />} />
-            {/* <Route path='rules' element={<Rules />} /> */}
+            <Route path='rules' element={<Rules />} />
             <Route path='documents' element={<Documents />} />
             <Route path='admission' element={<Admissions />} />
           </Route>
@@ -233,10 +234,14 @@ function App() {
             element={<LoginPage onLogin={handleLogin} />}
           />
         )}
-        <Route
-          path='/auth/registration'
-          element={<RegistrationPage onRegistration={handleRegistration} />}
-        />
+        {isLoggedIn ? (
+          <Route path='*' element={<Navigate to='/dashboard' replace />} />
+        ) : (
+          <Route
+            path='/auth/registration'
+            element={<RegistrationPage onRegistration={handleRegistration} />}
+          />
+        )}
         {isLoggedIn ? (
           <Route
             path='/dashboard'

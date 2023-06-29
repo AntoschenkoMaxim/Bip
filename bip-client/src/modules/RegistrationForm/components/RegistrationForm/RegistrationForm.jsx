@@ -145,14 +145,16 @@ export function RegistrationForm({ onRegistration }) {
             </Form.Item>
           </>
         )}
-        <Row style={{ marginBottom: 8 }}>
-          <RegistrationButtons current={current} next={next} prev={prev} />
-        </Row>
-        <Row>
-          <Button block type='link'>
-            <Link to={'/auth/login'}>Авторизоваться</Link>
-          </Button>
-        </Row>
+        <RegistrationButtons
+          style={{ marginBottom: 8 }}
+          current={current}
+          next={next}
+          prev={prev}
+        />
+
+        <Button block type='link'>
+          <Link to={'/auth/login'}>Авторизоваться</Link>
+        </Button>
       </Form>
     </Card>
   )

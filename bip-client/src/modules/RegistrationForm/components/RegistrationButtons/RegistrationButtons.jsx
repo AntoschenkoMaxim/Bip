@@ -9,7 +9,7 @@ export function RegistrationButtons({ current, next, prev }) {
           Следующий
         </Button>
       )}
-      <Row gutter={16}>
+      <Row gutter={16} style={{ marginBottom: 8 }}>
         <Col span={12}>
           {current > 0 && (
             <Button block type='dashed' onClick={() => prev()}>

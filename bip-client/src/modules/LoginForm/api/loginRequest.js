@@ -11,10 +11,7 @@ export async function loginUser(loginData) {
       'Content-Type': 'application/json',
     },
   })
-    .then(
-      (response) => response.data.token,
-      message.success('Успешно авторизован!')
-    )
+    .then((response) => response, message.success('Успешно авторизован!'))
     .catch(function (error) {
       console.log(error.toJSON())
     })
