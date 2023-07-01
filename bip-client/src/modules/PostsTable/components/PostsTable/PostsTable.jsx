@@ -2,11 +2,13 @@ import { Badge, Button, Divider, Image, Table, Tooltip } from 'antd'
 import { useState } from 'react'
 import { PostForm } from '../PostForm/PostForm'
 import { useRemovePostByIdQuery } from '../../hooks/useRemovePostByIdQuery'
-import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useUpdatePostQuery } from '../../hooks/useUpdatePostQuery'
 import { useCreatePostQuery } from '../../hooks/useCreatePostQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { POSTS_URL } from '../../../../constants/urls'
+import { POSTS_KEY } from '../../../../constants/keys'
 
 export function PostsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -82,7 +84,7 @@ export function PostsTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: posts, isSuccess } = useGetAllPostsQuery()
+  const { data: posts, isSuccess } = useGetAllItemsQuery(POSTS_URL, POSTS_KEY)
 
   const { mutate: createPost } = useCreatePostQuery()
 

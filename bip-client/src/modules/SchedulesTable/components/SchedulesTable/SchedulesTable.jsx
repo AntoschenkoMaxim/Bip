@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
 import { useRemoveScheduleByIdQuery } from '../../hooks/useRemoveScheduleByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { ScheduleForm } from '../ScheduleForm/ScheduleForm'
 import { useCreateScheduleQuery } from '../../hooks/useCreateScheduleQuery'
 import { useUpdateScheduleByIdQuery } from '../../hooks/useUpdateScheduleByIdQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { SCHEDULES_URL } from '../../../../constants/urls'
+import { SCHEDULES_KEY } from '../../../../constants/keys'
 
 export function SchedulesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -63,7 +65,10 @@ export function SchedulesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: schedules, isSuccess } = useGetAllSchedulesQuery()
+  const { data: schedules, isSuccess } = useGetAllItemsQuery(
+    SCHEDULES_URL,
+    SCHEDULES_KEY
+  )
 
   const { mutate: createSchedule } = useCreateScheduleQuery()
 

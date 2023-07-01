@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
-import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useUpdateImageByIdQuery } from '../../hooks/useUpdateImageByIdQuery'
 import { useCreateImageQuery } from '../../hooks/useCreateImageQuery'
 import { ImageForm } from '../ImageForm/ImageForm'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { IMAGES_URL } from '../../../../constants/urls'
+import { IMAGES_KEY } from '../../../../constants/keys'
 
 export function ImagesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -63,7 +65,10 @@ export function ImagesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: images, isSuccess } = useGetAllImagesQuery()
+  const { data: images, isSuccess } = useGetAllItemsQuery(
+    IMAGES_URL,
+    IMAGES_KEY
+  )
 
   const { mutate: createImage } = useCreateImageQuery()
 

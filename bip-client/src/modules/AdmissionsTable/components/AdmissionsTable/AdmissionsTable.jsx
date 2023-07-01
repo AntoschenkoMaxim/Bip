@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useRemoveAdmissionByIdQuery } from '../../hooks/useRemoveAdmissionByIdQuery'
-import { useGetAllAdmissionsQuery } from '../../../../hooks/useGetAllAdmissionsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { AdmissionForm } from '../AdmissionForm/AdmissionForm'
 import { useCreateAdmissionQuery } from '../../hooks/useCreateAdmissionQuery'
 import { useUpdateAdmissionByIdQuery } from '../../hooks/useUpdateAdmissionByIdQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { ADMISSIONS_URL } from '../../../../constants/urls'
+import { ADMISSIONS_KEY } from '../../../../constants/keys'
 
 export function AdmissionsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -70,7 +72,10 @@ export function AdmissionsTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: admissions, isSuccess } = useGetAllAdmissionsQuery()
+  const { data: admissions, isSuccess } = useGetAllItemsQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
 
   const { mutate: createAdmission } = useCreateAdmissionQuery()
 

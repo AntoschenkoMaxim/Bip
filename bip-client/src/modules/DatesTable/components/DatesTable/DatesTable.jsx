@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useRemoveDateByIdQuery } from '../../hooks/useRemoveDateByIdQuery'
-import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { DateForm } from '../DateForm/DateForm'
 import { useUpdateDateByIdQuery } from '../../hooks/useUpdateDateByIdQuery'
 import { useCreateDateQuery } from '../../hooks/useCreateDateQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { DATES_URL } from '../../../../constants/urls'
+import { DATES_KEY } from '../../../../constants/keys'
 
 export function DatesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -64,7 +66,7 @@ export function DatesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: dates, isSuccess } = useGetAllDatesQuery()
+  const { data: dates, isSuccess } = useGetAllItemsQuery(DATES_URL, DATES_KEY)
 
   const { mutate: createDate } = useCreateDateQuery()
 

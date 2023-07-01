@@ -1,6 +1,8 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { Collapse, Image, theme } from 'antd'
-import { useGetAllStatementsQuery } from '../../../../hooks/useGetAllStatementsQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { STATEMENTS_URL } from '../../../../constants/urls'
+import { STATEMENTS_KEY } from '../../../../constants/keys'
 const { Panel } = Collapse
 
 export function Statements() {
@@ -13,7 +15,10 @@ export function Statements() {
     border: 'none',
   }
 
-  const { data: statements, isSuccess } = useGetAllStatementsQuery()
+  const { data: statements, isSuccess } = useGetAllItemsQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
 
   return (
     <Collapse

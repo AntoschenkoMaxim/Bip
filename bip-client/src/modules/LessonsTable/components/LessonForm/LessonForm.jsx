@@ -1,6 +1,8 @@
 import { Button, Form, Input, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
-import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { TEACHERS_URL } from '../../../../constants/urls'
+import { TEACHERS_KEY } from '../../../../constants/keys'
 
 export function LessonForm({
   key,
@@ -25,7 +27,10 @@ export function LessonForm({
     setIsModalOpen(false)
   }
 
-  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
+  const { data: teachers, isSuccess } = useGetAllItemsQuery(
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
   const options = teachers?.rows.map((item) => ({
     value: item.id,

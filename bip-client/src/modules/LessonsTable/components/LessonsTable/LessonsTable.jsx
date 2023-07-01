@@ -1,12 +1,14 @@
-import { Badge, Button, Divider, Popconfirm, Space, Table } from 'antd'
+import { Badge, Button, Divider, Table } from 'antd'
 import { useState } from 'react'
 import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
-import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { LessonForm } from '../LessonForm/LessonForm'
 import { useUpdateLessonByIdQuery } from '../../hooks/useUpdateLessonByIdQuery'
 import { useCreateLessonQuery } from '../../hooks/useCreateLessonQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { LESSONS_URL } from '../../../../constants/urls'
+import { LESSONS_KEY } from '../../../../constants/keys'
 
 export function LessonsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -58,7 +60,10 @@ export function LessonsTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: lessons, isSuccess } = useGetAllLessonsQuery()
+  const { data: lessons, isSuccess } = useGetAllItemsQuery(
+    LESSONS_URL,
+    LESSONS_KEY
+  )
 
   const { mutate: createLesson } = useCreateLessonQuery()
 

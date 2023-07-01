@@ -1,10 +1,9 @@
-import { SCHEDULES_URL } from '../constants/schedulesUrl'
 import { api } from './interceptors'
 
-export async function getAllSchedules() {
+export async function getAllItems(url) {
   return api({
     method: 'GET',
-    url: SCHEDULES_URL,
+    url,
   })
     .then((response) => response.data)
     .catch(function (error) {

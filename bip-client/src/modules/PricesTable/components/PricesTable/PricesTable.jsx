@@ -4,9 +4,11 @@ import { PriceForm } from '../PriceForm/PriceForm'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useRemovePriceByIdQuery } from '../../hooks/useRemovePriceByIdQuery'
-import { useGetAllPricesQuery } from '../../../../hooks/useGetAllPricesQuery'
 import { useUpdatePriceByIdQuery } from '../../hooks/useUpdatePriceByIdQuery'
 import { useCreatePriceQuery } from '../../hooks/useCreatePriceQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { PRICES_URL } from '../../../../constants/urls'
+import { PRICES_KEY } from '../../../../constants/keys'
 
 export function PricesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -75,7 +77,10 @@ export function PricesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: prices, isSuccess } = useGetAllPricesQuery()
+  const { data: prices, isSuccess } = useGetAllItemsQuery(
+    PRICES_URL,
+    PRICES_KEY
+  )
 
   const { mutate: createPrice } = useCreatePriceQuery()
 

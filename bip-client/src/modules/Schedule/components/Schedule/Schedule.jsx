@@ -1,6 +1,8 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { Collapse, Image, theme } from 'antd'
-import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { SCHEDULES_URL } from '../../../../constants/urls'
+import { SCHEDULES_KEY } from '../../../../constants/keys'
 const { Panel } = Collapse
 
 export function Schedule() {
@@ -13,7 +15,10 @@ export function Schedule() {
     border: 'none',
   }
 
-  const { data: schedules, isSuccess } = useGetAllSchedulesQuery()
+  const { data: schedules, isSuccess } = useGetAllItemsQuery(
+    SCHEDULES_URL,
+    SCHEDULES_KEY
+  )
 
   return (
     <Collapse

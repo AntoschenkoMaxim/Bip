@@ -2,7 +2,9 @@ import { Button, Form, Input, Modal, Select, Upload } from 'antd'
 import { useState } from 'react'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
-import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { IMAGE_CATEGORIES_URL } from '../../../../constants/urls'
+import { IMAGE_CATEGORIES_KEY } from '../../../../constants/keys'
 
 export function ImageForm({
   id,
@@ -39,7 +41,10 @@ export function ImageForm({
     setIsModalOpen(false)
   }
 
-  const { data: imageCategories, isSuccess } = useGetAllImageCategoriesQuery()
+  const { data: imageCategories, isSuccess } = useGetAllItemsQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
   const options = imageCategories?.rows.map((item) => ({
     value: item.id,

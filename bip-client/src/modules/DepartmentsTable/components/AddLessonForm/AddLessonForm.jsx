@@ -1,8 +1,9 @@
 import { Button, Form, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useAddLessonToDepartmentQuery } from '../../hooks/useAddLessonToDepartmentQuery'
-import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
-import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { DEPARTMENTS_URL, LESSONS_URL } from '../../../../constants/urls'
+import { DEPARTMENTS_KEY, LESSONS_KEY } from '../../../../constants/keys'
 
 export function AddLessonForm({ isAddModalOpen, setIsAddModalOpen }) {
   const [form] = Form.useForm()
@@ -15,7 +16,10 @@ export function AddLessonForm({ isAddModalOpen, setIsAddModalOpen }) {
     setIsAddModalOpen(false)
   }
 
-  const { data: lessons, isSuccess: isLessonsSuccess } = useGetAllLessonsQuery()
+  const { data: lessons, isSuccess: isLessonsSuccess } = useGetAllItemsQuery(
+    LESSONS_URL,
+    LESSONS_KEY
+  )
 
   const lessonsOptions = lessons?.rows.map((lesson) => ({
     value: lesson.id,
@@ -23,7 +27,7 @@ export function AddLessonForm({ isAddModalOpen, setIsAddModalOpen }) {
   }))
 
   const { data: departments, isSuccess: isDepartmentsSuccess } =
-    useGetAllDepartmentsQuery()
+    useGetAllItemsQuery(DEPARTMENTS_URL, DEPARTMENTS_KEY)
 
   const departmentsOptions = departments?.rows.map((department) => ({
     value: department.id,

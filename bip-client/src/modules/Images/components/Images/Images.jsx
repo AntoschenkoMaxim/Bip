@@ -1,20 +1,27 @@
 import { Card, Image, List, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
-import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
-import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { IMAGES_URL, IMAGE_CATEGORIES_URL } from '../../../../constants/urls'
+import { IMAGES_KEY, IMAGE_CATEGORIES_KEY } from '../../../../constants/keys'
 const { Meta } = Card
 
 export function Images() {
   const [id, setId] = useState(null)
 
-  const { data: imageCategories } = useGetAllImageCategoriesQuery()
+  const { data: imageCategories } = useGetAllItemsQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
   const items = imageCategories?.rows.map((item) => ({
     key: item.id,
     label: item.description,
   }))
 
-  const { data: images, isSuccess } = useGetAllImagesQuery()
+  const { data: images, isSuccess } = useGetAllItemsQuery(
+    IMAGES_URL,
+    IMAGES_KEY
+  )
 
   useEffect(() => {
     if (items && !id) {

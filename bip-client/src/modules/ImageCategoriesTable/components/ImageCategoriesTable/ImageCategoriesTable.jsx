@@ -2,11 +2,13 @@ import { Badge, Button, Divider, Table } from 'antd'
 import { ImageCategoryForm } from '../ImageCategoryForm/ImageCategoryForm'
 import { useState } from 'react'
 import { useRemoveImageCategoryByIdQuery } from '../../hooks/useRemoveImageCategoryByIdQuery'
-import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useUpdateImageCategoryByIdQuery } from '../../hooks/useUpdateImageCategoryByIdQuery'
 import { useCreateImageCategoryQuery } from '../../hooks/useCreateImageCategoryQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { IMAGE_CATEGORIES_URL } from '../../../../constants/urls'
+import { IMAGE_CATEGORIES_KEY } from '../../../../constants/keys'
 
 export function ImageCategoriesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -58,7 +60,10 @@ export function ImageCategoriesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: imageCategories, isSuccess } = useGetAllImageCategoriesQuery()
+  const { data: imageCategories, isSuccess } = useGetAllItemsQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
   const { mutate: createImageCategory } = useCreateImageCategoryQuery()
 

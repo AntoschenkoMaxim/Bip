@@ -1,9 +1,14 @@
 import { Image, List, Tag } from 'antd'
 import { intlFormatDistance } from 'date-fns'
-import { useGetAllAdmissionsQuery } from '../../../../hooks/useGetAllAdmissionsQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { ADMISSIONS_URL } from '../../../../constants/urls'
+import { ADMISSIONS_KEY } from '../../../../constants/keys'
 
 export function Admissions() {
-  const { data: admissions, isSuccess } = useGetAllAdmissionsQuery()
+  const { data: admissions, isSuccess } = useGetAllItemsQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
 
   return (
     <>

@@ -2,11 +2,13 @@ import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useGetAllTimetablesQuery } from '../../../../hooks/useGetAllTimetablesQuery'
 import { useRemoveTimetableByIdQuery } from '../../hooks/useRemoveTimetableByIdQuery'
 import { useUpdateTimetableByIdQuery } from '../../hooks/useUpdateTimetableByIdQuery'
 import { useCreateTimetableQuery } from '../../hooks/useCreateTimetableQuery'
 import { TimetableForm } from '../TimetableForm/TimetableForm'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { TIMETABLES_URL } from '../../../../constants/urls'
+import { TIMETABLES_KEY } from '../../../../constants/keys'
 
 export function TimetablesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -63,7 +65,10 @@ export function TimetablesTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: timetables, isSuccess } = useGetAllTimetablesQuery()
+  const { data: timetables, isSuccess } = useGetAllItemsQuery(
+    TIMETABLES_URL,
+    TIMETABLES_KEY
+  )
 
   const { mutate: createTimetable } = useCreateTimetableQuery()
 

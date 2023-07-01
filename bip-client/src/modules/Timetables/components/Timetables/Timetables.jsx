@@ -1,13 +1,19 @@
 import { List, Tabs, Image, Skeleton } from 'antd'
 import { useEffect, useState } from 'react'
-import { useGetAllTimetablesQuery } from '../../../../hooks/useGetAllTimetablesQuery'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { TIMETABLES_URL } from '../../../../constants/urls'
+import { TIMETABLES_KEY } from '../../../../constants/keys'
 
 export function Timetables() {
   const [id, setId] = useState(null)
 
-  const { data: timetables, isLoading, isSuccess } = useGetAllTimetablesQuery()
+  const {
+    data: timetables,
+    isLoading,
+    isSuccess,
+  } = useGetAllItemsQuery(TIMETABLES_URL, TIMETABLES_KEY)
 
   const items = timetables?.rows.map((item) => ({
     key: item.id,

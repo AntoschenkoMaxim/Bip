@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query'
-import { getAllDates } from '../api/getDatesRequest'
+import { getAllItems } from '../api/getAllItemsRequest'
 
-export const useGetAllDatesQuery = () => {
+export const useGetAllItemsQuery = (url, key) => {
   return useQuery({
-    queryFn: () => getAllDates(),
-    queryKey: ['dates'],
+    queryFn: () => getAllItems(url),
+    queryKey: [key],
     onError: (err) => {
       if (err instanceof Error) {
         message.error(err.message)

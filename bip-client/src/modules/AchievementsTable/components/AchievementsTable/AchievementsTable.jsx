@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table, Tooltip } from 'antd'
 import { useState } from 'react'
 import { useRemoveAchievementByIdQuery } from '../../hooks/useRemoveAchievementByIdQuery'
-import { useGetAllAchievementsQuery } from '../../../../hooks/useGetAllAchievementsQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { AchievementForm } from '../AchievementForm/AchievementForm'
 import { useUpdateAchievementByIdQuery } from '../../hooks/useUpdateAchievementByIdQuery'
 import { useCreateAchievementQuery } from '../../hooks/useCreateAchievementQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { ACHIEVEMENTS_URL } from '../../../../constants/urls'
+import { ACHIEVEMENTS_KEY } from '../../../../constants/keys'
 
 export function AchievementsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -78,7 +80,10 @@ export function AchievementsTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: achievements, isSuccess } = useGetAllAchievementsQuery()
+  const { data: achievements, isSuccess } = useGetAllItemsQuery(
+    ACHIEVEMENTS_URL,
+    ACHIEVEMENTS_KEY
+  )
 
   const { mutate: createAchievement } = useCreateAchievementQuery()
 

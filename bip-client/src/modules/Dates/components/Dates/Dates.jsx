@@ -1,6 +1,8 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { Collapse, Image, theme } from 'antd'
-import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { DATES_URL } from '../../../../constants/urls'
+import { DATES_KEY } from '../../../../constants/keys'
 const { Panel } = Collapse
 
 export function Dates() {
@@ -13,7 +15,7 @@ export function Dates() {
     border: 'none',
   }
 
-  const { data: dates, isSuccess } = useGetAllDatesQuery()
+  const { data: dates, isSuccess } = useGetAllItemsQuery(DATES_URL, DATES_KEY)
 
   return (
     <Collapse

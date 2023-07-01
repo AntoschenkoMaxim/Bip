@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Table, Tag } from 'antd'
 import { useState } from 'react'
 import { TeacherForm } from '../TeacherForm/TeacherForm'
-import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
 import { useRemoveTeacherByIdQuery } from '../../hooks/useRemoveTeacherByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useUpdateTeacherByIdQuery } from '../../hooks/useUpdateTeacherByIdQuery'
 import { useCreateTeacherQuery } from '../../hooks/useCreateTeacherQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { TEACHERS_URL } from '../../../../constants/urls'
+import { TEACHERS_KEY } from '../../../../constants/keys'
 
 export function TeachersTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -106,7 +108,10 @@ export function TeachersTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: teachers, isSuccess } = useGetAllTeachersQuery()
+  const { data: teachers, isSuccess } = useGetAllItemsQuery(
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
   const { mutate: createTeacher } = useCreateTeacherQuery()
 

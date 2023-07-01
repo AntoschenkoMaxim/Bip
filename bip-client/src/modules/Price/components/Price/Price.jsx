@@ -1,7 +1,8 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { Col, Collapse, Image, Row, theme } from 'antd'
-import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
-import { useGetAllPricesQuery } from '../../../../hooks/useGetAllPricesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { PRICES_URL } from '../../../../constants/urls'
+import { PRICES_KEY } from '../../../../constants/keys'
 const { Panel } = Collapse
 
 export function Price() {
@@ -14,7 +15,10 @@ export function Price() {
     border: 'none',
   }
 
-  const { data: prices, isSuccess } = useGetAllPricesQuery()
+  const { data: prices, isSuccess } = useGetAllItemsQuery(
+    PRICES_URL,
+    PRICES_KEY
+  )
 
   return (
     <Collapse

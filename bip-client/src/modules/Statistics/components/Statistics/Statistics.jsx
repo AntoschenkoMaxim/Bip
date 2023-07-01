@@ -1,34 +1,74 @@
 import { Card, Col, Row } from 'antd'
-import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
-import { useGetAllLessonsQuery } from '../../../../hooks/useGetAllLessonsQuery'
-import { useGetAllTeachersQuery } from '../../../../hooks/useGetAllTeachersQuery'
-import { useGetAllPostsQuery } from '../../../../hooks/useGetAllPostsQuery'
-import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
-import { useGetAllImageCategoriesQuery } from '../../../../hooks/useGetAllImageCategories'
-import { useGetAllImagesQuery } from '../../../../hooks/useGetAllImagesQuery'
-import { useGetAllTimetablesQuery } from '../../../../hooks/useGetAllTimetablesQuery'
-import { useGetAllAchievementsQuery } from '../../../../hooks/useGetAllAchievementsQuery'
-import { useGetAllStatementsQuery } from '../../../../hooks/useGetAllStatementsQuery'
-import { useGetAllDatesQuery } from '../../../../hooks/useGetAllDatesQuery'
-import { useGetAllAdmissionsQuery } from '../../../../hooks/useGetAllAdmissionsQuery'
-import { useGetAllSchedulesQuery } from '../../../../hooks/useGetAllSchedulesQuery'
-import { useGetAllPricesQuery } from '../../../../hooks/useGetAllPricesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import {
+  ACHIEVEMENTS_KEY,
+  ADMISSIONS_KEY,
+  DATES_KEY,
+  DEPARTMENTS_KEY,
+  IMAGES_KEY,
+  IMAGE_CATEGORIES_KEY,
+  LESSONS_KEY,
+  POSTS_KEY,
+  POST_CATEGORIES_KEY,
+  PRICES_KEY,
+  SCHEDULES_KEY,
+  STATEMENTS_KEY,
+  TEACHERS_KEY,
+  TIMETABLES_KEY,
+} from '../../../../constants/keys'
+import {
+  ACHIEVEMENTS_URL,
+  ADMISSIONS_URL,
+  DATES_URL,
+  DEPARTMENTS_URL,
+  IMAGES_URL,
+  IMAGE_CATEGORIES_URL,
+  LESSONS_URL,
+  POSTS_URL,
+  POST_CATEGORIES_URL,
+  PRICES_URL,
+  SCHEDULES_URL,
+  STATEMENTS_URL,
+  TEACHERS_URL,
+  TIMETABLES_URL,
+} from '../../../../constants/urls'
 
 export function Statistics() {
-  const { data: departments } = useGetAllDepartmentsQuery()
-  const { data: lessons } = useGetAllLessonsQuery()
-  const { data: teachers } = useGetAllTeachersQuery()
-  const { data: postCategories } = useGetAllPostCategoriesQuery()
-  const { data: posts } = useGetAllPostsQuery()
-  const { data: imageCategories } = useGetAllImageCategoriesQuery()
-  const { data: images } = useGetAllImagesQuery()
-  const { data: timetables } = useGetAllTimetablesQuery()
-  const { data: achievements } = useGetAllAchievementsQuery()
-  const { data: statements } = useGetAllStatementsQuery()
-  const { data: dates } = useGetAllDatesQuery()
-  const { data: admissions } = useGetAllAdmissionsQuery()
-  const { data: schedules } = useGetAllSchedulesQuery()
-  const { data: prices } = useGetAllPricesQuery()
+  const { data: departments } = useGetAllItemsQuery(
+    DEPARTMENTS_URL,
+    DEPARTMENTS_KEY
+  )
+  const { data: lessons } = useGetAllItemsQuery(LESSONS_URL, LESSONS_KEY)
+  const { data: teachers } = useGetAllItemsQuery(TEACHERS_URL, TEACHERS_KEY)
+  const { data: postCategories } = useGetAllItemsQuery(
+    POST_CATEGORIES_URL,
+    POST_CATEGORIES_KEY
+  )
+  const { data: posts } = useGetAllItemsQuery(POSTS_URL, POSTS_KEY)
+  const { data: imageCategories } = useGetAllItemsQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
+  const { data: images } = useGetAllItemsQuery(IMAGES_URL, IMAGES_KEY)
+  const { data: timetables } = useGetAllItemsQuery(
+    TIMETABLES_URL,
+    TIMETABLES_KEY
+  )
+  const { data: achievements } = useGetAllItemsQuery(
+    ACHIEVEMENTS_URL,
+    ACHIEVEMENTS_KEY
+  )
+  const { data: statements } = useGetAllItemsQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
+  const { data: dates } = useGetAllItemsQuery(DATES_URL, DATES_KEY)
+  const { data: admissions } = useGetAllItemsQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
+  const { data: schedules } = useGetAllItemsQuery(SCHEDULES_URL, SCHEDULES_KEY)
+  const { data: prices } = useGetAllItemsQuery(PRICES_URL, PRICES_KEY)
 
   const statistics = [
     {

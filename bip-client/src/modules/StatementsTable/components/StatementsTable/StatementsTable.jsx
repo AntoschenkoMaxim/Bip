@@ -1,12 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useGetAllStatementsQuery } from '../../../../hooks/useGetAllStatementsQuery'
 import { StatementForm } from '../StatementForm/StatementForm'
 import { useRemoveStatementByIdQuery } from '../../hooks/useRemoveStatementByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { useUpdateStatementByIdQuery } from '../../hooks/useUpdateStatementByIdQuery'
 import { useCreateStatementQuery } from '../../hooks/useCreateStatementQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { STATEMENTS_URL } from '../../../../constants/urls'
+import { STATEMENTS_KEY } from '../../../../constants/keys'
 
 export function StatementsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -63,7 +65,10 @@ export function StatementsTable() {
     setIsCreateModalOpen(true)
   }
 
-  const { data: statements, isSuccess } = useGetAllStatementsQuery()
+  const { data: statements, isSuccess } = useGetAllItemsQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
 
   const { mutate: createStatement } = useCreateStatementQuery()
 

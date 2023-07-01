@@ -2,7 +2,9 @@ import { Button, DatePicker, Form, Input, Modal, Select, Upload } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useGetAllPostCategoriesQuery } from '../../../../hooks/useGetAllPostCategoriesQuery'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { POST_CATEGORIES_URL } from '../../../../constants/urls'
+import { POST_CATEGORIES_KEY } from '../../../../constants/keys'
 
 export function PostForm({
   id,
@@ -39,7 +41,10 @@ export function PostForm({
     setIsModalOpen(false)
   }
 
-  const { data: postCategories, isSuccess } = useGetAllPostCategoriesQuery()
+  const { data: postCategories, isSuccess } = useGetAllItemsQuery(
+    POST_CATEGORIES_URL,
+    POST_CATEGORIES_KEY
+  )
 
   const options = postCategories?.rows.map((item) => ({
     value: item.id,

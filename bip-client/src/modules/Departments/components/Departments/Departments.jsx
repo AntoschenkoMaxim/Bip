@@ -1,14 +1,19 @@
 import { List, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
-import { useGetAllDepartmentsQuery } from '../../../../hooks/useGetAllDepartmentsQuery'
 import { TeacherDrawer } from '../TeacherDrawer/TeacherDrawer'
+import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
+import { DEPARTMENTS_URL } from '../../../../constants/urls'
+import { DEPARTMENTS_KEY } from '../../../../constants/keys'
 
 export function Departments() {
   const [id, setId] = useState(null)
   const [teacherId, setTeacherId] = useState()
   const [open, setOpen] = useState(false)
 
-  const { data: departments, isSuccess } = useGetAllDepartmentsQuery()
+  const { data: departments, isSuccess } = useGetAllItemsQuery(
+    DEPARTMENTS_URL,
+    DEPARTMENTS_KEY
+  )
 
   const items = departments?.rows.map((item) => ({
     key: item.id,
