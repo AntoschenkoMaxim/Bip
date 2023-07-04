@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Table } from 'antd'
 import { ImageCategoryForm } from '../ImageCategoryForm/ImageCategoryForm'
 import { useState } from 'react'
-import { useRemoveImageCategoryByIdQuery } from '../../hooks/useRemoveImageCategoryByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdateImageCategoryByIdQuery } from '../../hooks/useUpdateImageCategoryByIdQuery'
-import { useCreateImageCategoryQuery } from '../../hooks/useCreateImageCategoryQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { IMAGE_CATEGORIES_URL } from '../../../../constants/urls'
 import { IMAGE_CATEGORIES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function ImageCategoriesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -65,11 +65,20 @@ export function ImageCategoriesTable() {
     IMAGE_CATEGORIES_KEY
   )
 
-  const { mutate: createImageCategory } = useCreateImageCategoryQuery()
+  const { mutate: createImageCategory } = useCreateItemQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
-  const { mutate: updateImageCategory } = useUpdateImageCategoryByIdQuery()
+  const { mutate: updateImageCategory } = useUpdateItemByIdQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
-  const { mutate: removeImageCategory } = useRemoveImageCategoryByIdQuery()
+  const { mutate: removeImageCategory } = useRemoveItemByIdQuery(
+    IMAGE_CATEGORIES_URL,
+    IMAGE_CATEGORIES_KEY
+  )
 
   return (
     <>

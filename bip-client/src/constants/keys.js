@@ -2,6 +2,7 @@ const ACHIEVEMENTS_KEY = `achievements`
 const ADMISSIONS_KEY = `admissions`
 const DATES_KEY = `dates`
 const DEPARTMENTS_KEY = `departments`
+const DEPARTMENTS_LESSON_KEY = 'departments'
 const IMAGE_CATEGORIES_KEY = `image-categories`
 const IMAGES_KEY = `images`
 const LESSONS_KEY = `lessons`
@@ -18,6 +19,7 @@ export {
   ADMISSIONS_KEY,
   DATES_KEY,
   DEPARTMENTS_KEY,
+  DEPARTMENTS_LESSON_KEY,
   IMAGE_CATEGORIES_KEY,
   IMAGES_KEY,
   LESSONS_KEY,

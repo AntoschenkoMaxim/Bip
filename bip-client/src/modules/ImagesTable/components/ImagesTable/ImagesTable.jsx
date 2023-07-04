@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useRemoveImageByIdQuery } from '../../hooks/useRemoveImageByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdateImageByIdQuery } from '../../hooks/useUpdateImageByIdQuery'
-import { useCreateImageQuery } from '../../hooks/useCreateImageQuery'
 import { ImageForm } from '../ImageForm/ImageForm'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { IMAGES_URL } from '../../../../constants/urls'
 import { IMAGES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function ImagesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -70,11 +70,11 @@ export function ImagesTable() {
     IMAGES_KEY
   )
 
-  const { mutate: createImage } = useCreateImageQuery()
+  const { mutate: createImage } = useCreateItemQuery(IMAGES_URL, IMAGES_KEY)
 
-  const { mutate: updateImage } = useUpdateImageByIdQuery()
+  const { mutate: updateImage } = useUpdateItemByIdQuery(IMAGES_URL, IMAGES_KEY)
 
-  const { mutate: removeImage } = useRemoveImageByIdQuery()
+  const { mutate: removeImage } = useRemoveItemByIdQuery(IMAGES_URL, IMAGES_KEY)
 
   return (
     <>

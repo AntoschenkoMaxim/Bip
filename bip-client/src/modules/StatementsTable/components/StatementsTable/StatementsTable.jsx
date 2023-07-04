@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { StatementForm } from '../StatementForm/StatementForm'
-import { useRemoveStatementByIdQuery } from '../../hooks/useRemoveStatementByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdateStatementByIdQuery } from '../../hooks/useUpdateStatementByIdQuery'
-import { useCreateStatementQuery } from '../../hooks/useCreateStatementQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { STATEMENTS_URL } from '../../../../constants/urls'
 import { STATEMENTS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function StatementsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -70,11 +70,20 @@ export function StatementsTable() {
     STATEMENTS_KEY
   )
 
-  const { mutate: createStatement } = useCreateStatementQuery()
+  const { mutate: createStatement } = useCreateItemQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
 
-  const { mutate: updateStatement } = useUpdateStatementByIdQuery()
+  const { mutate: updateStatement } = useUpdateItemByIdQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
 
-  const { mutate: removeStatement } = useRemoveStatementByIdQuery()
+  const { mutate: removeStatement } = useRemoveItemByIdQuery(
+    STATEMENTS_URL,
+    STATEMENTS_KEY
+  )
 
   return (
     <>

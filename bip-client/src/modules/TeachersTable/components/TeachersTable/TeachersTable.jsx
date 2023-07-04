@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Table, Tag } from 'antd'
 import { useState } from 'react'
 import { TeacherForm } from '../TeacherForm/TeacherForm'
-import { useRemoveTeacherByIdQuery } from '../../hooks/useRemoveTeacherByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdateTeacherByIdQuery } from '../../hooks/useUpdateTeacherByIdQuery'
-import { useCreateTeacherQuery } from '../../hooks/useCreateTeacherQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { TEACHERS_URL } from '../../../../constants/urls'
 import { TEACHERS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function TeachersTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -113,11 +113,20 @@ export function TeachersTable() {
     TEACHERS_KEY
   )
 
-  const { mutate: createTeacher } = useCreateTeacherQuery()
+  const { mutate: createTeacher } = useCreateItemQuery(
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
-  const { mutate: updateTeacher } = useUpdateTeacherByIdQuery()
+  const { mutate: updateTeacher } = useUpdateItemByIdQuery(
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
-  const { mutate: removeTeacher } = useRemoveTeacherByIdQuery()
+  const { mutate: removeTeacher } = useRemoveItemByIdQuery(
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
   return (
     <>

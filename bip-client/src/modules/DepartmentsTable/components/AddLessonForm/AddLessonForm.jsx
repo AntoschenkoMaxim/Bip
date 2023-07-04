@@ -2,8 +2,16 @@ import { Button, Form, Modal, Select } from 'antd'
 import { validateMessages } from '../../../../constants/validateMessages'
 import { useAddLessonToDepartmentQuery } from '../../hooks/useAddLessonToDepartmentQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
-import { DEPARTMENTS_URL, LESSONS_URL } from '../../../../constants/urls'
-import { DEPARTMENTS_KEY, LESSONS_KEY } from '../../../../constants/keys'
+import {
+  DEPARTMENTS_LESSON_URL,
+  DEPARTMENTS_URL,
+  LESSONS_URL,
+} from '../../../../constants/urls'
+import {
+  DEPARTMENTS_KEY,
+  DEPARTMENTS_LESSON_KEY,
+  LESSONS_KEY,
+} from '../../../../constants/keys'
 
 export function AddLessonForm({ isAddModalOpen, setIsAddModalOpen }) {
   const [form] = Form.useForm()
@@ -34,7 +42,10 @@ export function AddLessonForm({ isAddModalOpen, setIsAddModalOpen }) {
     label: department.description,
   }))
 
-  const { mutate: addLesson } = useAddLessonToDepartmentQuery()
+  const { mutate: addLesson } = useAddLessonToDepartmentQuery(
+    DEPARTMENTS_LESSON_URL,
+    DEPARTMENTS_LESSON_KEY
+  )
 
   const handleSubmit = (values) => {
     addLesson(values)

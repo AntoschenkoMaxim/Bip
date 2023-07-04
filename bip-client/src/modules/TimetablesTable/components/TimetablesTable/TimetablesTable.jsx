@@ -2,13 +2,13 @@ import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useRemoveTimetableByIdQuery } from '../../hooks/useRemoveTimetableByIdQuery'
-import { useUpdateTimetableByIdQuery } from '../../hooks/useUpdateTimetableByIdQuery'
-import { useCreateTimetableQuery } from '../../hooks/useCreateTimetableQuery'
 import { TimetableForm } from '../TimetableForm/TimetableForm'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { TIMETABLES_URL } from '../../../../constants/urls'
 import { TIMETABLES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function TimetablesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -70,11 +70,20 @@ export function TimetablesTable() {
     TIMETABLES_KEY
   )
 
-  const { mutate: createTimetable } = useCreateTimetableQuery()
+  const { mutate: createTimetable } = useCreateItemQuery(
+    TIMETABLES_URL,
+    TIMETABLES_KEY
+  )
 
-  const { mutate: updateTimetable } = useUpdateTimetableByIdQuery()
+  const { mutate: updateTimetable } = useUpdateItemByIdQuery(
+    TIMETABLES_URL,
+    TIMETABLES_KEY
+  )
 
-  const { mutate: removeTimetable } = useRemoveTimetableByIdQuery()
+  const { mutate: removeTimetable } = useRemoveItemByIdQuery(
+    TIMETABLES_URL,
+    TIMETABLES_KEY
+  )
 
   return (
     <>

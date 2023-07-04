@@ -1,7 +1,8 @@
 import { Button, Form, Input, Modal, Upload } from 'antd'
-import { validateMessages } from '../../../../constants/validateMessages'
 import { UploadOutlined } from '@ant-design/icons'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { ACHIEVEMENTS_URL } from '../../../../constants/urls'
+import { ACHIEVEMENTS_KEY } from '../../../../constants/keys'
 
 export function AchievementForm({
   id,

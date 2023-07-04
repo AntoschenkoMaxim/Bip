@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useRemoveAdmissionByIdQuery } from '../../hooks/useRemoveAdmissionByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { AdmissionForm } from '../AdmissionForm/AdmissionForm'
-import { useCreateAdmissionQuery } from '../../hooks/useCreateAdmissionQuery'
-import { useUpdateAdmissionByIdQuery } from '../../hooks/useUpdateAdmissionByIdQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { ADMISSIONS_URL } from '../../../../constants/urls'
 import { ADMISSIONS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function AdmissionsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -77,11 +77,20 @@ export function AdmissionsTable() {
     ADMISSIONS_KEY
   )
 
-  const { mutate: createAdmission } = useCreateAdmissionQuery()
+  const { mutate: createAdmission } = useCreateItemQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
 
-  const { mutate: updateAdmission } = useUpdateAdmissionByIdQuery()
+  const { mutate: updateAdmission } = useUpdateItemByIdQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
 
-  const { mutate: removeAdmission } = useRemoveAdmissionByIdQuery()
+  const { mutate: removeAdmission } = useRemoveItemByIdQuery(
+    ADMISSIONS_URL,
+    ADMISSIONS_KEY
+  )
 
   return (
     <>

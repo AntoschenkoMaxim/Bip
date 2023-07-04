@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table, Tooltip } from 'antd'
 import { useState } from 'react'
 import { PostForm } from '../PostForm/PostForm'
-import { useRemovePostByIdQuery } from '../../hooks/useRemovePostByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdatePostQuery } from '../../hooks/useUpdatePostQuery'
-import { useCreatePostQuery } from '../../hooks/useCreatePostQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { POSTS_URL } from '../../../../constants/urls'
 import { POSTS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function PostsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -86,11 +86,11 @@ export function PostsTable() {
 
   const { data: posts, isSuccess } = useGetAllItemsQuery(POSTS_URL, POSTS_KEY)
 
-  const { mutate: createPost } = useCreatePostQuery()
+  const { mutate: createPost } = useCreateItemQuery(POSTS_URL, POSTS_KEY)
 
-  const { mutate: updatePost } = useUpdatePostQuery()
+  const { mutate: updatePost } = useUpdateItemByIdQuery(POSTS_URL, POSTS_KEY)
 
-  const { mutate: removePost } = useRemovePostByIdQuery()
+  const { mutate: removePost } = useRemoveItemByIdQuery(POSTS_URL, POSTS_KEY)
 
   return (
     <>

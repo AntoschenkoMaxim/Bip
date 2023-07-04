@@ -1,8 +1,8 @@
-import { api } from '../../../api/interceptors'
+import { api } from './interceptors'
 
-export async function getTeacherById(id, url) {
+export async function removeItemById(id, url) {
   return api({
-    method: 'GET',
+    method: 'DELETE',
     url: `${url}/${id}`,
   })
     .then((response) => response.data)

@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { PriceForm } from '../PriceForm/PriceForm'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useRemovePriceByIdQuery } from '../../hooks/useRemovePriceByIdQuery'
-import { useUpdatePriceByIdQuery } from '../../hooks/useUpdatePriceByIdQuery'
-import { useCreatePriceQuery } from '../../hooks/useCreatePriceQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { PRICES_URL } from '../../../../constants/urls'
 import { PRICES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function PricesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -82,11 +82,11 @@ export function PricesTable() {
     PRICES_KEY
   )
 
-  const { mutate: createPrice } = useCreatePriceQuery()
+  const { mutate: createPrice } = useCreateItemQuery(PRICES_URL, PRICES_KEY)
 
-  const { mutate: updatePrice } = useUpdatePriceByIdQuery()
+  const { mutate: updatePrice } = useUpdateItemByIdQuery(PRICES_URL, PRICES_KEY)
 
-  const { mutate: removePrice } = useRemovePriceByIdQuery()
+  const { mutate: removePrice } = useRemoveItemByIdQuery(PRICES_URL, PRICES_KEY)
 
   return (
     <>

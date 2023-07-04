@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useRemoveScheduleByIdQuery } from '../../hooks/useRemoveScheduleByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { ScheduleForm } from '../ScheduleForm/ScheduleForm'
-import { useCreateScheduleQuery } from '../../hooks/useCreateScheduleQuery'
-import { useUpdateScheduleByIdQuery } from '../../hooks/useUpdateScheduleByIdQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { SCHEDULES_URL } from '../../../../constants/urls'
 import { SCHEDULES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function SchedulesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -70,11 +70,20 @@ export function SchedulesTable() {
     SCHEDULES_KEY
   )
 
-  const { mutate: createSchedule } = useCreateScheduleQuery()
+  const { mutate: createSchedule } = useCreateItemQuery(
+    SCHEDULES_URL,
+    SCHEDULES_KEY
+  )
 
-  const { mutate: updateSchedule } = useUpdateScheduleByIdQuery()
+  const { mutate: updateSchedule } = useUpdateItemByIdQuery(
+    SCHEDULES_URL,
+    SCHEDULES_KEY
+  )
 
-  const { mutate: removeSchedule } = useRemoveScheduleByIdQuery()
+  const { mutate: removeSchedule } = useRemoveItemByIdQuery(
+    SCHEDULES_URL,
+    SCHEDULES_KEY
+  )
 
   return (
     <>

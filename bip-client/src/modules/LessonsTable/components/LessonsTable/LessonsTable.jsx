@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Table } from 'antd'
 import { useState } from 'react'
-import { useRemoveLessonByIdQuery } from '../../hooks/useRemoveLessonByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { LessonForm } from '../LessonForm/LessonForm'
-import { useUpdateLessonByIdQuery } from '../../hooks/useUpdateLessonByIdQuery'
-import { useCreateLessonQuery } from '../../hooks/useCreateLessonQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { LESSONS_URL } from '../../../../constants/urls'
 import { LESSONS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function LessonsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -65,11 +65,17 @@ export function LessonsTable() {
     LESSONS_KEY
   )
 
-  const { mutate: createLesson } = useCreateLessonQuery()
+  const { mutate: createLesson } = useCreateItemQuery(LESSONS_URL, LESSONS_KEY)
 
-  const { mutate: updateLesson } = useUpdateLessonByIdQuery()
+  const { mutate: updateLesson } = useUpdateItemByIdQuery(
+    LESSONS_URL,
+    LESSONS_KEY
+  )
 
-  const { mutate: removeLesson } = useRemoveLessonByIdQuery()
+  const { mutate: removeLesson } = useRemoveItemByIdQuery(
+    LESSONS_URL,
+    LESSONS_KEY
+  )
 
   return (
     <>

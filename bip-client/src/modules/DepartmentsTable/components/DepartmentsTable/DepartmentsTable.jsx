@@ -1,15 +1,15 @@
 import { Badge, Button, Divider, Space, Table, Tag } from 'antd'
 import { useState } from 'react'
-import { useRemoveDepartmentByIdQuery } from '../../hooks/useRemoveDepartmentByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { DepartmentForm } from '../DepartmentForm/DepartmentForm'
-import { useCreateDepartmentQuery } from '../../hooks/useCreateDepartmentQuery'
-import { useUpdateDepartmentByIdQuery } from '../../hooks/useUpdateDepartmentByIdQuery'
 import { AddLessonForm } from '../AddLessonForm/AddLessonForm'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { DEPARTMENTS_URL } from '../../../../constants/urls'
 import { DEPARTMENTS_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function DepartmentsTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -91,11 +91,20 @@ export function DepartmentsTable() {
     DEPARTMENTS_KEY
   )
 
-  const { mutate: createDepartment } = useCreateDepartmentQuery()
+  const { mutate: createDepartment } = useCreateItemQuery(
+    DEPARTMENTS_URL,
+    DEPARTMENTS_KEY
+  )
 
-  const { mutate: updateDepartment } = useUpdateDepartmentByIdQuery()
+  const { mutate: updateDepartment } = useUpdateItemByIdQuery(
+    DEPARTMENTS_URL,
+    DEPARTMENTS_KEY
+  )
 
-  const { mutate: removeDepartment } = useRemoveDepartmentByIdQuery()
+  const { mutate: removeDepartment } = useRemoveItemByIdQuery(
+    DEPARTMENTS_URL,
+    DEPARTMENTS_KEY
+  )
 
   return (
     <>

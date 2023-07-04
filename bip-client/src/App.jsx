@@ -27,31 +27,6 @@ import { Statements } from './modules/Statements'
 import { Regulations } from './modules/Regulations'
 import { Consultation } from './modules/Consultation'
 import { Images } from './modules/Images'
-import {
-  BookOutlined,
-  CrownOutlined,
-  ContainerOutlined,
-  PhoneOutlined,
-  UsergroupAddOutlined,
-  AuditOutlined,
-  CalendarOutlined,
-  FileExclamationOutlined,
-  FileDoneOutlined,
-  FileWordOutlined,
-  DollarOutlined,
-  SolutionOutlined,
-  FileImageOutlined,
-  BarChartOutlined,
-  InboxOutlined,
-  FileProtectOutlined,
-  PictureOutlined,
-  StarOutlined,
-  TeamOutlined,
-  ProfileOutlined,
-  FileTextOutlined,
-  OrderedListOutlined,
-  FieldTimeOutlined,
-} from '@ant-design/icons'
 import { AchievementsPage } from './pages/Achievements/components/AchievementsPage'
 import { Achievements } from './modules/Achievements'
 import { Admissions } from './modules/Admissions'
@@ -73,82 +48,45 @@ import { RegistrationPage } from './pages/Registration/components/RegistrationPa
 import { LoginPage } from './pages/Login/components/LoginPage'
 import { Error404Page } from './pages/Error404/components/Error404Page'
 import { Rules } from './modules/Rules'
+import {
+  aboutIcons,
+  achievementsIcons,
+  applicantIcons,
+  dashboardIcons,
+  postsIcons,
+  studentIcons,
+} from './constants/icons'
 
 function App() {
   const { t } = useTranslation()
 
-  const icons1 = [
-    <ContainerOutlined />,
-    <FileImageOutlined />,
-    <UsergroupAddOutlined />,
-    <AuditOutlined />,
-    <BookOutlined />,
-    <PhoneOutlined />,
-  ]
-
-  const items1 = t('sider_menu.main', { returnObjects: true }).map(
+  const postsItems = t('sider_menu.main', { returnObjects: true }).map(
     (item, index) =>
       getItem(
         item.title,
         item.path,
-        icons1[index],
+        postsIcons[index],
         item.sub_menu?.map((sub) => getItem(sub.title, sub.path))
       )
   )
 
-  const icons2 = [
-    <CalendarOutlined />,
-    <FileExclamationOutlined />,
-    <FileDoneOutlined />,
-  ]
-
-  const items2 = t('sider_menu.about', { returnObjects: true }).map(
-    (item, index) => getItem(item.title, item.path, icons2[index])
+  const aboutItems = t('sider_menu.about', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, aboutIcons[index])
   )
 
-  const icons3 = [
-    <CalendarOutlined />,
-    <FileExclamationOutlined />,
-    <FileDoneOutlined />,
-    <FileWordOutlined />,
-  ]
-
-  const items3 = t('sider_menu.applicant', { returnObjects: true }).map(
-    (item, index) => getItem(item.title, item.path, icons3[index])
+  const applicantItems = t('sider_menu.applicant', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, applicantIcons[index])
   )
 
-  const icons4 = [
-    <CalendarOutlined />,
-    <FileExclamationOutlined />,
-    <SolutionOutlined />,
-    <DollarOutlined />,
-  ]
-
-  const items4 = t('sider_menu.student', { returnObjects: true }).map(
-    (item, index) => getItem(item.title, item.path, icons4[index])
+  const studentItems = t('sider_menu.student', { returnObjects: true }).map(
+    (item, index) => getItem(item.title, item.path, studentIcons[index])
   )
 
-  const icons5 = [<CrownOutlined />]
-
-  const items5 = t('sider_menu.achievements', { returnObjects: true }).map(
-    (item, index) => getItem(item.title, item.path, icons5[index])
+  const achievementsItems = t('sider_menu.achievements', {
+    returnObjects: true,
+  }).map((item, index) =>
+    getItem(item.title, item.path, achievementsIcons[index])
   )
-
-  const dashboardIcons = [
-    <BarChartOutlined />,
-    <InboxOutlined />,
-    <ProfileOutlined />,
-    <TeamOutlined />,
-    <FileProtectOutlined />,
-    <PictureOutlined />,
-    <FieldTimeOutlined />,
-    <StarOutlined />,
-    <FileTextOutlined />,
-    <CalendarOutlined />,
-    <OrderedListOutlined />,
-    <ContainerOutlined />,
-    <DollarOutlined />,
-  ]
 
   const dashboardItems = t('dashboard_menu.main', { returnObjects: true }).map(
     (item, index) =>
@@ -169,12 +107,7 @@ function App() {
     }
   }, [])
 
-  const handleRegistration = (accessToken) => {
-    Cookies.set('accessToken', accessToken)
-    setIsLoggedIn(true)
-  }
-
-  const handleLogin = (accessToken) => {
+  const handleAuthorization = (accessToken) => {
     Cookies.set('accessToken', accessToken)
     setIsLoggedIn(true)
   }
@@ -184,54 +117,165 @@ function App() {
     setIsLoggedIn(false)
   }
 
+  const routes = [
+    {
+      path: 'posts/*',
+      items: postsItems,
+      subRoutes: [
+        { component: <MainPostsPage />, index: true },
+        { path: 'gallery', component: <Images /> },
+        { path: 'projects', component: <Projects /> },
+        { path: 'brsm', component: <Brsm /> },
+        { path: 'consultation', component: <Consultation /> },
+        { path: 'regulations', component: <Regulations /> },
+        { path: 'library', component: <LibraryPage /> },
+        { path: 'contacts', component: <OneWindowPage /> },
+        { path: 'statements', component: <Statements /> },
+        { path: 'reception', component: <Reception /> },
+        {
+          path: 'educational-department',
+          component: <EducationalDepartment />,
+        },
+      ],
+    },
+    {
+      path: 'about/*',
+      items: aboutItems,
+      subRoutes: [
+        { component: <History />, index: true },
+        { path: 'departments', component: <Departments /> },
+        { path: 'accreditation', component: <AccreditationPage /> },
+        { path: 'brsm', component: <Brsm /> },
+        { path: 'consultation', component: <Consultation /> },
+        { path: 'regulations', component: <Regulations /> },
+        { path: 'library', component: <LibraryPage /> },
+        { path: 'contacts', component: <OneWindowPage /> },
+        { path: 'statements', component: <Statements /> },
+        { path: 'reception', component: <Reception /> },
+        {
+          path: 'educational-department',
+          component: <EducationalDepartment />,
+        },
+      ],
+    },
+    {
+      path: 'applicant/*',
+      items: applicantItems,
+      subRoutes: [
+        { component: <Dates />, index: true },
+        { path: 'rules', component: <Rules /> },
+        { path: 'documents', component: <Documents /> },
+        { path: 'admission', component: <Admissions /> },
+      ],
+    },
+    {
+      path: 'student/*',
+      items: studentItems,
+      subRoutes: [
+        { component: <Timetables />, index: true },
+        { path: 'rules', component: <StudentRules /> },
+        { path: 'schedule', component: <Schedule /> },
+        { path: 'price', component: <Price /> },
+      ],
+    },
+    {
+      path: 'achievements/*',
+      items: achievementsItems,
+      subRoutes: [{ component: <Achievements />, index: true }],
+    },
+  ]
+
+  const authRoutes = [
+    {
+      component: <Statistics />,
+      index: true,
+    },
+    {
+      path: 'teachers',
+      component: <TeachersPage />,
+    },
+    {
+      path: 'departments',
+      component: <DepartmentsPage />,
+    },
+    {
+      path: 'lessons',
+      component: <LessonsPage />,
+    },
+    {
+      path: 'post-categories',
+      component: <PostCategoriesPage />,
+    },
+    {
+      path: 'posts',
+      component: <PostsPage />,
+    },
+    {
+      path: 'image-categories',
+      component: <ImageCategoriesPage />,
+    },
+    {
+      path: 'images',
+      component: <ImagesPage />,
+    },
+    {
+      path: 'timetables',
+      component: <TimetablesPage />,
+    },
+    {
+      path: 'achievements',
+      component: <AchievementsPage />,
+    },
+    {
+      path: 'statements',
+      component: <StatementsPage />,
+    },
+    {
+      path: 'dates',
+      component: <DatesPage />,
+    },
+    {
+      path: 'admissions',
+      component: <AdmissionsPage />,
+    },
+    {
+      path: 'schedules',
+      component: <SchedulesPage />,
+    },
+    {
+      path: 'prices',
+      component: <PricesPage />,
+    },
+  ]
+
   return (
     <>
       <Routes>
         <Route path='/' element={<MainLayoutPage />}>
           <Route index element={<LandingPage />} />
-          <Route path='posts/*' element={<MainSider items={items1} />}>
-            <Route index element={<MainPostsPage />} />
-            <Route path='gallery' element={<Images />} />
-            <Route path='projects' element={<Projects />} />
-            <Route path='brsm' element={<Brsm />} />
-            <Route path='consultation' element={<Consultation />} />
-            <Route path='regulations' element={<Regulations />} />
-            <Route path='library' element={<LibraryPage />} />
-            <Route path='contacts' element={<OneWindowPage />} />
-            <Route path='statements' element={<Statements />} />
-            <Route path='reception' element={<Reception />} />
+          {routes.map((route, index) => (
             <Route
-              path='educational-department'
-              element={<EducationalDepartment />}
-            />
-          </Route>
-          <Route path='about/*' element={<MainSider items={items2} />}>
-            <Route index element={<History />} />
-            <Route path='departments' element={<Departments />} />
-            <Route path='accreditation' element={<AccreditationPage />} />
-          </Route>
-          <Route path='applicant/*' element={<MainSider items={items3} />}>
-            <Route index element={<Dates />} />
-            <Route path='rules' element={<Rules />} />
-            <Route path='documents' element={<Documents />} />
-            <Route path='admission' element={<Admissions />} />
-          </Route>
-          <Route path='student/*' element={<MainSider items={items4} />}>
-            <Route index element={<Timetables />} />
-            <Route path='rules' element={<StudentRules />} />
-            <Route path='schedule' element={<Schedule />} />
-            <Route path='price' element={<Price />} />
-          </Route>
-          <Route path='achievements/*' element={<MainSider items={items5} />}>
-            <Route index element={<Achievements />} />
-          </Route>
+              key={index}
+              path={route.path}
+              element={<MainSider items={route.items} />}
+            >
+              {route.subRoutes.map((subRoute, subIndex) => (
+                <Route
+                  key={subIndex}
+                  index={subRoute?.index}
+                  path={subRoute.path ? subRoute.path : ''}
+                  element={subRoute.component}
+                />
+              ))}
+            </Route>
+          ))}
         </Route>
         {isLoggedIn ? (
           <Route path='*' element={<Navigate to='/dashboard' replace />} />
         ) : (
           <Route
             path='/auth/login'
-            element={<LoginPage onLogin={handleLogin} />}
+            element={<LoginPage onLogin={handleAuthorization} />}
           />
         )}
         {isLoggedIn ? (
@@ -239,7 +283,7 @@ function App() {
         ) : (
           <Route
             path='/auth/registration'
-            element={<RegistrationPage onRegistration={handleRegistration} />}
+            element={<RegistrationPage onRegistration={handleAuthorization} />}
           />
         )}
         {isLoggedIn ? (
@@ -252,21 +296,14 @@ function App() {
               />
             }
           >
-            <Route index element={<Statistics />} />
-            <Route path='teachers' element={<TeachersPage />} />
-            <Route path='departments' element={<DepartmentsPage />} />
-            <Route path='lessons' element={<LessonsPage />} />
-            <Route path='post-categories' element={<PostCategoriesPage />} />
-            <Route path='posts' element={<PostsPage />} />
-            <Route path='image-categories' element={<ImageCategoriesPage />} />
-            <Route path='images' element={<ImagesPage />} />
-            <Route path='timetables' element={<TimetablesPage />} />
-            <Route path='achievements' element={<AchievementsPage />} />
-            <Route path='statements' element={<StatementsPage />} />
-            <Route path='dates' element={<DatesPage />} />
-            <Route path='admissions' element={<AdmissionsPage />} />
-            <Route path='schedules' element={<SchedulesPage />} />
-            <Route path='prices' element={<PricesPage />} />
+            {authRoutes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.component}
+                index={route?.index}
+              />
+            ))}
           </Route>
         ) : (
           <Route

@@ -1,8 +1,14 @@
 import { Descriptions, Divider, Drawer, Tag, Typography } from 'antd'
 import { useGetTeacherByIdQuery } from '../../hooks/useGetTeacherByIdQuery'
+import { TEACHERS_URL } from '../../../../constants/urls'
+import { TEACHERS_KEY } from '../../../../constants/keys'
 
 export function TeacherDrawer({ teacherId, open, setOpen }) {
-  const { data: teacher, isSuccess } = useGetTeacherByIdQuery(teacherId)
+  const { data: teacher, isSuccess } = useGetTeacherByIdQuery(
+    teacherId,
+    TEACHERS_URL,
+    TEACHERS_KEY
+  )
 
   const onClose = () => {
     setOpen(false)

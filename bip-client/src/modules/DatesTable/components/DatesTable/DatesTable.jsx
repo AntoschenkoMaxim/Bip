@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Image, Table } from 'antd'
 import { useState } from 'react'
-import { useRemoveDateByIdQuery } from '../../hooks/useRemoveDateByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
 import { DateForm } from '../DateForm/DateForm'
-import { useUpdateDateByIdQuery } from '../../hooks/useUpdateDateByIdQuery'
-import { useCreateDateQuery } from '../../hooks/useCreateDateQuery'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { DATES_URL } from '../../../../constants/urls'
 import { DATES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function DatesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -68,11 +68,11 @@ export function DatesTable() {
 
   const { data: dates, isSuccess } = useGetAllItemsQuery(DATES_URL, DATES_KEY)
 
-  const { mutate: createDate } = useCreateDateQuery()
+  const { mutate: createDate } = useCreateItemQuery(DATES_URL, DATES_KEY)
 
-  const { mutate: updateDate } = useUpdateDateByIdQuery()
+  const { mutate: updateDate } = useUpdateItemByIdQuery(DATES_URL, DATES_KEY)
 
-  const { mutate: removeDate } = useRemoveDateByIdQuery()
+  const { mutate: removeDate } = useRemoveItemByIdQuery(DATES_URL, DATES_KEY)
 
   return (
     <>

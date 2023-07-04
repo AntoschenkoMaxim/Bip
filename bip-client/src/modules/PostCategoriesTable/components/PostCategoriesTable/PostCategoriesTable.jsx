@@ -1,14 +1,14 @@
 import { Badge, Button, Divider, Table, Tooltip } from 'antd'
 import { useState } from 'react'
-import { useRemovePostCategoryByIdQuery } from '../../hooks/useRemovePostCategoryByIdQuery'
 import { useTableFilterAndSearch } from '../../../../hooks/useTableFilterAndSearch'
 import { ActionsColumn } from '../../../../components'
-import { useUpdatePostCategoryByIdQuery } from '../../hooks/useUpdatePostCategoryByIdQuery'
-import { useCreatePostCategoryQuery } from '../../hooks/useCreatePostCategoryQuery'
 import { PostCategoryForm } from '../PostCategoryForm/PostCategoryForm'
 import { useGetAllItemsQuery } from '../../../../hooks/useGetAllItemsQuery'
 import { POST_CATEGORIES_URL } from '../../../../constants/urls'
 import { POST_CATEGORIES_KEY } from '../../../../constants/keys'
+import { useCreateItemQuery } from '../../../../hooks/useCreateItemQuery'
+import { useUpdateItemByIdQuery } from '../../../../hooks/useUpdateItemByIdQuery'
+import { useRemoveItemByIdQuery } from '../../../../hooks/useRemoveItemByIdQuery'
 
 export function PostCategoriesTable() {
   const { getColumnSearchProps } = useTableFilterAndSearch()
@@ -73,11 +73,20 @@ export function PostCategoriesTable() {
     POST_CATEGORIES_KEY
   )
 
-  const { mutate: createPostCategory } = useCreatePostCategoryQuery()
+  const { mutate: createPostCategory } = useCreateItemQuery(
+    POST_CATEGORIES_URL,
+    POST_CATEGORIES_KEY
+  )
 
-  const { mutate: updatePostCategory } = useUpdatePostCategoryByIdQuery()
+  const { mutate: updatePostCategory } = useUpdateItemByIdQuery(
+    POST_CATEGORIES_URL,
+    POST_CATEGORIES_KEY
+  )
 
-  const { mutate: removePostCategory } = useRemovePostCategoryByIdQuery()
+  const { mutate: removePostCategory } = useRemoveItemByIdQuery(
+    POST_CATEGORIES_URL,
+    POST_CATEGORIES_KEY
+  )
 
   return (
     <>

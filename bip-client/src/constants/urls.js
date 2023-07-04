@@ -2,6 +2,7 @@ const ACHIEVEMENTS_URL = `/achievements`
 const ADMISSIONS_URL = `/admissions`
 const DATES_URL = `/dates`
 const DEPARTMENTS_URL = `/departments`
+const DEPARTMENTS_LESSON_URL = '/departments/lesson'
 const IMAGE_CATEGORIES_URL = `/image-categories`
 const IMAGES_URL = `/images`
 const LESSONS_URL = `/lessons`
@@ -18,6 +19,7 @@ export {
   ADMISSIONS_URL,
   DATES_URL,
   DEPARTMENTS_URL,
+  DEPARTMENTS_LESSON_URL,
   IMAGE_CATEGORIES_URL,
   IMAGES_URL,
   LESSONS_URL,
