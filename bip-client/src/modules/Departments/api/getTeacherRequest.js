@@ -1,12 +1,12 @@
 import { api } from '../../../api/interceptors'
+import { handleError } from '../../../helpers/handleError'
+import { handleSuccess } from '../../../helpers/handleSuccess'
 
 export async function getTeacherById(id, url) {
   return api({
     method: 'GET',
     url: `${url}/${id}`,
   })
-    .then((response) => response.data)
-    .catch(function (error) {
-      console.log(error.toJSON())
-    })
+    .then(handleSuccess)
+    .catch(handleError)
 }

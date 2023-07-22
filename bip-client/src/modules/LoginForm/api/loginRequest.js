@@ -1,6 +1,7 @@
 import { LOGIN_URL } from '../constants/loginUrl'
-import { message } from 'antd'
 import { api } from '../../../api/interceptors'
+import { handleError } from '../../../helpers/handleError'
+import { handleSuccess } from '../../../helpers/handleSuccess'
 
 export async function loginUser(loginData) {
   return api({
@@ -11,8 +12,6 @@ export async function loginUser(loginData) {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response, message.success('Успешно авторизован!'))
-    .catch(function (error) {
-      console.log(error.toJSON())
-    })
+    .then(handleSuccess)
+    .catch(handleError)
 }

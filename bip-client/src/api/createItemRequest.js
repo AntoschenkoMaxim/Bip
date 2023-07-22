@@ -1,3 +1,5 @@
+import { handleError } from '../helpers/handleError'
+import { handleSuccess } from '../helpers/handleSuccess'
 import { api } from './interceptors'
 
 export async function createItem(data, url) {
@@ -6,8 +8,6 @@ export async function createItem(data, url) {
     url: url,
     data: data,
   })
-    .then((response) => response.data)
-    .catch(function (error) {
-      console.log(error.toJSON())
-    })
+    .then(handleSuccess)
+    .catch(handleError)
 }

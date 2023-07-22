@@ -1,3 +1,5 @@
+import { handleError } from '../helpers/handleError'
+import { handleSuccess } from '../helpers/handleSuccess'
 import { api } from './interceptors'
 
 export async function updateItemById(data, url) {
@@ -7,8 +9,6 @@ export async function updateItemById(data, url) {
     url: `${url}/${id}`,
     data: data,
   })
-    .then((response) => response.data)
-    .catch(function (error) {
-      console.log(error.toJSON())
-    })
+    .then(handleSuccess)
+    .catch(handleError)
 }

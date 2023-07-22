@@ -1,5 +1,4 @@
 import {
-  Breadcrumb,
   Col,
   Divider,
   Layout,
@@ -9,7 +8,6 @@ import {
   Space,
   Typography,
 } from 'antd'
-import { getItem } from '../../helpers/getItem'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -18,6 +16,7 @@ import {
   GlobalOutlined,
 } from '@ant-design/icons'
 import * as images from '../../../../assets/index'
+import { getItem } from '../../../../helpers/getItem'
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
 
@@ -88,32 +87,9 @@ export function MainLayout() {
 
       <Footer>
         <Divider />
-        <Row justify='space-between' align='middle'>
-          <Col
-            style={{
-              margin: 4,
-            }}
-          >
-            <img src={images.logo} style={{ width: 48 }} />
-          </Col>
+        <Row justify='center' align='middle'>
           <Col style={{ textAlign: 'center' }}>
             <Title level={5}>Bip University ©2023 All rights reserved.</Title>
-          </Col>
-          <Col>
-            <Space split={<Divider type='vertical' />}>
-              <Typography.Link href='http://bip-grodno.by/' target='_blank'>
-                <ChromeOutlined style={{ fontSize: 24 }} />
-              </Typography.Link>
-              <Typography.Link
-                href='https://instagram.com/bip_grodno_?igshid=MzRlODBiNWFlZA=='
-                target='_blank'
-              >
-                <InstagramOutlined style={{ fontSize: 24 }} />
-              </Typography.Link>
-              <Typography.Link href='https://vk.com/bipgrodno' target='_blank'>
-                <GlobalOutlined style={{ fontSize: 24 }} />
-              </Typography.Link>
-            </Space>
           </Col>
         </Row>
       </Footer>

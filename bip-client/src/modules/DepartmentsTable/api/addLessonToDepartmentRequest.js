@@ -1,4 +1,6 @@
 import { api } from '../../../api/interceptors'
+import { handleError } from '../../../helpers/handleError'
+import { handleSuccess } from '../../../helpers/handleSuccess'
 
 export async function addLessonToDepartment(data, url) {
   return api({
@@ -6,8 +8,6 @@ export async function addLessonToDepartment(data, url) {
     url: url,
     data: data,
   })
-    .then((response) => response.data)
-    .catch(function (error) {
-      console.log(error.toJSON())
-    })
+    .then(handleSuccess)
+    .catch(handleError)
 }
